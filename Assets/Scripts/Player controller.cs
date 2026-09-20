@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngineInternal;
 
-public class Playercontroller : MonoBehaviour
+public class Playercontroller : MonoBehaviour, IHeal, IDamage
 {
     
     [Range(1, 10)][SerializeField] float playerSpeed;
+    [Range(0,100)][SerializeField] int playerHP;
+
+    int playerMaxHP;
 
     Vector2 playerInput;
     Vector2 mousePos;
@@ -12,7 +16,7 @@ public class Playercontroller : MonoBehaviour
     Vector2 playerDir;
 
     Rigidbody2D rb;
-    [SerializeField] RectTransform reticle;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -71,16 +75,64 @@ public class Playercontroller : MonoBehaviour
 
     void TurnPlayer()
     {
+      
+        // Checks if a controller connected before reading controller inputs
+        if (Gamepad.current != null)
+        {
+            // gets the horizontal and vertical input from the controllers right stick
+            Vector2 controllerInput = Gamepad.current.rightStick.ReadValue();
+
+            //checks if the right stick is being moved
+            if (controllerInput.x != 0 || controllerInput.y != 0)
+            {
+                // calculates the angle based on the direction of the right stick
+                float controllerAngle = Mathf.Atan2(controllerInput.y, controllerInput.x) * Mathf.Rad2Deg;
+
+                // rotates the player int he direction of the right stick
+                rb.MoveRotation(controllerAngle - 90);
+
+                // stops here so the mouse does not override the controller 
+                return;
+            }
+        }
+
+        //Gets the current position of the mouse on the screen
         mousePos = Mouse.current.position.ReadValue();
+
+        // converts teh mouses screen position into a posistion in the game would
         mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        //gets the direction fromthe player to the mouse
         playerDir = mouseWorldPos - new Vector2(transform.position.x, transform.position.y);
+        
+        // calculates the angle the player needs toward the mouse
         float playerAngle = Mathf.Atan2(playerDir.y, playerDir.x) * Mathf.Rad2Deg;
+
+        // Rotates the player to face the calculated direction
         rb.MoveRotation(playerAngle - 90);
-        ReticlePosition();
+
     }
 
-    void ReticlePosition()
+    public void Heal(int healAmount)
     {
-        reticle.position = mousePos;
+        playerHP += healAmount;
+
+        if (playerHP > playerMaxHP)
+        {
+            
+            playerHP = playerMaxHP;
+        }
     }
+
+    public void TakeDamage(int damage)
+    {
+        playerHP -= damage;
+
+        if (playerHP <= 0)
+        {
+            playerHP = 0;
+        }
+    }
+
+
 }
