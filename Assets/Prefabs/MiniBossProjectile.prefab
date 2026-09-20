@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5254749989473418675}
   - component: {fileID: 715405505585330497}
   m_Layer: 0
-  m_Name: EnemyProjectile
+  m_Name: MiniBossProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883f54bbf282b9446acb9fec9ebd53fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectile
-  speed: 6
-  damage: 2
+  speed: 7
+  damage: 3
   lifetime: 4
 --- !u!212 &1214422695585238534
 SpriteRenderer:
