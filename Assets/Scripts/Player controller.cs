@@ -9,6 +9,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 	[Range(1, 10)][SerializeField] float playerSpeed;
     [Range(0,100)][SerializeField] int playerHP;
 
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform firePoint;
+
     int playerMaxHP = 100;
 
     Vector2 playerInput;
@@ -32,6 +35,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         Movement();
         TurnPlayer();
 		RenderCamera();
+        Shoot();
 	}
 
     void RenderCamera()
@@ -138,6 +142,14 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         if (playerHP <= 0)
         {
             playerHP = 0;
+        }
+    }
+
+    void Shoot()
+    {
+        if(Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Instantiate(bullet, firePoint.position, transform.rotation);
         }
     }
 
