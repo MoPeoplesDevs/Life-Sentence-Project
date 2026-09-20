@@ -15,7 +15,7 @@ public class LavePad : MonoBehaviour
         {
             damage.TakeDamage(burnDamage);
             dmgTime += Time.deltaTime;
-            dmgTime >= dmgOverTime;
+           // dmgTime >= dmgOverTime;
         }
     }
 
