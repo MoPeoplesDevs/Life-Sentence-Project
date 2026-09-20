@@ -5,7 +5,8 @@ using UnityEngineInternal;
 public class Playercontroller : MonoBehaviour, IHeal, IDamage
 {
     
-    [Range(1, 10)][SerializeField] float playerSpeed;
+    [SerializeField] GameObject playerCam;
+	[Range(1, 10)][SerializeField] float playerSpeed;
     [Range(0,100)][SerializeField] int playerHP;
 
     int playerMaxHP = 100;
@@ -30,6 +31,12 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     {
         Movement();
         TurnPlayer();
+		RenderCamera();
+	}
+
+    void RenderCamera()
+    {
+        playerCam.transform.position = new Vector3(transform.position.x, transform.position.y, playerCam.transform.position.z);
     }
 
     void Movement()
