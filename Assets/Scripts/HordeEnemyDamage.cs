@@ -7,11 +7,11 @@ public class HordeEnemyDamage : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        IDamage damageable = collision.gameObject.GetComponent<IDamage>();
+        Playercontroller player = collision.gameObject.GetComponent<Playercontroller>();
 
-        if (damageable != null)
+        if (player != null)
         {
-            damageable.TakeDamage(damage);
+            player.TakeDamage(damage);
         }
     }
 }

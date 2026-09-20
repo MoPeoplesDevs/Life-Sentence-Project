@@ -27,11 +27,11 @@ public class EnemyProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        IDamage damageable = collision.GetComponent<IDamage>();
+        Playercontroller player = collision.GetComponent<Playercontroller>();
 
-        if (damageable != null)
+        if (player != null)
         {
-            damageable.TakeDamage(damage);
+            player.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
