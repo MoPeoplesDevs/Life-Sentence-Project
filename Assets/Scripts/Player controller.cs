@@ -8,7 +8,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [Range(1, 10)][SerializeField] float playerSpeed;
     [Range(0,100)][SerializeField] int playerHP;
 
-    int playerMaxHP;
+    int playerMaxHP = 100;
 
     Vector2 playerInput;
     Vector2 mousePos;
