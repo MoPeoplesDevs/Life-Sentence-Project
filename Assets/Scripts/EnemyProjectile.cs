@@ -22,6 +22,9 @@ public class EnemyProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (GameManager.Instance.IsGameOver) return;
+
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
     }
 
