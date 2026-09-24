@@ -4,10 +4,18 @@ using UnityEngineInternal;
 
 public class Playercontroller : MonoBehaviour, IHeal, IDamage
 {
-    
+
     [SerializeField] GameObject playerCam;
-	[Range(1, 10)][SerializeField] float playerSpeed;
-    [Range(0,100)][SerializeField] int playerHP;
+    [Range(1, 10)][SerializeField] float playerSpeed;
+    [Range(0, 100)][SerializeField] int playerHP;
+    [Range(2, 4)][SerializeField] float evadeSpeed;
+    [Range(0, 5)][SerializeField] float evadeTime;
+    [Range(1, 5)] [SerializeField] float evadeCooldown;
+    float evadeDuration;
+    float evadeCooldownTimer;
+
+    bool isEvading;
+    bool isInvincible;
 
     [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
@@ -20,10 +28,12 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     Vector2 playerDir;
 
     Rigidbody2D rb;
+    CircleCollider2D playerCollider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        playerCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
@@ -36,6 +46,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         TurnPlayer();
 		RenderCamera();
         Shoot();
+        Evade();
 	}
 
     void RenderCamera()
@@ -137,14 +148,15 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     public void TakeDamage(int damage)
     {
-        playerHP -= damage;
-
-        if (playerHP <= 0)
+        if (isInvincible == false)
         {
-            playerHP = 0;
+            playerHP -= damage;
+
+            if (playerHP <= 0)
+            {
+                playerHP = 0;
+            }
         }
-
-
     }
 
     void Shoot()
@@ -153,6 +165,39 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         {
             Instantiate(bullet, firePoint.position, transform.rotation);
         }
+    }
+
+    void Evade()
+    {
+        if (Keyboard.current.leftShiftKey.wasPressedThisFrame && evadeCooldownTimer <=0)
+        {
+            isEvading = true;
+            isInvincible = true;
+
+            playerCollider.enabled = false;
+
+            evadeDuration = evadeTime;
+        }
+        if (isEvading != false)
+        {
+            rb.linearVelocity = playerInput * (playerSpeed * evadeSpeed);
+            evadeDuration -= Time.deltaTime;
+
+            if (evadeDuration <= 0)
+            {
+                isEvading = false;
+                isInvincible = false;
+
+                playerCollider.enabled = true;
+
+                evadeCooldownTimer = evadeCooldown;
+            }
+        }
+        if (evadeCooldownTimer > 0)
+        {
+            evadeCooldownTimer -= Time.deltaTime;
+        }
+       
     }
 
 
