@@ -1,0 +1,80 @@
+{
+  "waves": [
+    {
+      "waveNumber": 1,
+      "startDelay": 2.0,
+      "spawnGroups": [
+        {
+          "enemyType": "Horde",
+          "count": 3,
+          "spawnInterval": 1.0
+        }
+      ]
+    },
+
+    {
+      "waveNumber": 2,
+      "startDelay": 2.0,
+      "spawnGroups": [
+        {
+          "enemyType": "Horde",
+          "count": 4,
+          "spawnInterval": 0.8
+        },
+        {
+          "enemyType": "Heavy",
+          "count": 1,
+          "spawnInterval": 1.0
+        }
+      ]
+    },
+    {
+      "waveNumber": 3,
+      "startDelay": 2.0,
+      "spawnGroups": [
+        {
+          "enemyType": "Horde",
+          "count": 3,
+          "spawnInterval": 0.8
+        },
+        {
+          "enemyType": "Seeking",
+          "count": 2,
+          "spawnInterval": 1.0
+        }
+      ]
+    },
+    {
+      "waveNumber": 4,
+      "startDelay": 2.0,
+      "spawnGroups": [
+        {
+          "enemyType": "Horde",
+          "count": 2,
+          "spawnInterval": 0.8
+        },
+        {
+          "enemyType": "Heavy",
+          "count": 1,
+          "spawnInterval": 1.0
+        },
+        {
+          "enemyType": "Sniper",
+          "count": 1,
+          "spawnInterval": 1.5
+        }
+      ]
+    },
+    {
+      "waveNumber": 5,
+      "startDelay": 3.0,
+      "spawnGroups": [
+        {
+          "enemyType": "Boss",
+          "count": 1,
+          "spawnInterval": 0.0
+        }
+      ]
+    }
+  ]
+}
