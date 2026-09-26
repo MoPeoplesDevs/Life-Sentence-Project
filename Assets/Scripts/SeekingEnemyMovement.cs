@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class SeekingEnemyMovement : MonoBehaviour
 {
@@ -8,17 +7,19 @@ public class SeekingEnemyMovement : MonoBehaviour
     [SerializeField] float stoppingDistance = 4f;
     [SerializeField] float speed = 2.5f;
 
-    NavMeshAgent agent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (GameManager.Instance.IsGameOver) return;
+
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         if (distanceToPlayer > stoppingDistance)
