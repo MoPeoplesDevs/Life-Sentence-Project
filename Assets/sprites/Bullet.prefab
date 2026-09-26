@@ -51,10 +51,10 @@ MonoBehaviour:
   bulletDamage: 10
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 256
   wallLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
 --- !u!212 &3127680028164854760
 SpriteRenderer:
   serializedVersion: 3

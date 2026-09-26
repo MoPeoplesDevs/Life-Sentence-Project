@@ -23,6 +23,7 @@ public class EnemyShooting : MonoBehaviour
     {
 
         if (GameManager.Instance.IsGameOver) return;
+        if (player == null) return;
 
         fireTimer += Time.deltaTime;
 

@@ -513,7 +513,7 @@ MonoBehaviour:
   heavyPrefab: {fileID: 7962632098728244822, guid: 6c4561a306113d64189d52f10c38b613, type: 3}
   seekingPrefab: {fileID: 7239499321924668746, guid: 243147e23690eb44b93cab8f6789b959, type: 3}
   sniperPrefab: {fileID: 3047276198905081543, guid: 43dc674b2bf81b7419b219aa79211b5d, type: 3}
-  bossPrefab: {fileID: 0}
+  bossPrefab: {fileID: 4865820463175617488, guid: 6ba2f3439d361e4468fc80a05efdf88b, type: 3}
   spawnPoints:
   - {fileID: 1170909043}
   - {fileID: 1683976988}
@@ -3006,7 +3006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Playercontroller
   playerCam: {fileID: 824360706}
   playerSpeed: 5
-  playerHP: 1
+  playerHP: 100
   evadeSpeed: 2
   evadeTime: 0.5
   evadeCooldown: 2
@@ -3014,6 +3014,9 @@ MonoBehaviour:
   bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
   firePoint: {fileID: 1841192744}
   loseMenu: {fileID: 10475497}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!58 &990450901
 CircleCollider2D:
   m_ObjectHideFlags: 0
