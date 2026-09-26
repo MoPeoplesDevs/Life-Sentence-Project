@@ -13,12 +13,16 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [Range(1, 5)] [SerializeField] float evadeCooldown;
     float evadeDuration;
     float evadeCooldownTimer;
+    float deathRotation;
+    [SerializeField]float spinSpeed;
 
     bool isEvading;
     bool isInvincible;
+    bool isDead;
 
     [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
+    [SerializeField] GameObject loseMenu;
 
     int playerMaxHP = 100;
 
@@ -42,6 +46,12 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     // Update is called once per frame
     void Update()
     {
+
+        if(isDead != false)
+        {
+            DeathSpin();
+            return;
+        }
         Movement();
         TurnPlayer();
 		RenderCamera();
@@ -56,6 +66,11 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void Movement()
     {
+        if(isDead != false)
+        {
+            return;
+        }
+
         // stores the players horizontal and vertical movement
         float x = 0;
         float y = 0;
@@ -140,8 +155,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         playerHP += healAmount;
 
         if (playerHP > playerMaxHP)
-        {
-            
+        { 
             playerHP = playerMaxHP;
         }
     }
@@ -155,6 +169,10 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             if (playerHP <= 0)
             {
                 playerHP = 0;
+            }
+            if(playerHP <= 0)
+            {
+                PlayerDeath();
             }
         }
     }
@@ -198,6 +216,30 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             evadeCooldownTimer -= Time.deltaTime;
         }
        
+    }
+
+    void PlayerDeath()
+    {
+        isDead = true;
+
+        rb.linearVelocity = Vector2.zero;
+    }
+
+    void DeathSpin()
+    {
+        transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
+
+        deathRotation += spinSpeed * Time.deltaTime;
+
+        if(deathRotation >= 1080)
+        {
+            loseMenu.SetActive(true);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            Destroy(gameObject);
+        }
     }
 
 
