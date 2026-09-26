@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 7154338418277300868}
   - component: {fileID: 8650515364040528874}
   - component: {fileID: 5700613485293029095}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MiniBossEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1450970497
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 8
   m_MaskInteraction: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}

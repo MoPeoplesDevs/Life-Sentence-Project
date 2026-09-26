@@ -13,12 +13,17 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [Range(1, 5)] [SerializeField] float evadeCooldown;
     float evadeDuration;
     float evadeCooldownTimer;
+    float deathRotation;
+    [SerializeField]float spinSpeed;
 
     bool isEvading;
     bool isInvincible;
+    bool isDead;
+    bool usingController;
 
     [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
+    [SerializeField] GameObject loseMenu;
 
     int playerMaxHP = 100;
 
@@ -26,6 +31,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     Vector2 mousePos;
     Vector2 mouseWorldPos;
     Vector2 playerDir;
+    [SerializeField] LayerMask wallLayer;
 
     Rigidbody2D rb;
     CircleCollider2D playerCollider;
@@ -42,6 +48,12 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     // Update is called once per frame
     void Update()
     {
+
+        if(isDead != false)
+        {
+            DeathSpin();
+            return;
+        }
         Movement();
         TurnPlayer();
 		RenderCamera();
@@ -56,6 +68,11 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void Movement()
     {
+        if(isDead != false)
+        {
+            return;
+        }
+
         // stores the players horizontal and vertical movement
         float x = 0;
         float y = 0;
@@ -105,17 +122,33 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             Vector2 controllerInput = Gamepad.current.rightStick.ReadValue();
 
             //checks if the right stick is being moved
-            if (controllerInput.x != 0 || controllerInput.y != 0)
+            if (controllerInput.magnitude > 0.1f)
             {
+                //sets controller aiming as the current aiming method
+                usingController = true;
+
                 // calculates the angle based on the direction of the right stick
                 float controllerAngle = Mathf.Atan2(controllerInput.y, controllerInput.x) * Mathf.Rad2Deg;
 
                 // rotates the player int he direction of the right stick
                 rb.MoveRotation(controllerAngle - 90);
 
-                // stops here so the mouse does not override the controller 
-                return;
             }
+            // stops here so the mouse does not override the controller 
+            return;
+        }
+
+        //checks if the mouse has been moved 
+        if(Mouse.current.delta.ReadValue().magnitude > 0.1f)
+        {
+            //Switcher the player back to mouse aiming
+            usingController = false;
+        }
+
+        //Stops the mouse code from running while using the controller
+        if(usingController)
+        {
+            return;
         }
 
         //Gets the current position of the mouse on the screen
@@ -140,8 +173,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         playerHP += healAmount;
 
         if (playerHP > playerMaxHP)
-        {
-            
+        { 
             playerHP = playerMaxHP;
         }
     }
@@ -156,12 +188,16 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             {
                 playerHP = 0;
             }
+            if(playerHP <= 0)
+            {
+                PlayerDeath();
+            }
         }
     }
 
     void Shoot()
     {
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        if(Mouse.current.leftButton.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.rightTrigger.wasPressedThisFrame)
         {
             Instantiate(bullet, firePoint.position, transform.rotation);
         }
@@ -169,12 +205,12 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void Evade()
     {
-        if (Keyboard.current.leftShiftKey.wasPressedThisFrame && evadeCooldownTimer <=0)
+        if (Keyboard.current.leftShiftKey.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame && evadeCooldownTimer <=0)
         {
             isEvading = true;
             isInvincible = true;
 
-            playerCollider.enabled = false;
+            playerCollider.includeLayers = ~wallLayer;
 
             evadeDuration = evadeTime;
         }
@@ -188,7 +224,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
                 isEvading = false;
                 isInvincible = false;
 
-                playerCollider.enabled = true;
+                playerCollider.excludeLayers = 0;
 
                 evadeCooldownTimer = evadeCooldown;
             }
@@ -198,6 +234,30 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             evadeCooldownTimer -= Time.deltaTime;
         }
        
+    }
+
+    void PlayerDeath()
+    {
+        isDead = true;
+
+        rb.linearVelocity = Vector2.zero;
+    }
+
+    void DeathSpin()
+    {
+        transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
+
+        deathRotation += spinSpeed * Time.deltaTime;
+
+        if(deathRotation >= 1080)
+        {
+            loseMenu.SetActive(true);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            Destroy(gameObject);
+        }
     }
 
 
