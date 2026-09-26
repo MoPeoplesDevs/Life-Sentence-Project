@@ -95,10 +95,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a941ac6b79ddf704d94bd2704c434101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyShooting
-  projectilePrefab: {fileID: -4476736061826955653, guid: 2596272f4c7e7f4479ed128e026e1d84, type: 3}
+  projectilePrefab: {fileID: -4476736061826955653, guid: 594975dcd5cd67647a1d257a67f1e694, type: 3}
   firePoint: {fileID: 6605050026688171895}
   player: {fileID: 0}
   fireRate: 0.7
+  projectileSpeed: 6
+  projectileDamage: 10
 --- !u!114 &8013273599240994051
 MonoBehaviour:
   m_ObjectHideFlags: 0

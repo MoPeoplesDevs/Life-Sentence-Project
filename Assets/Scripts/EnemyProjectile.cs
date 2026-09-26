@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-
-    [SerializeField] float speed = 6f;
-    [SerializeField] int damage = 2;
     [SerializeField] float lifetime = 4f;
+    [SerializeField] LayerMask wallLayers;
 
+    float speed;
+    int damage;
     Vector2 direction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,9 +15,11 @@ public class EnemyProjectile : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
-    public void SetDirection(Vector2 newDirection)
+    public void Initialize(Vector2 newDirection, float newSpeed, int newDamage)
     {
         direction = newDirection.normalized;
+        speed = newSpeed;
+        damage = newDamage;
     }
     // Update is called once per frame
     void Update()
@@ -35,6 +37,12 @@ public class EnemyProjectile : MonoBehaviour
         if (player != null)
         {
             player.TakeDamage(damage);
+            Destroy(gameObject);
+            return;
+        }
+
+        if (((1 << collision.gameObject.layer) & wallLayers) != 0)
+        {
             Destroy(gameObject);
         }
     }

@@ -7,6 +7,8 @@ public class EnemyShooting : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField] Transform player;
     [SerializeField] float fireRate = 1f;
+    [SerializeField] float projectileSpeed = 6f;
+    [SerializeField] int projectileDamage = 10;
 
     float fireTimer;
 
@@ -37,6 +39,6 @@ public class EnemyShooting : MonoBehaviour
 
         EnemyProjectile projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
-        projectile.GetComponent<EnemyProjectile>().SetDirection(direction);
+        projectile.Initialize(direction, projectileSpeed, projectileDamage);
     } 
 }
