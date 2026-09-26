@@ -54,7 +54,7 @@ MonoBehaviour:
     m_Bits: 256
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!212 &3127680028164854760
 SpriteRenderer:
   serializedVersion: 3
