@@ -30,6 +30,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     Vector2 mousePos;
     Vector2 mouseWorldPos;
     Vector2 playerDir;
+    [SerializeField] LayerMask wallLayer;
 
     Rigidbody2D rb;
     CircleCollider2D playerCollider;
@@ -192,7 +193,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             isEvading = true;
             isInvincible = true;
 
-            playerCollider.enabled = false;
+            playerCollider.includeLayers = ~wallLayer;
 
             evadeDuration = evadeTime;
         }
@@ -206,7 +207,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
                 isEvading = false;
                 isInvincible = false;
 
-                playerCollider.enabled = true;
+                playerCollider.excludeLayers = 0;
 
                 evadeCooldownTimer = evadeCooldown;
             }
