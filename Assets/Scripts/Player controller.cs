@@ -19,6 +19,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     bool isEvading;
     bool isInvincible;
     bool isDead;
+    bool usingController;
 
     [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
@@ -121,17 +122,33 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             Vector2 controllerInput = Gamepad.current.rightStick.ReadValue();
 
             //checks if the right stick is being moved
-            if (controllerInput.x != 0 || controllerInput.y != 0)
+            if (controllerInput.magnitude > 0.1f)
             {
+                //sets controller aiming as the current aiming method
+                usingController = true;
+
                 // calculates the angle based on the direction of the right stick
                 float controllerAngle = Mathf.Atan2(controllerInput.y, controllerInput.x) * Mathf.Rad2Deg;
 
                 // rotates the player int he direction of the right stick
                 rb.MoveRotation(controllerAngle - 90);
 
-                // stops here so the mouse does not override the controller 
-                return;
             }
+            // stops here so the mouse does not override the controller 
+            return;
+        }
+
+        //checks if the mouse has been moved 
+        if(Mouse.current.delta.ReadValue().magnitude > 0.1f)
+        {
+            //Switcher the player back to mouse aiming
+            usingController = false;
+        }
+
+        //Stops the mouse code from running while using the controller
+        if(usingController)
+        {
+            return;
         }
 
         //Gets the current position of the mouse on the screen
@@ -180,7 +197,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void Shoot()
     {
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        if(Mouse.current.leftButton.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.rightTrigger.wasPressedThisFrame)
         {
             Instantiate(bullet, firePoint.position, transform.rotation);
         }
@@ -188,7 +205,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void Evade()
     {
-        if (Keyboard.current.leftShiftKey.wasPressedThisFrame && evadeCooldownTimer <=0)
+        if (Keyboard.current.leftShiftKey.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame && evadeCooldownTimer <=0)
         {
             isEvading = true;
             isInvincible = true;

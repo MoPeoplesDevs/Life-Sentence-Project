@@ -1,13 +1,19 @@
-using Unity.Tutorials.Editor;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     [Range(1, 3200)][SerializeField] float bulletSpeed;
     [Range(5, 50)][SerializeField] int bulletDamage;
+    [SerializeField] LayerMask enemyLayer;
+    [SerializeField] LayerMask wallLayer;
+
+    CircleCollider2D bulletCollider;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        bulletCollider = GetComponent<CircleCollider2D>();
+
+        bulletCollider.excludeLayers = ~(enemyLayer | wallLayer);
         
     }
 
