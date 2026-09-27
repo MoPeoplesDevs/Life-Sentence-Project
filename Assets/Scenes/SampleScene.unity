@@ -761,7 +761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32860049256d63449beff638ca9837ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  plrCharacter: {fileID: 990450895}
+  loseMenu: {fileID: 10475497}
   pauseMenu: {fileID: 1652684196}
   creditsMenu: {fileID: 326985757}
   waveCounter: {fileID: 117047412}
@@ -3098,7 +3098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Playercontroller
   playerCam: {fileID: 824360706}
   playerSpeed: 5
-  playerHP: 100
+  playerHP: 1
   evadeSpeed: 2
   evadeTime: 0.5
   evadeCooldown: 2
