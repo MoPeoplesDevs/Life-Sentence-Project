@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngineInternal;
+using UnityEngine.UI;
+using TMPro;
 
 public class Playercontroller : MonoBehaviour, IHeal, IDamage
 {
@@ -35,6 +37,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     Rigidbody2D rb;
     CircleCollider2D playerCollider;
+
+    [SerializeField] private Image healthBar;
+    [SerializeField] private TMP_Text healthText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -183,6 +188,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         if (isInvincible == false)
         {
             playerHP -= damage;
+            UpdateHealthUI();
 
             if (playerHP <= 0)
             {
@@ -259,6 +265,14 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             Destroy(gameObject);
         }
     }
+
+    private void UpdateHealthUI()
+    { 
+        healthBar.fillAmount = (float)playerHP / playerMaxHP;
+        healthText.text = "Health" + playerHP;
+    }
+
+
 
 
 }
