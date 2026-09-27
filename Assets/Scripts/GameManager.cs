@@ -59,11 +59,8 @@ public class GameManager : MonoBehaviour
     {
         Playercontroller = FindAnyObjectByType<Playercontroller>();
         if (Playercontroller != null)
-        {
-            Debug.Log("Found player controller");
             Playercontroller.OnPlayerDeath += GameOver;
-        }
-
+        
         WaveCount = 1;
         UpdateWaveCounter();
         WaveManager.Instance.SpawnWave(WaveCount);
@@ -83,8 +80,6 @@ public class GameManager : MonoBehaviour
 
     private void ProgressGame()
     {
-        Debug.Log("Wave finished, spawning a new one!");
-
         Score++;
         WaveCount++;
         UpdateWaveCounter();
@@ -115,7 +110,7 @@ public class GameManager : MonoBehaviour
         if (!IsGameOver) return;
 
         WaveManager.Instance.WipeLevel();
-        
+
         Score = 0;
         WaveCount = 1;
         IsGameOver = false;
