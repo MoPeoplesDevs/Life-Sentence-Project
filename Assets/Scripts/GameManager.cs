@@ -9,13 +9,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private GameObject plrCharacter; 
-
+    [SerializeField] private GameObject loseMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject creditsMenu;
 
     [SerializeField] private TMP_Text waveCounter;
     [SerializeField] private TMP_Text enemyCounter;
+
+    private Playercontroller Playercontroller;
 
     public bool IsGameOver { get; private set; }
     public bool IsPaused { get; private set; }
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
         pauseMenu.SetActive(false);
         creditsMenu.SetActive(false);
 
+        loseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
         pauseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ForceRestart);
         pauseMenu.transform.Find("Continue").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(TogglePause);
         pauseMenu.transform.Find("Credits").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ToggleCredits);
@@ -55,6 +57,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Playercontroller = FindAnyObjectByType<Playercontroller>();
+        if (Playercontroller != null)
+        {
+            Debug.Log("Found player controller");
+            Playercontroller.OnPlayerDeath += GameOver;
+        }
+
         WaveCount = 1;
         UpdateWaveCounter();
         WaveManager.Instance.SpawnWave(WaveCount);
@@ -97,7 +106,6 @@ public class GameManager : MonoBehaviour
 
     private void ForceRestart()
     {
-        WaveManager.Instance.WipeLevel();
         IsGameOver = true;
         Restart();
     }
@@ -106,10 +114,12 @@ public class GameManager : MonoBehaviour
     {
         if (!IsGameOver) return;
 
+        WaveManager.Instance.WipeLevel();
+        
         Score = 0;
         WaveCount = 1;
         IsGameOver = false;
-        plrCharacter.transform.position = new Vector3(0, -0.5f, 0);
+        Playercontroller.Respawn();
 
         UpdateWaveCounter();
         OnGameRestarted?.Invoke();

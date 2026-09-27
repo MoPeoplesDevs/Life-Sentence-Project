@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using UnityEngine.InputSystem;
 using UnityEngineInternal;
 using UnityEngine.UI;
@@ -6,6 +7,7 @@ using TMPro;
 
 public class Playercontroller : MonoBehaviour, IHeal, IDamage
 {
+    public static event Action OnPlayerDeath;
 
     [SerializeField] GameObject playerCam;
     [Range(1, 10)][SerializeField] float playerSpeed;
@@ -58,13 +60,21 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         {
             DeathSpin();
             return;
-        }
+        } else
+            loseMenu.SetActive(false);
+
         Movement();
         TurnPlayer();
 		RenderCamera();
         Shoot();
         Evade();
 	}
+
+    public void Respawn()
+    {
+        transform.position = new Vector3(0, -0.5f, 0);
+        isDead = false;
+    }
 
     void RenderCamera()
     {
@@ -187,17 +197,11 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     {
         if (isInvincible == false)
         {
-            playerHP -= damage;
+            playerHP = Mathf.Clamp(playerHP - damage, 0, 100);
             UpdateHealthUI();
 
             if (playerHP <= 0)
-            {
-                playerHP = 0;
-            }
-            if(playerHP <= 0)
-            {
                 PlayerDeath();
-            }
         }
     }
 
@@ -246,12 +250,12 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     void PlayerDeath()
     {
         isDead = true;
-
         rb.linearVelocity = Vector2.zero;
     }
 
     void DeathSpin()
     {
+        OnPlayerDeath?.Invoke();
         transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
 
         deathRotation += spinSpeed * Time.deltaTime;
@@ -262,8 +266,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-
-            Destroy(gameObject);
         }
     }
 
