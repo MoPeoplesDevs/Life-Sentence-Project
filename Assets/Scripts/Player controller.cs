@@ -203,6 +203,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void Shoot()
     {
+        if (GameManager.Instance.IsPaused) return;
         if(Mouse.current.leftButton.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.rightTrigger.wasPressedThisFrame)
         {
             Instantiate(bullet, firePoint.position, transform.rotation);
@@ -269,10 +270,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     private void UpdateHealthUI()
     { 
         healthBar.fillAmount = (float)playerHP / playerMaxHP;
-        healthText.text = "Health" + playerHP;
+        healthText.text = $"Health: {playerHP}";
     }
-
-
-
-
 }

@@ -1,8 +1,10 @@
-using System.Collections;
+using System;
 using UnityEngine;
+using System.Collections;
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager Instance { get; private set; }
 
     [SerializeField] TextAsset waveJson;
     [SerializeField] GameObject hordePrefab;
@@ -14,16 +16,40 @@ public class WaveManager : MonoBehaviour
 
     WaveConfig waveConfig;
 
-    int currentWave = 1;
-    int activeEnemies = 0;
-    bool finishedSpawning = false;
+    public int activeEnemies = 0;
+    private bool finishedSpawning = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public static event Action OnWaveFinished;
+    public static event Action OnWaveStarted;
+    public static event Action<int> OnEnemyKilled;
+    public static event Action<int> OnEnemySpawned;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         waveConfig = JsonUtility.FromJson<WaveConfig>(waveJson.text);
+    }
 
-        SpawnWave(currentWave);
+    // Used to kill off all enemies in the level!
+    public void WipeLevel()
+    {
+        GameObject[] objects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+        foreach (GameObject obj in objects)
+        {
+            if (obj.name.Contains("(Clone)"))
+                Destroy(obj);
+        }
     }
 
     public void SpawnWave(int waveNumber)
@@ -38,6 +64,7 @@ public class WaveManager : MonoBehaviour
                 return;
             }
         }
+        OnWaveStarted?.Invoke();
     }
 
     IEnumerator SpawnWaveRoutine(WaveData wave)
@@ -52,14 +79,13 @@ public class WaveManager : MonoBehaviour
 
                 if (prefabToSpawn != null)
                 {
-                    Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-
+                    Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
                     GameObject enemy = Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
-
                     activeEnemies++;
-
                     WaveEnemyTracker tracker = enemy.AddComponent<WaveEnemyTracker>();
                     tracker.SetWaveManager(this);
+
+                    OnEnemySpawned?.Invoke(activeEnemies);
                 }
 
                 yield return new WaitForSeconds(group.spawnInterval);
@@ -68,26 +94,20 @@ public class WaveManager : MonoBehaviour
         }
 
         finishedSpawning = true;
-
         CheckWaveComplete();
-
     }
 
     public void EnemyDestroyed()
     {
         activeEnemies--;
-
+        OnEnemyKilled?.Invoke(activeEnemies);
         CheckWaveComplete();
     }
 
     void CheckWaveComplete()
     {
         if (finishedSpawning && activeEnemies <= 0)
-        {
-            currentWave++;
-
-            SpawnWave(currentWave);
-        }
+            OnWaveFinished?.Invoke();
     }
 
     GameObject GetEnemyPrefab(string enemyType)

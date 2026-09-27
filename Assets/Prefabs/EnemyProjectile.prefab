@@ -50,7 +50,7 @@ MonoBehaviour:
   lifetime: 4
   wallLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!212 &1214422695585238534
 SpriteRenderer:
   serializedVersion: 3

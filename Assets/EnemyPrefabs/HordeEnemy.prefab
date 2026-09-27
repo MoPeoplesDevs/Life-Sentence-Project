@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fbb4b9cdf7a81140810fb9c18135043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  enemyHP: 10
+  enemyHP: 35
   healthBar: {fileID: 8468696511038541138}
 --- !u!212 &2498122803468583800
 SpriteRenderer:
