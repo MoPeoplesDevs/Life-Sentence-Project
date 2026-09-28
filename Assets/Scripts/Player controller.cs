@@ -72,7 +72,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     public void Respawn()
     {
+        playerHP = playerMaxHP;
         transform.position = new Vector3(0, -0.5f, 0);
+        UpdateHealthUI();
         isDead = false;
     }
 
@@ -180,17 +182,12 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
         // Rotates the player to face the calculated direction
         rb.MoveRotation(playerAngle - 90);
-
     }
 
     public void Heal(int healAmount)
     {
-        playerHP += healAmount;
-
-        if (playerHP > playerMaxHP)
-        { 
-            playerHP = playerMaxHP;
-        }
+        playerHP = Mathf.Clamp(playerHP + healAmount, 0, playerMaxHP);
+        UpdateHealthUI();
     }
 
     public void TakeDamage(int damage)

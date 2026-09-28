@@ -93,7 +93,6 @@ public class WaveManager : MonoBehaviour
         }
 
         finishedSpawning = true;
-        CheckWaveComplete();
     }
 
     public void EnemyDestroyed()

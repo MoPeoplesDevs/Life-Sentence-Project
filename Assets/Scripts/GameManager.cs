@@ -122,6 +122,9 @@ public class GameManager : MonoBehaviour
 
     public void TogglePause()
     {
+        UnityEngine.Cursor.visible = !IsPaused;
+        UnityEngine.Cursor.lockState = !IsPaused ? CursorLockMode.None : CursorLockMode.Confined;
+        
         if (IsPaused)
             Resume();
         else
