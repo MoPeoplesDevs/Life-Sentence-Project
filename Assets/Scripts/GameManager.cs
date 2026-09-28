@@ -48,14 +48,14 @@ public class GameManager : MonoBehaviour
         creditsMenu.SetActive(false);
         winMenu.SetActive(false);
 
-        loseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
-        loseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
-        winMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
         winMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
+        loseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
+        pauseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
+        winMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
+        loseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
         pauseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ForceRestart);
         pauseMenu.transform.Find("Continue").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(TogglePause);
         pauseMenu.transform.Find("Credits").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ToggleCredits);
-        pauseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
 
         OnGameExit += QuitGame;
         
@@ -101,19 +101,18 @@ public class GameManager : MonoBehaviour
         if (IsGameOver) yield break;
         if (WaveManager.Instance == null) yield break;
 
-        if(WaveCount >= 5)
+        Score++;
+        WaveCount++;
+
+        if(WaveCount > 1)
         {
             WinGame();
             yield break;
         }
 
-        Score++;
-        WaveCount++;
-
-        UpdateWaveCounter();
-
         yield return new WaitForSeconds(1f);
 
+        UpdateWaveCounter();
         if (IsGameOver || WaveManager.Instance == null)
         {
             progressGameRoutine = null;
@@ -148,8 +147,7 @@ public class GameManager : MonoBehaviour
     }
     public void WinGame()
     {
-        Time.timeScale = 0f;
-
+        GameOver();
         winMenu.SetActive(true);
 
         UnityEngine.Cursor.visible = true;
@@ -175,10 +173,15 @@ public class GameManager : MonoBehaviour
         Score = 0;
         WaveCount = 1;
         IsGameOver = false;
-        Playercontroller.Respawn();
 
+        Playercontroller.Respawn();
         UpdateWaveCounter();
         OnGameRestarted?.Invoke();
+
+        winMenu.SetActive(false);
+        loseMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+
         WaveManager.Instance.SpawnWave(WaveCount);
     }
 
@@ -220,6 +223,8 @@ public class GameManager : MonoBehaviour
         IsPaused = false;
         Time.timeScale = 1f;
 
+        winMenu.SetActive(false);
+        loseMenu.SetActive(false);
         pauseMenu.SetActive(false);
 
         OnGameResumed?.Invoke();

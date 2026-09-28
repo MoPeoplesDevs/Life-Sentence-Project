@@ -204,7 +204,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void Shoot()
     {
-        if (GameManager.Instance.IsPaused) return;
+        if (GameManager.Instance.IsPaused || GameManager.Instance.IsGameOver) return;
         if(Mouse.current.leftButton.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.rightTrigger.wasPressedThisFrame)
         {
             Instantiate(bullet, firePoint.position, transform.rotation);

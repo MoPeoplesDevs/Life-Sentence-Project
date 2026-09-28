@@ -2,46 +2,61 @@ using UnityEngine;
 
 public class Landmine : MonoBehaviour
 {
-	private float nextFlip = 0f;
-	private bool hasExploded = false;
-	private SpriteRenderer mineButton;
+    private float nextFlip = 0;
+    private bool hasExploded = false;
+    private SpriteRenderer mineButton;
 
-	[Range(0, 10)][SerializeField] int damage;
+    [Range(0, 10)][SerializeField] int damage;
 
-	private void Awake()
-	{
-		mineButton = transform.Find("Button").GetComponent<SpriteRenderer>();
-		nextFlip = Time.time + 1f;
+    private void Awake()
+    {
+        mineButton = transform.Find("Button").GetComponent<SpriteRenderer>();
+        Reset();
 
-		GameManager.Instance.OnGameRestarted += Reset;
-	}
+		nextFlip = UnityEngine.Random.Range(0f, 1f);
+    }
 
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.transform.tag != "Player") return;
-		
-		if (hasExploded) return;
-		hasExploded = true;
-		mineButton.color = Color.black;
+    private void Start()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnGameRestarted += Reset;
+    }
 
-		IDamage dmgComponent = collision.GetComponent<IDamage>();
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnGameRestarted -= Reset;
+    }
 
-		if (dmgComponent != null)
-			dmgComponent.TakeDamage(this.damage);
-	}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Player")) return;
+        if (hasExploded) return;
 
-	private void Update()
-	{
-		if (hasExploded) return;
-		if (Time.time >= nextFlip)
-		{
-			mineButton.color = mineButton.color == Color.red ? Color.white : Color.red;
-			nextFlip = Time.time + 1f;
-		}
-	}
+        hasExploded = true;
+        mineButton.color = Color.black;
 
-	private void Reset()
-	{
-		hasExploded = false;
-	}
+        IDamage dmgComponent = collision.GetComponent<IDamage>();
+
+        if (dmgComponent != null)
+            dmgComponent.TakeDamage(damage);
+    }
+
+    private void Update()
+    {
+        if (hasExploded) return;
+
+        if (Time.time >= nextFlip)
+        {
+            mineButton.color = mineButton.color == Color.red ? Color.white : Color.red;
+            nextFlip = Time.time + 1f;
+        }
+    }
+
+    private void Reset()
+    {
+        hasExploded = false;
+        mineButton.color = Color.white;
+        nextFlip = Time.time + 1f;
+    }
 }
