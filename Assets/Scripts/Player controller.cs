@@ -247,14 +247,13 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     void PlayerDeath()
     {
         isDead = true;
+        OnPlayerDeath?.Invoke();
         rb.linearVelocity = Vector2.zero;
     }
 
     void DeathSpin()
     {
-        OnPlayerDeath?.Invoke();
         transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
-
         deathRotation += spinSpeed * Time.deltaTime;
 
         if(deathRotation >= 1080)
