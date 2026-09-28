@@ -3,7 +3,7 @@ using UnityEngine;
 public class LavePad : MonoBehaviour
 {
     [Range(0, 5)][SerializeField] float dmgOverTime;
-    int burnDamage = 1;
+    [Range(1, 5)][SerializeField] int burnDamage;
 
     float dmgTime;
 
