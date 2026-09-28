@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text waveCounter;
     [SerializeField] private TMP_Text enemyCounter;
 
+    private Coroutine progressGameRoutine;
     private Playercontroller Playercontroller;
 
     public bool IsGameOver { get; private set; }
@@ -43,7 +44,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // UI Stuff
         pauseMenu.SetActive(false);
         creditsMenu.SetActive(false);
         winMenu.SetActive(false);
@@ -91,7 +91,9 @@ public class GameManager : MonoBehaviour
 
     private void ProgressGame()
     {
-        StartCoroutine(ProgressGameRoutine());
+        if (IsGameOver) return;
+        if (progressGameRoutine != null) return;
+        progressGameRoutine = StartCoroutine(ProgressGameRoutine());
     }
 
     private IEnumerator ProgressGameRoutine()
@@ -112,9 +114,22 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        if (IsGameOver) yield break;
+        if (IsGameOver || WaveManager.Instance == null)
+        {
+            progressGameRoutine = null;
+            yield break;
+        }
 
         WaveManager.Instance.SpawnWave(WaveCount);
+        progressGameRoutine = null;
+    }
+
+    private void StopProgressGameRoutine()
+    {
+        if (progressGameRoutine == null) return;
+
+        StopCoroutine(progressGameRoutine);
+        progressGameRoutine = null;
     }
 
     private void IncreaseScore(int amount = 1)
@@ -127,6 +142,8 @@ public class GameManager : MonoBehaviour
         if (IsGameOver) return;
 
         IsGameOver = true;
+        StopProgressGameRoutine();
+
         OnGameOver?.Invoke();
     }
     public void WinGame()
@@ -137,6 +154,8 @@ public class GameManager : MonoBehaviour
 
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
+
+        OnGameWon?.Invoke();
     }
 
     private void ForceRestart()
@@ -148,6 +167,8 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         if (!IsGameOver) return;
+
+        StopProgressGameRoutine();
 
         WaveManager.Instance.WipeLevel();
 
@@ -221,10 +242,24 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
-    #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-    #else
-        Application.Quit();
-    #endif
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
+    private void OnDestroy()
+    {
+        WaveManager.OnEnemyKilled -= UpdateActiveEnemies;
+        WaveManager.OnEnemySpawned -= UpdateActiveEnemies;
+        WaveManager.OnEnemyKilled -= IncreaseScore;
+        WaveManager.OnWaveFinished -= ProgressGame;
+
+        if (Playercontroller != null)
+            Playercontroller.OnPlayerDeath -= GameOver;
+
+        if (Instance == this)
+            Instance = null;
     }
 }
