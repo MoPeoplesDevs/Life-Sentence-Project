@@ -59,7 +59,6 @@ public class WaveManager : MonoBehaviour
             if (wave.waveNumber == waveNumber)
             {
                 finishedSpawning = false;
-
                 StartCoroutine(SpawnWaveRoutine(wave));
                 return;
             }
@@ -69,24 +68,31 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnWaveRoutine(WaveData wave)
     {
-        yield return new WaitForSeconds(wave.startDelay);
+        bool CanContinue()
+        {
+            if (GameManager.Instance.IsGameOver)
+                return false;
+
+            return true;
+        }
 
         foreach (SpawnGroup group in wave.spawnGroups)
         {
             for (int i = 0; i < group.count; i++)
             {
+                if (!CanContinue()) yield break;
+
                 GameObject prefabToSpawn = GetEnemyPrefab(group.enemyType);
+                if (prefabToSpawn == null) continue;
 
-                if (prefabToSpawn != null)
-                {
-                    Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-                    GameObject enemy = Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
-                    activeEnemies++;
-                    WaveEnemyTracker tracker = enemy.AddComponent<WaveEnemyTracker>();
-                    tracker.SetWaveManager(this);
+                Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
+                GameObject enemy = Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
 
-                    OnEnemySpawned?.Invoke(activeEnemies);
-                }
+                WaveEnemyTracker tracker = enemy.AddComponent<WaveEnemyTracker>();
+                tracker.SetWaveManager(this);
+
+                activeEnemies++;
+                OnEnemySpawned?.Invoke(activeEnemies);
 
                 yield return new WaitForSeconds(group.spawnInterval);
             }

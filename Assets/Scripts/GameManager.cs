@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using System.Collections;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -85,9 +86,23 @@ public class GameManager : MonoBehaviour
 
     private void ProgressGame()
     {
+        StartCoroutine(ProgressGameRoutine());
+    }
+
+    private IEnumerator ProgressGameRoutine()
+    {
+        if (IsGameOver) yield break;
+        if (WaveManager.Instance == null) yield break;
+
         Score++;
         WaveCount++;
+
         UpdateWaveCounter();
+
+        yield return new WaitForSeconds(1f);
+
+        if (IsGameOver) yield break;
+
         WaveManager.Instance.SpawnWave(WaveCount);
     }
 
@@ -123,6 +138,7 @@ public class GameManager : MonoBehaviour
 
         UpdateWaveCounter();
         OnGameRestarted?.Invoke();
+        WaveManager.Instance.SpawnWave(WaveCount);
     }
 
     public void TogglePause()

@@ -14,7 +14,6 @@ public class SpawnGroup
 public class WaveData
 {
     public int waveNumber;
-    public float startDelay;
     public SpawnGroup[] spawnGroups;
 }
 
