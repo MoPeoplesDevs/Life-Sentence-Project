@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ProgressGameRoutine()
     {
-        if (GameManager.Instance.IsGameOver) yield break;
+        if (IsGameOver) yield break;
         if (WaveManager.Instance == null) yield break;
 
         Score++;
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        if (GameManager.Instance.IsGameOver) yield break;
+        if (IsGameOver) yield break;
 
         WaveManager.Instance.SpawnWave(WaveCount);
     }
