@@ -16,6 +16,8 @@ public class Landmine : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		if (collision.transform.tag != "Player") return;
+		
 		if (hasExploded) return;
 		hasExploded = true;
 		mineButton.color = Color.black;

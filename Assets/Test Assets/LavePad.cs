@@ -9,6 +9,8 @@ public class LavePad : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+		if (collision.transform.tag != "Player") return;
+        
         IDamage damage = collision.GetComponent<IDamage>();
 
         if (damage != null )
@@ -20,6 +22,8 @@ public class LavePad : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+		if (collision.transform.tag != "Player") return;
+        
         IDamage damage = collision.GetComponent<IDamage>();
 
         if(damage != null )

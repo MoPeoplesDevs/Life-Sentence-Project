@@ -40,6 +40,9 @@ public class SpikeTrap : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+
+		if (collision.transform.tag != "Player") return;
+
 		IDamage dmgComponent = collision.GetComponent<IDamage>();
 		if (dmgComponent == null) return;
 

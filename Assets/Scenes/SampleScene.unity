@@ -3098,7 +3098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Playercontroller
   playerCam: {fileID: 824360706}
   playerSpeed: 5
-  playerHP: 1
+  playerHP: 100
   evadeSpeed: 2
   evadeTime: 0.5
   evadeCooldown: 2

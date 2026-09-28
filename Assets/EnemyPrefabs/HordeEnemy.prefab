@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HordeEnemyDamage
   damage: 1
+  damageCooldown: 1
 --- !u!114 &1290498795438194116
 MonoBehaviour:
   m_ObjectHideFlags: 0
