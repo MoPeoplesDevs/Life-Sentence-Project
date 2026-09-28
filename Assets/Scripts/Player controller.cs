@@ -55,6 +55,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.IsGameOver) return;
 
         if(isDead != false)
         {
