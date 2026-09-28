@@ -55,7 +55,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.IsGameOver) return;
 
         if(isDead != false)
         {
@@ -64,6 +63,8 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         } else
             loseMenu.SetActive(false);
 
+        if (GameManager.Instance.IsGameOver) return;
+        
         Movement();
         TurnPlayer();
 		RenderCamera();
