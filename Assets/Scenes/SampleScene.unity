@@ -1538,8 +1538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadab85d82ce89a4cb5ccb3f07d901bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LavePad
-  dmgOverTime: 5
-  burnDamage: 1
+  dmgOverTime: 1
+  burnDamage: 5
 --- !u!4 &136094304
 Transform:
   m_ObjectHideFlags: 0
@@ -6516,8 +6516,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadab85d82ce89a4cb5ccb3f07d901bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LavePad
-  dmgOverTime: 5
-  burnDamage: 1
+  dmgOverTime: 1
+  burnDamage: 5
 --- !u!4 &757771735
 Transform:
   m_ObjectHideFlags: 0
@@ -22262,8 +22262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadab85d82ce89a4cb5ccb3f07d901bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LavePad
-  dmgOverTime: 5
-  burnDamage: 1
+  dmgOverTime: 1
+  burnDamage: 5
 --- !u!4 &1274878750
 Transform:
   m_ObjectHideFlags: 0
@@ -23415,8 +23415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aadab85d82ce89a4cb5ccb3f07d901bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LavePad
-  dmgOverTime: 5
-  burnDamage: 1
+  dmgOverTime: 1
+  burnDamage: 5
 --- !u!4 &1522971603
 Transform:
   m_ObjectHideFlags: 0
