@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public event Action OnGamePaused;
     public event Action OnGameResumed;
     public event Action OnGameRestarted;
+    public event Action OnGameExit;
 
     private void Awake()
     {
@@ -44,10 +45,14 @@ public class GameManager : MonoBehaviour
         creditsMenu.SetActive(false);
 
         loseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
+        loseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
         pauseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ForceRestart);
         pauseMenu.transform.Find("Continue").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(TogglePause);
         pauseMenu.transform.Find("Credits").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ToggleCredits);
+        pauseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
 
+        OnGameExit += QuitGame;
+        
         WaveManager.OnEnemyKilled += UpdateActiveEnemies;
         WaveManager.OnEnemySpawned += UpdateActiveEnemies;
 
@@ -171,5 +176,19 @@ public class GameManager : MonoBehaviour
     private void UpdateActiveEnemies(int activeEnemies)
     {
         enemyCounter.text = $"{activeEnemies}";
+    }
+
+    public void Exit()
+    {
+        OnGameExit?.Invoke();
+    }
+
+    public void QuitGame()
+    {
+    #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+    #else
+        Application.Quit();
+    #endif
     }
 }
