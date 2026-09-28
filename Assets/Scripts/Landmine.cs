@@ -12,6 +12,8 @@ public class Landmine : MonoBehaviour
 	{
 		mineButton = transform.Find("Button").GetComponent<SpriteRenderer>();
 		nextFlip = Time.time + 1f;
+
+		GameManager.Instance.OnGameRestarted += Reset;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -36,5 +38,10 @@ public class Landmine : MonoBehaviour
 			mineButton.color = mineButton.color == Color.red ? Color.white : Color.red;
 			nextFlip = Time.time + 1f;
 		}
+	}
+
+	private void Reset()
+	{
+		hasExploded = false;
 	}
 }
