@@ -63,6 +63,8 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         } else
             loseMenu.SetActive(false);
 
+        if (GameManager.Instance.IsGameOver) return;
+        
         Movement();
         TurnPlayer();
 		RenderCamera();

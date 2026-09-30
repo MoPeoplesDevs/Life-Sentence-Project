@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
         Score++;
         WaveCount++;
 
-        if(WaveCount > 1)
+        if(WaveCount > 5)
         {
             WinGame();
             yield break;
