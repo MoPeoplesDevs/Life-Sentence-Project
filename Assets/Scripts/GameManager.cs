@@ -6,10 +6,16 @@ using UnityEngine.UI;
 using UnityEngine.UIElements;
 using System.Collections;
 using TMPro;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+
+    [SerializeField] private Tilemap wallTiles;
+    [SerializeField] private Tilemap doorTiles;
+    [SerializeField] private Tilemap groundTiles;
+    [SerializeField] private LayerMask trapMask;
 
     [SerializeField] private GameObject loseMenu;
     [SerializeField] private GameObject winMenu;
@@ -45,18 +51,27 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        pauseMenu.SetActive(false);
+        //
+        if (groundTiles != null)
+            Pathfinder.Initialize(groundTiles, trapMask, wallTiles, doorTiles);
+
+        //
         creditsMenu.SetActive(false);
         winMenu.SetActive(false);
 
         winMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
         loseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
-        pauseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
         winMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
         loseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
-        pauseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ForceRestart);
-        pauseMenu.transform.Find("Continue").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(TogglePause);
-        pauseMenu.transform.Find("Credits").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ToggleCredits);
+
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(false);
+            pauseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
+            pauseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ForceRestart);
+            pauseMenu.transform.Find("Continue").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(TogglePause);
+            pauseMenu.transform.Find("Credits").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ToggleCredits);
+        }
 
         OnGameExit += QuitGame;
         
