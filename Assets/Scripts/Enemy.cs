@@ -1,14 +1,18 @@
 using UnityEngine;
+using Unity.Collections;
+using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour
 {
+	[SerializeField] LayerMask ignoreRaycastLayer;
     [Range(1, 10)][SerializeField] float SPEED;
 
     private Transform player;
     private Rigidbody2D rigidBody;
     private CircleCollider2D collider;
 
+    private float nextStuckCheck = 0f;
     private Memory enemyMemory = new Memory();
     private PathState pathState = new PathState();
 
@@ -31,6 +35,45 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        Move();
+    }
+
+    //
+    private void Move()
+    {
+        if (GameManager.Instance.IsGameOver) return;
+        if (buttonFunctions.Instance.IsPaused) return;
+
+        Vector3 movementDir = new Vector3(0, 0, 0);
+
+        // Can we see the player?
+        Vector3 dir = (player.position - transform.position).normalized;
+
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(~ignoreRaycastLayer);
+        filter.useTriggers = false;
+
+        Vector2 origin = transform.position;
+        Vector2 direction = new Vector2(dir.x, dir.y);
+
+        RaycastHit2D[] results = new RaycastHit2D[10];
+        int hitCount = Physics2D.Raycast(origin, direction, filter, results, 15f);
+
+        if (hitCount > 0)
+        {
+            RaycastHit2D hit = results[0];
+            if (hit.transform.gameObject == player.gameObject)
+            {
+                movementDir = dir;
+                pathState.path = null;
+                Debug.Log("Going straight for the player!");
+            }
+            else
+            {
+                Debug.Log(hit.transform.gameObject.name);
+            }
+        } 
+
         if (pathState.path == null)
             GetPath();
         else
@@ -46,21 +89,49 @@ public class Enemy : MonoBehaviour
                 Vector3 newTarget = pathState.path[pathState.index];
                 Vector3 difference = (newTarget - transform.position);
 
-                rigidBody.linearVelocity = difference.normalized * SPEED;
-                
+                movementDir = difference.normalized;
+
                 // Should we increase to the next index?
-                if (difference.magnitude < 0.1f)
+                if (difference.magnitude < 1f)
                     pathState.index++;
             }
             else
-            {
-                Debug.Log("Out of path!");
                 pathState.path = null;
-            }
         }
+
+        // Needs a nudge?
+        if (Time.time >= nextStuckCheck)
+        {
+            if (movementDir.magnitude > 0.1f && (enemyMemory.myPreviousPosition - transform.position).magnitude < 0.25f)
+            {
+                enemyMemory.stuckCounter++;
+
+                if (enemyMemory.stuckCounter >= 2)
+                {
+                    Debug.Log("We are stuck!");
+
+                    enemyMemory.stuckCounter = 0;
+
+                    Vector2 perpendicular = new Vector2(-movementDir.y, movementDir.x);
+
+                    if (Random.value > 0.5f)
+                        perpendicular = -perpendicular;
+
+                    movementDir = (movementDir + (Vector3)perpendicular).normalized;
+                }
+            }
+            else
+                enemyMemory.stuckCounter = 0;
+
+            enemyMemory.myPreviousPosition = transform.position;
+            nextStuckCheck = Time.time + 0.25f;
+        }
+
+        // Set velocity
+        rigidBody.linearVelocity = movementDir * SPEED;
+        enemyMemory.myPreviousPosition = transform.position;
     }
 
-    //
     private void GetPath()
     {
         enemyMemory.lastKnownLocation = player.position;
@@ -104,7 +175,7 @@ public class Enemy : MonoBehaviour
             Object.Destroy(sphere, 0.05f);
         }
     }
-    */
+    /**/
 
     //
     private class PathState
@@ -120,6 +191,8 @@ public class Enemy : MonoBehaviour
 
     private class Memory
     {
+        public int stuckCounter = 0;
         public Vector3 lastKnownLocation;
+        public Vector3 myPreviousPosition;
     }
 }

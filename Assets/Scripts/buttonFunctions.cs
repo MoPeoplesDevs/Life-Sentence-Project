@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
+    public static buttonFunctions Instance { get; private set; }
+
     [SerializeField] private GameObject loseMenu;
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject pauseMenu;
@@ -16,6 +18,15 @@ public class buttonFunctions : MonoBehaviour
     [SerializeField] private Playercontroller Playercontroller;
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
         Playercontroller = FindAnyObjectByType<Playercontroller>();
 
         if (GameManager.Instance != null)
@@ -50,11 +61,11 @@ public class buttonFunctions : MonoBehaviour
 
     public void QuitGame()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
             Application.Quit();
-#endif
+        #endif
     }
 
     public void Resume()
