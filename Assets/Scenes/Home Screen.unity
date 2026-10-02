@@ -440,7 +440,8 @@ MonoBehaviour:
   loseMenu: {fileID: 0}
   winMenu: {fileID: 0}
   pauseMenu: {fileID: 0}
-  creditsMenu: {fileID: 0}
+  creditsMenu: {fileID: 1032089890}
+  Playercontroller: {fileID: 0}
 --- !u!1 &1032089890
 GameObject:
   m_ObjectHideFlags: 0

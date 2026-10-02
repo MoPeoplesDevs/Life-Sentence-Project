@@ -17,7 +17,11 @@ public class buttonFunctions : MonoBehaviour
     private void Awake()
     {
         Playercontroller = FindAnyObjectByType<Playercontroller>();
-        GameManager.Instance.OnGameWon += ShowWinMenu;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameWon += ShowWinMenu;
+        }
     
     }
     private void Update()
