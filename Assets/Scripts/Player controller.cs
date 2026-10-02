@@ -28,6 +28,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
     [SerializeField] GameObject loseMenu;
+    [SerializeField] private buttonFunctions buttons;
 
     int playerMaxHP = 100;
 
@@ -206,7 +207,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void Shoot()
     {
-        if (GameManager.Instance.IsPaused || GameManager.Instance.IsGameOver) return;
+        if (buttons.IsPaused || GameManager.Instance.IsGameOver) return;
         if(Mouse.current.leftButton.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.rightTrigger.wasPressedThisFrame)
         {
             Instantiate(bullet, firePoint.position, transform.rotation);

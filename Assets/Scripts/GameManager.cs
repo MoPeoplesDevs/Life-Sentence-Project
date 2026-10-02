@@ -17,26 +17,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Tilemap groundTiles;
     [SerializeField] private LayerMask trapMask;
 
-    [SerializeField] private GameObject loseMenu;
-    [SerializeField] private GameObject winMenu;
-    [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private GameObject creditsMenu;
-
     [SerializeField] private TMP_Text waveCounter;
     [SerializeField] private TMP_Text enemyCounter;
 
     private Coroutine progressGameRoutine;
     private Playercontroller Playercontroller;
 
-    public bool IsGameOver { get; private set; }
-    public bool IsPaused { get; private set; }
-    public int Score { get; private set; }
-    public int WaveCount { get; private set; }
+    public bool IsGameOver { get; set; }
+    public int Score { get; set; }
+    public int WaveCount { get; set; }
 
     public event Action OnGameOver;
-    public event Action OnGamePaused;
-    public event Action OnGameResumed;
-    public event Action OnGameRestarted;
     public event Action OnGameExit;
     public event Action OnGameWon;
 
@@ -51,29 +42,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        //
         if (groundTiles != null)
             Pathfinder.Initialize(groundTiles, trapMask, wallTiles, doorTiles);
-
-        //
-        creditsMenu.SetActive(false);
-        winMenu.SetActive(false);
-
-        winMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
-        loseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
-        winMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
-        loseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Restart);
-
-        if (pauseMenu != null)
-        {
-            pauseMenu.SetActive(false);
-            pauseMenu.transform.Find("Exit").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(Exit);
-            pauseMenu.transform.Find("Restart").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ForceRestart);
-            pauseMenu.transform.Find("Continue").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(TogglePause);
-            pauseMenu.transform.Find("Credits").GetComponent<UnityEngine.UI.Button>().onClick.AddListener(ToggleCredits);
-        }
-
-        OnGameExit += QuitGame;
         
         WaveManager.OnEnemyKilled += UpdateActiveEnemies;
         WaveManager.OnEnemySpawned += UpdateActiveEnemies;
@@ -91,18 +61,6 @@ public class GameManager : MonoBehaviour
         WaveCount = 1;
         UpdateWaveCounter();
         WaveManager.Instance.SpawnWave(WaveCount);
-    }
-
-    private void Update()
-    {
-        if (creditsMenu.activeInHierarchy && Keyboard.current.anyKey.wasPressedThisFrame)
-        {
-            creditsMenu.SetActive(false);
-            pauseMenu.SetActive(true);
-        }
-
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
-            TogglePause();
     }
 
     private void ProgressGame()
@@ -139,7 +97,7 @@ public class GameManager : MonoBehaviour
         progressGameRoutine = null;
     }
 
-    private void StopProgressGameRoutine()
+    public void StopProgressGameRoutine()
     {
         if (progressGameRoutine == null) return;
 
@@ -164,7 +122,6 @@ public class GameManager : MonoBehaviour
     public void WinGame()
     {
         GameOver();
-        winMenu.SetActive(true);
 
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -172,81 +129,7 @@ public class GameManager : MonoBehaviour
         OnGameWon?.Invoke();
     }
 
-    private void ForceRestart()
-    {
-        IsGameOver = true;
-        Restart();
-    }
-
-    public void Restart()
-    {
-        if (!IsGameOver) return;
-
-        StopProgressGameRoutine();
-
-        WaveManager.Instance.WipeLevel();
-
-        Score = 0;
-        WaveCount = 1;
-        IsGameOver = false;
-
-        Playercontroller.Respawn();
-        UpdateWaveCounter();
-        OnGameRestarted?.Invoke();
-
-        winMenu.SetActive(false);
-        loseMenu.SetActive(false);
-        pauseMenu.SetActive(false);
-
-        WaveManager.Instance.SpawnWave(WaveCount);
-    }
-
-    public void TogglePause()
-    {
-        UnityEngine.Cursor.visible = !IsPaused;
-        UnityEngine.Cursor.lockState = !IsPaused ? CursorLockMode.None : CursorLockMode.Confined;
-        
-        if (IsPaused)
-            Resume();
-        else
-            Pause();
-    }
-
-    public void ToggleCredits()
-    {
-        bool isActive = creditsMenu.activeInHierarchy;
-        if (!isActive)
-            pauseMenu.SetActive(false);
-        creditsMenu.SetActive(!isActive);
-    }
-
-    public void Pause()
-    {
-        if (IsPaused || IsGameOver) return;
-
-        IsPaused = true;
-        Time.timeScale = 0f;
-
-        pauseMenu.SetActive(true);
-
-        OnGamePaused?.Invoke();
-    }
-
-    public void Resume()
-    {
-        if (!IsPaused) return;
-
-        IsPaused = false;
-        Time.timeScale = 1f;
-
-        winMenu.SetActive(false);
-        loseMenu.SetActive(false);
-        pauseMenu.SetActive(false);
-
-        OnGameResumed?.Invoke();
-    }
-
-    private void UpdateWaveCounter()
+    public void UpdateWaveCounter()
     {
         waveCounter.text = $"Wave: {WaveCount}";
     }
@@ -254,25 +137,6 @@ public class GameManager : MonoBehaviour
     private void UpdateActiveEnemies(int activeEnemies)
     {
         enemyCounter.text = $"{activeEnemies}";
-    }
-
-    public void Exit()
-    {
-        OnGameExit?.Invoke();
-    }
-
-    public void QuitGame()
-    {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
-    }
-
-    public void Play()
-    {
-        SceneManager.LoadScene(1);
     }
 
     private void OnDestroy()

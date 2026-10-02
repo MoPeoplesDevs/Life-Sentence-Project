@@ -18,14 +18,18 @@ public class Landmine : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.OnGameRestarted += Reset;
+        buttonFunctions buttons = FindAnyObjectByType<buttonFunctions>();
+
+        if (buttons != null)
+            buttons.OnGameRestarted += Reset;
     }
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
-            GameManager.Instance.OnGameRestarted -= Reset;
+        buttonFunctions buttons = FindAnyObjectByType<buttonFunctions>();
+
+        if (buttons != null)
+            buttons.OnGameRestarted -= Reset;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
