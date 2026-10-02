@@ -66,11 +66,6 @@ public class Enemy : MonoBehaviour
             {
                 movementDir = dir;
                 pathState.path = null;
-                Debug.Log("Going straight for the player!");
-            }
-            else
-            {
-                Debug.Log(hit.transform.gameObject.name);
             }
         } 
 
