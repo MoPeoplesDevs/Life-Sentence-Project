@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5443082771961822491}
   - component: {fileID: 8468696511038541138}
   m_Layer: 8
-  m_Name: Fill
+  m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.5}
-  m_SizeDelta: {x: 50, y: 35}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 60, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5443082771961822491
 CanvasRenderer:
@@ -58,14 +58,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8731389, b: 0, a: 1}
+  m_Color: {r: 0.07136887, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -8852995704630408839, guid: 0531d85c9568a9944ace4b1c742cee22, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -109,8 +109,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.5}
-  m_SizeDelta: {x: 50, y: 35}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 60, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5067415642204885687
 CanvasRenderer:
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: -8852995704630408839, guid: 0531d85c9568a9944ace4b1c742cee22, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 7606361464687569450}
   - component: {fileID: 7018652932268981924}
   m_Layer: 8
-  m_Name: EnemyHelathBar
+  m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,12 +263,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 750524593705385903}
-  - component: {fileID: 4868593089782661566}
-  - component: {fileID: 1290498795438194116}
-  - component: {fileID: 7765282971711084623}
   - component: {fileID: 2498122803468583800}
   - component: {fileID: 4010181217717455049}
-  - component: {fileID: 7837661789972295356}
+  - component: {fileID: 1064425007889507293}
+  - component: {fileID: 8270126082580715371}
   m_Layer: 8
   m_Name: HordeEnemy
   m_TagString: Untagged
@@ -292,48 +290,6 @@ Transform:
   - {fileID: 1607688061372277715}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4868593089782661566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4636200690292352861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aa26c97b0c376446ac05258235f9e84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HordeEnemyDamage
-  damage: 1
-  damageCooldown: 1
---- !u!114 &1290498795438194116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4636200690292352861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25996a9f5479f6d49ad38d9d13470b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HordeEnemyMovement
-  speed: 3
-  player: {fileID: 0}
---- !u!114 &7765282971711084623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4636200690292352861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fbb4b9cdf7a81140810fb9c18135043, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  enemyHP: 35
-  healthBar: {fileID: 8468696511038541138}
 --- !u!212 &2498122803468583800
 SpriteRenderer:
   serializedVersion: 3
@@ -384,7 +340,7 @@ SpriteRenderer:
   m_SortingOrder: 8
   m_MaskInteraction: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.9622642, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.5801887, g: 0.90029454, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -421,8 +377,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &7837661789972295356
-CapsuleCollider2D:
+--- !u!114 &1064425007889507293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4636200690292352861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8ac5516ec6b014783164f1ca11299d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Horde
+  MAX_HEALTH: 35
+  SPEED: 4.5
+  ignoreRaycastLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  lastKnownLocation: {x: 0, y: 0, z: 0}
+  damage: 5
+  damageCooldown: 1
+--- !u!58 &8270126082580715371
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -456,5 +432,4 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
+  m_Radius: 0.5

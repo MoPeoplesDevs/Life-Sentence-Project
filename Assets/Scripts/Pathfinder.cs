@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public static class Pathfinder
 {
-	private static LayerMask obstacleLayer;
 	private static Tilemap groundTilemap;
+	private static LayerMask obstacleLayer;
 	private static Tilemap[] obstacleTilemaps;
 
 	public static void Initialize(Tilemap ground, LayerMask obstaclesLayer, params Tilemap[] obstacles)
@@ -45,10 +45,8 @@ public static class Pathfinder
 			Node current = open[0];
 
 			for (int i = 1; i < open.Count; i++)
-			{
 				if (open[i].FCost < current.FCost || open[i].FCost == current.FCost && open[i].HCost < current.HCost)
 					current = open[i];
-			}
 
 			open.Remove(current);
 			closed.Add(current.Position);
@@ -116,10 +114,8 @@ public static class Pathfinder
 		if (!groundTilemap.HasTile(cell)) return false;
 
 		foreach (Tilemap tilemap in obstacleTilemaps)
-		{
 			if (tilemap != null && tilemap.HasTile(cell))
 				return false;
-		}
 
 		Vector3 center = groundTilemap.GetCellCenterWorld(cell);
 
@@ -133,8 +129,9 @@ public static class Pathfinder
 
 		public int GCost;
 		public int HCost;
+		public int NearWallCost = 0;
 
-		public int FCost => GCost + HCost;
+		public int FCost => GCost + HCost + NearWallCost;
 
 		public Node(Vector3Int position, Node parent, int gCost, int hCost)
 		{
