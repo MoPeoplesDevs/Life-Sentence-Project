@@ -30,6 +30,12 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [SerializeField] GameObject loseMenu;
     [SerializeField] private buttonFunctions buttons;
 
+
+
+  
+
+  
+
     int playerMaxHP = 100;
 
     Vector2 playerInput;
@@ -43,6 +49,8 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     [SerializeField] private Image healthBar;
     [SerializeField] private TMP_Text healthText;
+
+   
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -273,4 +281,11 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         healthBar.fillAmount = (float)playerHP / playerMaxHP;
         healthText.text = $"Health: {playerHP}";
     }
+
+    public void UseWeapon()
+    {
+        Shoot();
+    }
+
+  
 }
