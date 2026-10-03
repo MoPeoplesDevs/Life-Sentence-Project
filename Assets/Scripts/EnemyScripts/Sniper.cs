@@ -4,7 +4,7 @@ public class Sniper : Enemy
 {
     void Update()
     {
-        if (GameManager.Instance.IsGameOver || buttonFunctions.Instance.IsPaused) return;
+        if (GameManager.Instance.IsGameOver || buttonFunctions.IsPaused) return;
 
         Vector3 toPlayer = (player.position - transform.position).normalized;
         if (!CanSeePlayer(toPlayer))
