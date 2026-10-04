@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Tilemap doorTiles;
     [SerializeField] private Tilemap groundTiles;
     [SerializeField] private LayerMask trapMask;
-
     [SerializeField] private TMP_Text waveCounter;
     [SerializeField] private TMP_Text enemyCounter;
 
