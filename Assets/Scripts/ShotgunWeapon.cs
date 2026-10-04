@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ShotgunWeapon : MonoBehaviour
 {
@@ -34,14 +35,14 @@ public class ShotgunWeapon : MonoBehaviour
         {
             return;
         }
-        if (Input.GetMouseButton(0) && Time.time >= nextFireTime)
+        if (Mouse.current.leftButton.isPressed && Time.time >= nextFireTime)
         {
             nextFireTime = Time.time + (1f / fireRate);
             Shoot();
         }
     }
 
-    private void Shoot()
+    public void Shoot()
     {
         Debug.Log("SHOTGUN SHOOTING: " + bulletCount + " bullets");
 

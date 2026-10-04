@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngineInternal;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class Playercontroller : MonoBehaviour, IHeal, IDamage
 {
@@ -14,27 +15,25 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [Range(0, 100)][SerializeField] int playerHP;
     [Range(2, 4)][SerializeField] float evadeSpeed;
     [Range(0, 5)][SerializeField] float evadeTime;
-    [Range(1, 5)] [SerializeField] float evadeCooldown;
+    [Range(1, 5)][SerializeField] float evadeCooldown;
     float evadeDuration;
     float evadeCooldownTimer;
     float deathRotation;
-    [SerializeField]float spinSpeed;
+    [SerializeField] float spinSpeed;
 
     bool isEvading;
     bool isInvincible;
     bool isDead;
     bool usingController;
 
+    private List<GameObject> weaponInventory = new List<GameObject>();
+    private int currentWeapon;
+
+    [SerializeField] GameObject startingWeapon;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
     [SerializeField] GameObject loseMenu;
     [SerializeField] private buttonFunctions buttons;
-
-
-
-  
-
-  
 
     int playerMaxHP = 100;
 
@@ -59,6 +58,8 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         rb = GetComponent<Rigidbody2D>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+
+        AddeWeapon(startingWeapon);
     }
 
     // Update is called once per frame
@@ -77,8 +78,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         Movement();
         TurnPlayer();
 		RenderCamera();
-        Shoot();
         Evade();
+        SwitchWeapon();
+        UseWeapon();
 	}
 
     public void Respawn()
@@ -284,7 +286,53 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     public void UseWeapon()
     {
-        Shoot();
+        if(currentWeapon == 0)
+        {
+            Shoot();
+        }
+    }
+
+    public void AddeWeapon(GameObject weapon)
+    {
+        if(!weaponInventory.Contains(weapon))
+        {
+            weaponInventory.Add(weapon);
+
+            if (weaponInventory.Count == 1)
+            {
+                currentWeapon = 0;
+            }
+
+        }
+    }
+
+    private void SwitchWeapon()
+    {
+        if(Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            currentWeapon++;
+
+            if(currentWeapon >= weaponInventory.Count)
+            {
+                currentWeapon = 0;
+            }
+        }
+
+        for (int i = 0; i < weaponInventory.Count; i++)
+            {
+                if(i == currentWeapon)
+                {
+                    weaponInventory[i].SetActive(true);
+
+                }
+                else
+                {
+                    weaponInventory[i].SetActive(false);
+
+                }   
+
+            }
+
     }
 
   

@@ -21,7 +21,7 @@ public class Shotgun : MonoBehaviour, IPickup
 
     private void GiveToPlayer(Playercontroller player)
     {
-        ShotgunWeapon shotgun = player.GetComponent<ShotgunWeapon>();
+        ShotgunWeapon shotgun = GetComponent<ShotgunWeapon>();
 
         if (shotgun != null)
         {
@@ -29,7 +29,13 @@ public class Shotgun : MonoBehaviour, IPickup
             shotgun.enabled = true;
         }
 
-        Destroy(gameObject);
+        player.AddeWeapon(gameObject);
+
+        transform.SetParent(player.transform);
+        transform.localPosition = new Vector3(0, 0.736f, 0);
+        transform.localRotation = Quaternion.Euler(0, 0, 90);
+
+        GetComponent<Collider2D>().enabled = false;
     }
 
 
