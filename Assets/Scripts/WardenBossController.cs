@@ -49,9 +49,21 @@ public class WardenBossController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        bossHealth = GetComponent<BossHealth>();
 
-        bossHealth.OnPhaseTwo += EnterPhaseTwo;
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+
+        if (bossHealth != null)
+        {
+            bossHealth.OnPhaseTwo += EnterPhaseTwo;
+        }
+
+
     }
 
     void OnDestroy()
