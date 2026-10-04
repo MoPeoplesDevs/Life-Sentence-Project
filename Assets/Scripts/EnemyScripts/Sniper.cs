@@ -2,46 +2,31 @@ using UnityEngine;
 
 public class Sniper : Enemy
 {
+    [SerializeField] EnemyProjectile projectilePrefab;
+    [SerializeField] float fireRate = 1f;
+    [SerializeField] float projectileSpeed = 6f;
+    [SerializeField] int projectileDamage = 10;
+
+    private float lastAttack;
+
     void Update()
     {
         if (GameManager.Instance.IsGameOver || buttonFunctions.IsPaused) return;
 
-        Vector3 toPlayer = (player.position - transform.position).normalized;
-        if (!CanSeePlayer(toPlayer))
-            Move();
-        else
-        {
-            Debug.Log("I can see the player!");
-        }
+        Vector3 dir = (player.position - transform.position).normalized;
+        
+        if (CanSeePlayer(dir))
+            Shoot(dir);
     }
 
-    protected override void Move()
+    private void Shoot(Vector3 plrDirection)
     {
-        Vector3 movementDir = new Vector3(0, 0, 0);
+        if (Time.time - lastAttack < fireRate) return;
+        lastAttack = Time.time;
 
-        if (pathState.path == null)
-            Debug.Log("Get path to somewhere that can see the player");
-            // GetPath();
-        else
-        {
-            // VisualizePath();
-
-            if (pathState.index < pathState.path.Count)
-            {
-                Vector3 newTarget = pathState.path[pathState.index];
-                Vector3 difference = (newTarget - transform.position);
-
-                movementDir = difference.normalized;
-
-                // Should we increase to the next index?
-                if (difference.magnitude < 1f)
-                    pathState.index++;
-            }
-            else
-                pathState.path = null;
-        }
-
-        // Set velocity
-        rigidBody.linearVelocity = movementDir * SPEED;
+        EnemyProjectile projectile = Instantiate(
+            projectilePrefab, transform.position + (transform.forward * 2), Quaternion.identity
+        );
+        projectile.Initialize(plrDirection, projectileSpeed, projectileDamage);
     }
 }

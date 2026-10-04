@@ -42,20 +42,9 @@ public class Horde : Enemy
                 if (lastKnownLocation != null && (lastKnownLocation - player.position).magnitude > 5)
                     GetPathToPlayer();
 
-                // VisualizePath();
+                movementDir = GetMovementDirectionFromPath();
 
-                if (pathState.index < pathState.path.Count)
-                {
-                    Vector3 newTarget = pathState.path[pathState.index];
-                    Vector3 difference = (newTarget - transform.position);
-
-                    movementDir = difference.normalized;
-
-                    // Should we increase to the next index?
-                    if (difference.magnitude < 1f)
-                        pathState.index++;
-                }
-                else
+                if (movementDir == new Vector3(0, 0, 0)) // Reset the path if we get nothing...
                     pathState.path = null;
             }
         }

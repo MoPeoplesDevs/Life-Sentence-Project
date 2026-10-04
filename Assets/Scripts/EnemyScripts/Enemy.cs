@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour, IDamage
     [SerializeField] protected int MAX_HEALTH;
     [Range(1, 10)][SerializeField] public float SPEED;
 	[SerializeField] public LayerMask ignoreRaycastLayer;
+    [SerializeField] public DamageIndicator dmgIndicatorPrefab;
 
     protected int health;
     protected Image healthBar;
@@ -19,7 +20,7 @@ public class Enemy : MonoBehaviour, IDamage
     protected CircleCollider2D collider;
 
     protected PathState pathState = new PathState();
-    // protected LineRenderer pathRenderer;
+    protected LineRenderer pathRenderer;
 
     public Vector3 lastKnownLocation;
     private Coroutine healthBarTween;
@@ -37,13 +38,13 @@ public class Enemy : MonoBehaviour, IDamage
         health = MAX_HEALTH;
         healthBar = this.gameObject.transform.Find("Health").transform.Find("Bar").GetComponent<Image>();
 
-        // pathRenderer = gameObject.AddComponent<LineRenderer>();
-        // pathRenderer.startWidth = 0.08f;
-        // pathRenderer.endWidth = 0.08f;
-        // pathRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        // pathRenderer.startColor = Color.green;
-        // pathRenderer.endColor = Color.green;
-        // pathRenderer.sortingOrder = 100;
+        pathRenderer = gameObject.AddComponent<LineRenderer>();
+        pathRenderer.startWidth = 0.08f;
+        pathRenderer.endWidth = 0.08f;
+        pathRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        pathRenderer.startColor = Color.green;
+        pathRenderer.endColor = Color.green;
+        pathRenderer.sortingOrder = 100;
     }
 
     void Update()
@@ -61,9 +62,18 @@ public class Enemy : MonoBehaviour, IDamage
             StopCoroutine(healthBarTween);
 
         healthBarTween = StartCoroutine(TweenHealthBar(targetAlpha, 0.25f));
+        
+        ShowDamageIndicator(damage);
 
         if (health <= 0)
             Destroy(gameObject);
+    }
+
+    private void ShowDamageIndicator(int damage)
+    {
+        Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), 0.15f, 0);
+        DamageIndicator indicator = Instantiate(dmgIndicatorPrefab, transform.position + offset, Quaternion.identity);
+        indicator.Show(damage);
     }
 
     private IEnumerator TweenHealthBar(float target, float tweenTime)
@@ -96,25 +106,47 @@ public class Enemy : MonoBehaviour, IDamage
         pathState.path = Pathfinder.Pathfind(transform.position, player.position, collider.radius + 0.25f);
     }
 
-    protected bool CanSeePlayer(Vector3 dir)
+    protected bool CanSeePlayer(Vector3 dir, float distance = 15f)
     {
         ContactFilter2D filter = new ContactFilter2D();
         filter.SetLayerMask(~ignoreRaycastLayer);
         filter.useTriggers = false;
 
-        Vector2 origin = transform.position;
-        Vector2 direction = new Vector2(dir.x, dir.y);
-
         RaycastHit2D[] results = new RaycastHit2D[10];
-        int hitCount = Physics2D.Raycast(origin, direction, filter, results, 15f);
+        int hitCount = Physics2D.Raycast(transform.position, new Vector2(dir.x, dir.y), filter, results, distance);
 
         if (hitCount > 0)
         {
             RaycastHit2D hit = results[0];
+            if (hit.transform.gameObject == transform.gameObject)
+            {
+                if (results.Length > 1)
+                    hit = results[1];
+                else
+                    return false;
+            }
+
+            if (hit == null) return false;
             if (hit.transform.gameObject == player.gameObject)
                 return true;
-        } 
+        }
         return false;
+    }
+
+    protected Vector3 GetMovementDirectionFromPath()
+    {
+        if (pathState.index < pathState.path.Count)
+        {
+            Vector3 newTarget = pathState.path[pathState.index];
+            Vector3 difference = (newTarget - transform.position);
+
+            // Should we increase to the next index?
+            if (difference.magnitude < 1f)
+                pathState.index++;
+
+            return difference.normalized;
+        }
+        return new Vector3(0, 0, 0);
     }
 
     /*

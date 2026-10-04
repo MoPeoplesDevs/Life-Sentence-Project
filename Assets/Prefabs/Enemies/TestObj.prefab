@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7431068368932451772}
   m_Layer: 8
   m_Name: TestObj
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8ac5516ec6b014783164f1ca11299d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Horde
+  MAX_HEALTH: 0
   SPEED: 3
   ignoreRaycastLayer:
     serializedVersion: 2

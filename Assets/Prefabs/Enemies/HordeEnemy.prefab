@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 8270126082580715371}
   m_Layer: 8
   m_Name: HordeEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -389,11 +389,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce8ac5516ec6b014783164f1ca11299d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Horde
-  MAX_HEALTH: 35
+  MAX_HEALTH: 10
   SPEED: 4.5
   ignoreRaycastLayer:
     serializedVersion: 2
     m_Bits: 256
+  dmgIndicatorPrefab: {fileID: -3661789217590035035, guid: 86a41ee43826eee4daa9b8c1d42b2db6, type: 3}
   lastKnownLocation: {x: 0, y: 0, z: 0}
   damage: 5
   damageCooldown: 1
