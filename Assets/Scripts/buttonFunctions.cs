@@ -62,6 +62,9 @@ public class buttonFunctions : MonoBehaviour
         IsPaused = false;
         Time.timeScale = 1f;
 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+
         winMenu.SetActive(false);
         loseMenu.SetActive(false);
         pauseMenu.SetActive(false);
