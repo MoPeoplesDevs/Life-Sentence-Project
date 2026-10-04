@@ -3277,87 +3277,6 @@ Transform:
   - {fileID: 717588135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &423604740
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8344796176209473737, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 990450899}
-    - target: {fileID: -8344796176209473737, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: guardPrefab
-      value: 
-      objectReference: {fileID: 7239499321924668746, guid: 243147e23690eb44b93cab8f6789b959, type: 3}
-    - target: {fileID: -8344796176209473737, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: guardSpawnPoints.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8344796176209473737, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: 'guardSpawnPoints.Array.data[0]'
-      value: 
-      objectReference: {fileID: 1170909043}
-    - target: {fileID: -8344796176209473737, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: 'guardSpawnPoints.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1683976988}
-    - target: {fileID: -8344796176209473737, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: 'guardSpawnPoints.Array.data[2]'
-      value: 
-      objectReference: {fileID: 578054765}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 7.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 6.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4865820463175617488, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
-      propertyPath: m_Name
-      value: TestWarden
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
 --- !u!1 &425846234
 GameObject:
   m_ObjectHideFlags: 0
@@ -8095,11 +8014,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f29c86427168049bc216e75ff65944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunWeapon
-  bulletCount: 10
-  damage: 3
-  bulletSpread: 45
-  bulletSpeed: 1
-  fireRate: 1
+  bulletCount: 7
+  damage: 1
+  bulletSpread: 30
+  bulletSpeed: 5
   bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
   firePoint: {fileID: 1841192744}
 --- !u!1 &1005858132
@@ -8769,7 +8687,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.95323, y: -1.23942, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2092093849}
@@ -8835,9 +8753,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Shotgun
   bulletCount: 15
   damage: 1
-  bulletSpread: 30
+  bulletSpread: 45
   bulletSpeed: 20
-  fireRate: 2
 --- !u!1 &1074043526
 GameObject:
   m_ObjectHideFlags: 0
@@ -31923,4 +31840,3 @@ SceneRoots:
   - {fileID: 578054765}
   - {fileID: 401834063}
   - {fileID: 1028934332}
-  - {fileID: 423604740}

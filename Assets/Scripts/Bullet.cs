@@ -33,4 +33,10 @@ public class Bullet : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    public void SetStats(int damage, float speed)
+    {
+        bulletDamage = damage;
+        bulletSpeed = speed;
+    }
 }

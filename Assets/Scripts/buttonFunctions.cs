@@ -4,36 +4,23 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour
 {
-    public static buttonFunctions Instance { get; private set; }
-
     [SerializeField] private GameObject loseMenu;
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject creditsMenu;
 
     public bool IsPaused { get; private set; }
-
     public event System.Action OnGameRestarted;
 
     [SerializeField] private Playercontroller Playercontroller;
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        
         Playercontroller = FindAnyObjectByType<Playercontroller>();
 
         if (GameManager.Instance != null)
         {
             GameManager.Instance.OnGameWon += ShowWinMenu;
         }
-    
     }
     private void Update()
     {
@@ -89,7 +76,6 @@ public class buttonFunctions : MonoBehaviour
         Time.timeScale = 0f;
 
         pauseMenu.SetActive(true);
-
     }
 
     public void TogglePause()
@@ -147,5 +133,4 @@ public class buttonFunctions : MonoBehaviour
     {
         winMenu.SetActive(true);
     }
-
 }

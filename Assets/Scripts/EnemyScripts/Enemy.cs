@@ -23,9 +23,13 @@ public class Enemy : MonoBehaviour, IDamage
 
     public Vector3 lastKnownLocation;
     private Coroutine healthBarTween;
+
+    protected buttonFunctions buttonFunctions;
     
     void Awake()
     {
+        buttonFunctions = FindFirstObjectByType<buttonFunctions>();
+
         rigidBody = GetComponent<Rigidbody2D>();
         collider = GetComponent<CircleCollider2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -44,7 +48,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Update()
     {
-        if (GameManager.Instance.IsGameOver || buttonFunctions.Instance.IsPaused) return;
+        if (GameManager.Instance.IsGameOver || buttonFunctions.IsPaused) return;
         Move();
     }
 
