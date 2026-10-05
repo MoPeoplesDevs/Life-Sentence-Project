@@ -150,10 +150,9 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        SetSceneReferences();
-
         if (IsFromContinued)
         {
+            SetSceneReferences();
             WaveManager.Instance.SpawnWave(WaveCount);
             IsFromContinued = false;
         }

@@ -38,7 +38,6 @@ public class WaveManager : MonoBehaviour
 
     public void Initialize(LevelData currentLevel)
     {
-        Debug.Log(currentLevel.name);
         waves = currentLevel.waves;
         enemySpawns = GameObject.Find("Enemy Spawns").transform;
 
@@ -84,8 +83,6 @@ public class WaveManager : MonoBehaviour
 
                 GameObject prefab = GetEnemyPrefab(data.type);
                 if (prefab == null) break;
-
-                Debug.Log($"{spawnPoints.Count}");
 
                 Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)];
                 GameObject enemy = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
