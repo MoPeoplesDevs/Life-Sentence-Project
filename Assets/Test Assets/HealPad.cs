@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class HealPad : MonoBehaviour
 {
-    [Range(1,3)][SerializeField] int healing = 1;
+    [Range(1,3)][SerializeField] int healing;
     float healTime = 0;
-    float healOverTime;
+    float healOverTime = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
