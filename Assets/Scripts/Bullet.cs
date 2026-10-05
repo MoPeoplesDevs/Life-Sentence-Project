@@ -8,18 +8,27 @@ public class Bullet : MonoBehaviour
     [SerializeField] LayerMask wallLayer;
 
     CircleCollider2D bulletCollider;
+
+    float lifeStarted;
+    private int LIFETIME = 30;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        lifeStarted = Time.time;
         bulletCollider = GetComponent<CircleCollider2D>();
-
         bulletCollider.excludeLayers = ~(enemyLayer | wallLayer);
-        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Time.time - lifeStarted > LIFETIME)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         transform.position += transform.up * bulletSpeed * Time.deltaTime;
     }
 

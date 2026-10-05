@@ -13,21 +13,22 @@ public class buttonFunctions : MonoBehaviour
     public event System.Action OnGameRestarted;
 
     [SerializeField] private Playercontroller Playercontroller;
+    
     private void Awake()
     {
         Playercontroller = FindAnyObjectByType<Playercontroller>();
-
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnGameWon += ShowWinMenu;
-        }
     }
+
+    private void Start()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnGameWon += ShowWinMenu;
+    }
+
     private void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
             TogglePause();
-        }
 
         if(creditsMenu.activeInHierarchy && Keyboard.current.anyKey.wasPressedThisFrame)
         {

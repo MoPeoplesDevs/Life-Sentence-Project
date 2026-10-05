@@ -138,11 +138,10 @@ public class GameManager : MonoBehaviour
     }
     public void WinGame()
     {
-        GameOver();
-
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
 
+        GameOver();
         OnGameWon?.Invoke();
     }
 
