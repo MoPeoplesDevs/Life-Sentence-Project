@@ -45,6 +45,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     Rigidbody2D rb;
     CircleCollider2D playerCollider;
+    [SerializeField] Transform playerSpawn;
 
     [SerializeField] private Image healthBar;
     [SerializeField] private TMP_Text healthText;
@@ -56,6 +57,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     {
         playerCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        transform.position = playerSpawn.position;
+
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -86,7 +90,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     public void Respawn()
     {
         playerHP = playerMaxHP;
-        transform.position = new Vector3(0, -0.5f, 0);
+        transform.position = playerSpawn.position;
         UpdateHealthUI();
         isDead = false;
     }
