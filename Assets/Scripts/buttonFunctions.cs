@@ -153,6 +153,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void ShowWinMenu()
     {
+        if (winMenu == null) return;
         winMenu.SetActive(true);
     }
 }
