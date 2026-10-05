@@ -12,12 +12,11 @@ public class WaveManager : MonoBehaviour
     [SerializeField] GameObject seekingPrefab;
     [SerializeField] GameObject sniperPrefab;
     [SerializeField] GameObject bossPrefab;
-    [SerializeField] Transform enemySpawns;
 
     private List<WaveData> waves;
+    private Transform enemySpawns;
     private bool finishedSpawning = false;
     public int activeEnemies {get; private set;} = 0;
-    public bool isInitialized {get; private set;} = false;
     private List<Transform> spawnPoints = new List<Transform>();
 
     public static event Action OnWaveFinished;
@@ -35,16 +34,17 @@ public class WaveManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        // Grab spawns
-        foreach (Transform point in enemySpawns)
-            spawnPoints.Add(point);
     }
 
     public void Initialize(LevelData currentLevel)
     {
+        Debug.Log(currentLevel.name);
         waves = currentLevel.waves;
-        isInitialized = true;
+        enemySpawns = GameObject.Find("Enemy Spawns").transform;
+
+        spawnPoints.Clear();
+        foreach (Transform point in enemySpawns)
+            spawnPoints.Add(point);
     }
 
     // Used to kill off all enemies in the level!
@@ -84,6 +84,8 @@ public class WaveManager : MonoBehaviour
 
                 GameObject prefab = GetEnemyPrefab(data.type);
                 if (prefab == null) break;
+
+                Debug.Log($"{spawnPoints.Count}");
 
                 Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)];
                 GameObject enemy = Instantiate(prefab, spawnPoint.position, Quaternion.identity);

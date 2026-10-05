@@ -2869,9 +2869,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32860049256d63449beff638ca9837ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  wallTiles: {fileID: 0}
-  doorTiles: {fileID: 0}
-  groundTiles: {fileID: 0}
+  wallTiles: {fileID: 1398468494}
+  doorTiles: {fileID: 503428444}
+  groundTiles: {fileID: 1830865796}
   trapMask:
     serializedVersion: 2
     m_Bits: 512

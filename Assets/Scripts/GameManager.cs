@@ -13,13 +13,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private Tilemap wallTiles;
-    [SerializeField] private Tilemap doorTiles;
-    [SerializeField] private Tilemap groundTiles;
-    [SerializeField] private LayerMask trapMask;
-    [SerializeField] private TMP_Text waveCounter;
-    [SerializeField] private TMP_Text enemyCounter;
-    [SerializeField] private TextAsset levelConfigFile;
+    private Tilemap wallTiles;
+    private Tilemap doorTiles;
+    private Tilemap groundTiles;
+    private LayerMask trapMask;
+    private TMP_Text waveCounter;
+    private TMP_Text enemyCounter;
 
     private Coroutine progressGameRoutine;
     private Playercontroller Playercontroller;
@@ -27,6 +26,7 @@ public class GameManager : MonoBehaviour
     public int Score { get; set; }
     public int WaveCount { get; set; }
     public bool IsGameOver { get; set; }
+    public bool IsFromContinued {get; set;}
     public LevelData Level {get; private set;}
     public List<LevelData> Levels { get; private set;}
 
@@ -44,19 +44,19 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        if (groundTiles != null)
-            Pathfinder.Initialize(groundTiles, trapMask, wallTiles, doorTiles);
         
         // Grab level data
-        LevelConfig config = LevelConfig.FromJson(levelConfigFile.text);
-        Levels = config.levels;
+        TextAsset levelConfig = Resources.Load<TextAsset>("Data/Level");
+        Levels = LevelConfig.FromJson(levelConfig.text).levels;
 
         WaveManager.OnEnemyKilled += UpdateActiveEnemies;
         WaveManager.OnEnemySpawned += UpdateActiveEnemies;
 
         WaveManager.OnEnemyKilled += IncreaseScore;
         WaveManager.OnWaveFinished += ProgressGame;
+
+        //
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start()
@@ -65,14 +65,7 @@ public class GameManager : MonoBehaviour
         if (Playercontroller != null)
             Playercontroller.OnPlayerDeath += GameOver;
         
-        // Load level data
-        string sceneName = SceneManager.GetActiveScene().name;
-        Level = Levels.Find(level => level.name == sceneName);
-
-        if (Level == null)
-            Debug.LogWarning($"FAILED TO FIND LEVEL DATA FOR SCENE: {sceneName}");
-        
-        WaveManager.Instance.Initialize(Level);
+        SetSceneReferences();
 
         //
         WaveCount = 1;
@@ -155,6 +148,49 @@ public class GameManager : MonoBehaviour
         enemyCounter.text = $"{activeEnemies}";
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SetSceneReferences();
+
+        if (IsFromContinued)
+        {
+            WaveManager.Instance.SpawnWave(WaveCount);
+            IsFromContinued = false;
+        }
+    }
+
+    private void SetSceneReferences()
+    {
+        //
+        GameObject ui = GameObject.Find("UI");
+        GameObject grid = GameObject.Find("Grid");
+
+        if (grid != null)
+        {
+            wallTiles = grid.transform.Find("Walls").GetComponent<Tilemap>();
+            doorTiles = grid.transform.Find("Doors").GetComponent<Tilemap>();
+            groundTiles = grid.transform.Find("Ground").GetComponent<Tilemap>();
+        }
+
+        if (ui != null)
+        {
+            Transform hud = ui.transform.Find("MainRoot/HUD");
+
+            waveCounter = hud.Find("Enemy/Wave").GetComponent<TMP_Text>();
+            enemyCounter = hud.Find("Enemy/Amount").GetComponent<TMP_Text>();
+        }
+        
+        // Load level data
+        string sceneName = SceneManager.GetActiveScene().name;
+        Level = Levels.Find(level => level.name == sceneName);
+
+        if (Level == null)
+            Debug.LogWarning($"FAILED TO FIND LEVEL DATA FOR SCENE: {sceneName}");
+
+        WaveManager.Instance.Initialize(Level);
+        Pathfinder.Initialize(groundTiles, trapMask, doorTiles, wallTiles);
+    }
+
     private void OnDestroy()
     {
         WaveManager.OnEnemyKilled -= UpdateActiveEnemies;
@@ -169,3 +205,43 @@ public class GameManager : MonoBehaviour
             Instance = null;
     }
 }
+
+
+
+// {
+//             "name": "Level 1",
+//             "waves": [
+//                 {
+//                     "enemies": [
+//                         {
+//                             "type": "Horde",
+//                             "count": 4,
+//                             "maxDelay": 0.25
+//                         }
+//                     ]
+//                 },
+//                 {
+//                     "enemies": [
+//                         {
+//                             "type": "Heavy",
+//                             "count": 2,
+//                             "maxDelay": 1.5
+//                         }
+//                     ]
+//                 },
+//                 {
+//                     "enemies": [
+//                         {
+//                             "type": "Horde",
+//                             "count": 12,
+//                             "maxDelay": 0.25
+//                         },
+//                         {
+//                             "type": "Heavy",
+//                             "count": 2,
+//                             "maxDelay": 0.25
+//                         }
+//                     ]
+//                 }
+//             ]
+//         },
