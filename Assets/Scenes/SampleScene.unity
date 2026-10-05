@@ -3327,15 +3327,15 @@ PrefabInstance:
     - target: {fileID: -8344796176209473737, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
       propertyPath: 'guardSpawnPoints.Array.data[0]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 232369756}
     - target: {fileID: -8344796176209473737, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
       propertyPath: 'guardSpawnPoints.Array.data[1]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1462707628}
     - target: {fileID: -8344796176209473737, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
       propertyPath: 'guardSpawnPoints.Array.data[2]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 871941595}
     - target: {fileID: 3124896110979934777, guid: 4c35cfecf89747044bdb030c33996d81, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.9
