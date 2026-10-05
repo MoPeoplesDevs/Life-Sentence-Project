@@ -1,12 +1,13 @@
+using TMPro;
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using System.Collections;
-using TMPro;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
+using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,13 +19,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LayerMask trapMask;
     [SerializeField] private TMP_Text waveCounter;
     [SerializeField] private TMP_Text enemyCounter;
+    [SerializeField] private TextAsset levelConfigFile;
 
     private Coroutine progressGameRoutine;
     private Playercontroller Playercontroller;
 
-    public bool IsGameOver { get; set; }
     public int Score { get; set; }
     public int WaveCount { get; set; }
+    public bool IsGameOver { get; set; }
+    public LevelData Level {get; private set;}
+    public List<LevelData> Levels { get; private set;}
 
     public event Action OnGameOver;
     public event Action OnGameExit;
@@ -44,6 +48,10 @@ public class GameManager : MonoBehaviour
         if (groundTiles != null)
             Pathfinder.Initialize(groundTiles, trapMask, wallTiles, doorTiles);
         
+        // Grab level data
+        LevelConfig config = LevelConfig.FromJson(levelConfigFile.text);
+        Levels = config.levels;
+
         WaveManager.OnEnemyKilled += UpdateActiveEnemies;
         WaveManager.OnEnemySpawned += UpdateActiveEnemies;
 
@@ -57,6 +65,16 @@ public class GameManager : MonoBehaviour
         if (Playercontroller != null)
             Playercontroller.OnPlayerDeath += GameOver;
         
+        // Load level data
+        string sceneName = SceneManager.GetActiveScene().name;
+        Level = Levels.Find(level => level.name == sceneName);
+
+        if (Level == null)
+            Debug.LogWarning($"FAILED TO FIND LEVEL DATA FOR SCENE: {sceneName}");
+        
+        WaveManager.Instance.Initialize(Level);
+
+        //
         WaveCount = 1;
         UpdateWaveCounter();
         WaveManager.Instance.SpawnWave(WaveCount);
@@ -77,7 +95,7 @@ public class GameManager : MonoBehaviour
         Score++;
         WaveCount++;
 
-        if(WaveCount > 5)
+        if (WaveCount - 1 >= Level.waves.Count)
         {
             WinGame();
             yield break;

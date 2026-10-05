@@ -1,23 +1,24 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance { get; private set; }
 
-    [SerializeField] TextAsset waveJson;
     [SerializeField] GameObject hordePrefab;
     [SerializeField] GameObject heavyPrefab;
     [SerializeField] GameObject seekingPrefab;
     [SerializeField] GameObject sniperPrefab;
     [SerializeField] GameObject bossPrefab;
-    [SerializeField] Transform[] spawnPoints;
+    [SerializeField] Transform enemySpawns;
 
-    WaveConfig waveConfig;
-
-    public int activeEnemies = 0;
+    private List<WaveData> waves;
     private bool finishedSpawning = false;
+    public int activeEnemies {get; private set;} = 0;
+    public bool isInitialized {get; private set;} = false;
+    private List<Transform> spawnPoints = new List<Transform>();
 
     public static event Action OnWaveFinished;
     public static event Action OnWaveStarted;
@@ -34,11 +35,16 @@ public class WaveManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // Grab spawns
+        foreach (Transform point in enemySpawns)
+            spawnPoints.Add(point);
     }
 
-    void Start()
+    public void Initialize(LevelData currentLevel)
     {
-        waveConfig = JsonUtility.FromJson<WaveConfig>(waveJson.text);
+        waves = currentLevel.waves;
+        isInitialized = true;
     }
 
     // Used to kill off all enemies in the level!
@@ -54,15 +60,11 @@ public class WaveManager : MonoBehaviour
 
     public void SpawnWave(int waveNumber)
     {
-        foreach (WaveData wave in waveConfig.waves)
-        {
-            if (wave.waveNumber == waveNumber)
-            {
-                finishedSpawning = false;
-                StartCoroutine(SpawnWaveRoutine(wave));
-                return;
-            }
-        }
+        finishedSpawning = false;
+        
+        WaveData wave = waves[waveNumber - 1];
+        StartCoroutine(SpawnWaveRoutine(wave));
+
         OnWaveStarted?.Invoke();
     }
 
@@ -70,31 +72,29 @@ public class WaveManager : MonoBehaviour
     {
         bool CanContinue()
         {
-            if (GameManager.Instance.IsGameOver)
-                return false;
-
+            if (GameManager.Instance.IsGameOver) return false;
             return true;
         }
 
-        foreach (SpawnGroup group in wave.spawnGroups)
+        foreach (EnemyData data in wave.enemies)
         {
-            for (int i = 0; i < group.count; i++)
+            for (int i = 0; i < data.count; ++i)
             {
                 if (!CanContinue()) yield break;
 
-                GameObject prefabToSpawn = GetEnemyPrefab(group.enemyType);
-                if (prefabToSpawn == null) continue;
+                GameObject prefab = GetEnemyPrefab(data.type);
+                if (prefab == null) break;
 
-                Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-                GameObject enemy = Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
-
+                Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)];
+                GameObject enemy = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
+                
                 WaveEnemyTracker tracker = enemy.AddComponent<WaveEnemyTracker>();
                 tracker.SetWaveManager(this);
 
                 activeEnemies++;
                 OnEnemySpawned?.Invoke(activeEnemies);
 
-                yield return new WaitForSeconds(group.spawnInterval);
+                yield return new WaitForSeconds(UnityEngine.Random.Range(0, data.maxDelay));
             }
         }
 
