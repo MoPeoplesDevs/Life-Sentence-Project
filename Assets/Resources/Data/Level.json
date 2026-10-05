@@ -21,30 +21,7 @@
                     "enemies": [
                         {
                             "type": "Horde",
-                            "count": 4,
-                            "maxDelay": 0.25
-                        }
-                    ]
-                },
-                {
-                    "enemies": [
-                        {
-                            "type": "Heavy",
-                            "count": 2,
-                            "maxDelay": 1.5
-                        }
-                    ]
-                },
-                {
-                    "enemies": [
-                        {
-                            "type": "Horde",
-                            "count": 12,
-                            "maxDelay": 0.25
-                        },
-                        {
-                            "type": "Heavy",
-                            "count": 2,
+                            "count": 1,
                             "maxDelay": 0.25
                         }
                     ]

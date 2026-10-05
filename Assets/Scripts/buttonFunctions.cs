@@ -44,7 +44,25 @@ public class buttonFunctions : MonoBehaviour
 
     public void NextLevel()
     {
+        GameManager.Instance.IsFromContinued = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        GameManager.Instance.Score = 0;
+        GameManager.Instance.WaveCount = 1;
+        GameManager.Instance.IsGameOver = false;
+
+        IsPaused = false;
+        Time.timeScale = 1f;
+
+        Playercontroller.Respawn();
+        GameManager.Instance.UpdateWaveCounter();
+
+        winMenu.SetActive(false);
+        loseMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void QuitGame()
