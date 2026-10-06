@@ -1589,7 +1589,6 @@ MonoBehaviour:
   seekingPrefab: {fileID: 7239499321924668746, guid: 243147e23690eb44b93cab8f6789b959, type: 3}
   sniperPrefab: {fileID: 3047276198905081543, guid: 43dc674b2bf81b7419b219aa79211b5d, type: 3}
   bossPrefab: {fileID: 4865820463175617488, guid: 6ba2f3439d361e4468fc80a05efdf88b, type: 3}
-  enemySpawns: {fileID: 1975905593}
 --- !u!4 &136841249
 Transform:
   m_ObjectHideFlags: 0
@@ -1979,15 +1978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32860049256d63449beff638ca9837ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  wallTiles: {fileID: 1843513184}
-  doorTiles: {fileID: 438089736}
-  groundTiles: {fileID: 1115579633}
-  trapMask:
-    serializedVersion: 2
-    m_Bits: 512
-  waveCounter: {fileID: 117047412}
-  enemyCounter: {fileID: 1877522425}
-  levelConfigFile: {fileID: 4900000, guid: e44aaa39b50e4b14c8333e0767cfe841, type: 3}
 --- !u!1 &232369755
 GameObject:
   m_ObjectHideFlags: 0
@@ -7304,6 +7294,7 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
+  playerSpawn: {fileID: 1523383058067794406, guid: be0a47e48554b7842b8e3228971dfb68, type: 3}
   healthBar: {fileID: 1984918186}
   healthText: {fileID: 1291326917}
 --- !u!58 &990450901
@@ -8096,8 +8087,10 @@ MonoBehaviour:
   bulletSpread: 45
   bulletSpeed: 1
   fireRate: 1
+  bulletLifetime: 3.3
   bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
   firePoint: {fileID: 2092093849}
+  shotgunActive: 0
 --- !u!1 &1074043526
 GameObject:
   m_ObjectHideFlags: 0
@@ -22621,6 +22614,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1495234497}
+  - component: {fileID: 1495234499}
   - component: {fileID: 1495234498}
   m_Layer: 10
   m_Name: Pistol
@@ -22705,6 +22699,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &1495234499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495234496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 718d7c7ee5086b94ca5315d8e25b9582, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DefaultWeapon
+  bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
+  firePoint: {fileID: 1841192744}
+  fireRate: 5
 --- !u!1 &1498589341
 GameObject:
   m_ObjectHideFlags: 0
@@ -24440,6 +24449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0f20683dd87e84393b82706d734fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealPad
+  healing: 0
 --- !u!4 &1681935932
 Transform:
   m_ObjectHideFlags: 0

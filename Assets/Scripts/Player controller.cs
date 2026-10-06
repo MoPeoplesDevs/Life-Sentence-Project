@@ -63,7 +63,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
-        AddeWeapon(startingWeapon);
+        AddWeapon(startingWeapon);
     }
 
     // Update is called once per frame
@@ -296,7 +296,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         }
     }
 
-    public void AddeWeapon(GameObject weapon)
+    public void AddWeapon(GameObject weapon)
     {
         if(!weaponInventory.Contains(weapon))
         {
