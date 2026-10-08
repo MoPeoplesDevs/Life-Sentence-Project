@@ -7,12 +7,12 @@ using System.Collections.Generic;
 
 public class Enemy : MonoBehaviour, IDamage
 {
-    [SerializeField] protected int MAX_HEALTH;
+    [SerializeField] protected float MAX_HEALTH;
     [Range(1, 10)][SerializeField] public float SPEED;
 	[SerializeField] public LayerMask ignoreRaycastLayer;
     [SerializeField] public DamageIndicator dmgIndicatorPrefab;
 
-    protected int health;
+    protected float health;
     protected Image healthBar;
 
     protected Transform player;
@@ -35,7 +35,6 @@ public class Enemy : MonoBehaviour, IDamage
         collider = GetComponent<CircleCollider2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         
-        health = MAX_HEALTH;
         healthBar = this.gameObject.transform.Find("Health").transform.Find("Bar").GetComponent<Image>();
 
         pathRenderer = gameObject.AddComponent<LineRenderer>();
@@ -45,6 +44,26 @@ public class Enemy : MonoBehaviour, IDamage
         pathRenderer.startColor = Color.green;
         pathRenderer.endColor = Color.green;
         pathRenderer.sortingOrder = 100;
+
+        // Difficulty
+        Difficulty difficulty = GameManager.Instance.gameDifficulty;
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                MAX_HEALTH *= 0.8f;
+                break;
+            case Difficulty.Medium:
+                MAX_HEALTH *= 1f;
+                break;
+            case Difficulty.Hard:
+                MAX_HEALTH *= 1.5f;
+                break;
+            case Difficulty.Expert:
+                MAX_HEALTH *= 2f;
+                break;
+        }
+
+        health = MAX_HEALTH;
     }
 
     void Update()
@@ -53,10 +72,10 @@ public class Enemy : MonoBehaviour, IDamage
         Move();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
-        float targetAlpha = Mathf.Clamp01((float) health / MAX_HEALTH);
+        float targetAlpha = Mathf.Clamp01(health / MAX_HEALTH);
         
         if (healthBarTween != null)
             StopCoroutine(healthBarTween);
@@ -69,7 +88,7 @@ public class Enemy : MonoBehaviour, IDamage
             Destroy(gameObject);
     }
 
-    private void ShowDamageIndicator(int damage)
+    private void ShowDamageIndicator(float damage)
     {
         Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), 0.15f, 0);
         DamageIndicator indicator = Instantiate(dmgIndicatorPrefab, transform.position + offset, Quaternion.identity);

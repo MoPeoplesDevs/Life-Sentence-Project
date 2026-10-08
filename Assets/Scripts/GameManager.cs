@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public bool IsFromContinued {get; set;}
     public LevelData Level {get; private set;}
     public List<LevelData> Levels { get; private set;}
+    public Difficulty gameDifficulty { get; set; } = Difficulty.Expert;
 
     public event Action OnGameOver;
     public event Action OnGameExit;

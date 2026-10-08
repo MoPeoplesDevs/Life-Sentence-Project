@@ -12,7 +12,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     [SerializeField] GameObject playerCam;
     [Range(1, 10)][SerializeField] float playerSpeed;
-    [Range(0, 100)][SerializeField] int playerHP;
+    [Range(0, 100)][SerializeField] float playerHP;
     [Range(2, 4)][SerializeField] float evadeSpeed;
     [Range(0, 5)][SerializeField] float evadeTime;
     [Range(1, 5)][SerializeField] float evadeCooldown;
@@ -212,7 +212,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         UpdateHealthUI();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (isInvincible == false)
         {

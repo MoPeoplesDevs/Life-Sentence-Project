@@ -17,7 +17,7 @@ public class DamageIndicator : MonoBehaviour
         renderer.sortingOrder = 100;
     }
 
-    public void Show(int damage)
+    public void Show(float damage)
     {
         text.text = damage.ToString();
         StartCoroutine(Animate());
