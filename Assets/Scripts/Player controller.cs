@@ -73,11 +73,16 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         if(isDead != false)
         {
             DeathSpin();
+            rb.linearVelocity = new Vector3(0, 0, 0);
             return;
         } else
             loseMenu.SetActive(false);
 
-        if (GameManager.Instance.IsGameOver) return;
+        if (GameManager.Instance.IsGameOver)
+        {
+            rb.linearVelocity = new Vector3(0, 0, 0);
+            return;
+        }
         
         Movement();
         TurnPlayer();

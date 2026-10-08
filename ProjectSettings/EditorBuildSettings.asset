@@ -9,13 +9,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Home Screen.unity
     guid: 12161e1cedc3f2c40bedaa30e9ae0f6e
   - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: a1cbd2dc977bb154085c6b25c8f34687
   - enabled: 1
     path: Assets/Scenes/Level 2.unity
     guid: 321dedecee2dbc545a1ad2a92f464e71
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
