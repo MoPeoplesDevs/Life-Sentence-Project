@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
-using UnityEngineInternal;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
@@ -172,9 +171,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
                 // rotates the player int he direction of the right stick
                 rb.MoveRotation(controllerAngle - 90);
 
+                // stops here so the mouse does not override the controller 
+                return;
             }
-            // stops here so the mouse does not override the controller 
-            return;
         }
 
         //checks if the mouse has been moved 

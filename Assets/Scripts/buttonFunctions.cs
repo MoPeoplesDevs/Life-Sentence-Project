@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using Unity.Tutorials.Editor;
 
 public class buttonFunctions : MonoBehaviour
 {
@@ -8,8 +10,15 @@ public class buttonFunctions : MonoBehaviour
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject creditsMenu;
+    [SerializeField] private GameObject playButton;
+    [SerializeField] private GameObject resumeButton;
+    [SerializeField] private GameObject nextLevelButton;
+    [SerializeField] private GameObject restartButton;
+
 
     public bool IsPaused { get; private set; }
+
+    public bool isControllerActive;
     public event System.Action OnGameRestarted;
 
     [SerializeField] private Playercontroller Playercontroller;
@@ -27,14 +36,64 @@ public class buttonFunctions : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (Keyboard.current.escapeKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame))
             TogglePause();
 
-        if(creditsMenu.activeInHierarchy && Keyboard.current.anyKey.wasPressedThisFrame)
+        if(creditsMenu.activeInHierarchy && (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame))
         {
             creditsMenu.SetActive(false);
-            pauseMenu.SetActive(true);
+            if (pauseMenu != null)
+            {
+                pauseMenu.SetActive(true);
+            }
+            
         }
+
+        if (Gamepad.current != null)
+        {
+            if(Mouse.current != null && Mouse.current.delta.ReadValue().sqrMagnitude > 0.1f)
+            {
+                isControllerActive = false;
+                Cursor.visible = IsPaused;
+            }
+
+            if (Gamepad.current.leftStick.ReadValue().sqrMagnitude > 0.25f && !isControllerActive)
+            {
+                Cursor.visible = false;
+
+                if (!isControllerActive)
+                {
+                    isControllerActive = true;
+
+                    if (playButton != null && playButton.activeInHierarchy)
+                    {
+                        EventSystem.current.SetSelectedGameObject(playButton);
+                    }
+                    else if (pauseMenu != null && pauseMenu.activeInHierarchy && resumeButton != null)
+                    {
+                        EventSystem.current.SetSelectedGameObject(resumeButton);
+                    }
+                    else if (winMenu != null && winMenu.activeInHierarchy && nextLevelButton != null)
+                    {
+                        EventSystem.current.SetSelectedGameObject(nextLevelButton);
+                    }
+                    else if (loseMenu != null && loseMenu != null && loseMenu.activeInHierarchy && restartButton != null)
+                    {
+                        EventSystem.current.SetSelectedGameObject(restartButton);
+                    }
+                }
+
+            }
+        }
+
+        if(Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.delta.ReadValue().magnitude > 0.2f)
+        {
+            isControllerActive = false;
+            Cursor.visible = IsPaused || winMenu.activeInHierarchy || loseMenu.activeInHierarchy;
+            
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+
     }
 
     public void Play()
@@ -102,20 +161,30 @@ public class buttonFunctions : MonoBehaviour
 
     public void TogglePause()
     {
-        UnityEngine.Cursor.visible = !IsPaused;
-        UnityEngine.Cursor.lockState = !IsPaused ? CursorLockMode.None : CursorLockMode.Confined;
-
         if (IsPaused)
             Resume();
         else
             Pause();
+
+        UnityEngine.Cursor.visible = !IsPaused;
+        UnityEngine.Cursor.lockState = !IsPaused ? CursorLockMode.None : CursorLockMode.Confined;
+
+        if ( IsPaused && isControllerActive && resumeButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(resumeButton);
+        }
     }
 
     public void ToggleCredits()
     {
         bool isActive = creditsMenu.activeInHierarchy;
         if (!isActive)
-            pauseMenu.SetActive(false);
+        {
+            if (pauseMenu != null)
+            {
+                pauseMenu.SetActive(false);
+            }
+        }
         creditsMenu.SetActive(!isActive);
     }
 
@@ -154,6 +223,15 @@ public class buttonFunctions : MonoBehaviour
     public void ShowWinMenu()
     {
         if (winMenu == null) return;
+
         winMenu.SetActive(true);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+
+        if (isControllerActive && nextLevelButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(nextLevelButton);
+        }
     }
 }
