@@ -2,10 +2,33 @@ using UnityEngine;
 
 public class Horde : Enemy
 {
-    [SerializeField] int damage = 1;
+    [SerializeField] float damage = 1;
     [SerializeField] float damageCooldown = 1f;
 
     private float lastDamageTime;
+
+    void Start()
+    {
+        // Difficulty
+        Difficulty difficulty = GameManager.Instance.gameDifficulty;
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                damage *= 0.8f;
+                break;
+            case Difficulty.Medium:
+                damage *= 1f;
+                break;
+            case Difficulty.Hard:
+                damage *= 1.2f;
+                damageCooldown *= 0.9f;
+                break;
+            case Difficulty.Expert:
+                damage *= 1.5f;
+                damageCooldown *= 0.75f;
+                break;
+        }
+    }
 
     void OnCollisionStay2D(Collision2D collision)
     {

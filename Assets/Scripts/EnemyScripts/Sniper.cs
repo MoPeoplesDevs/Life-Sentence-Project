@@ -5,9 +5,36 @@ public class Sniper : Enemy
     [SerializeField] EnemyProjectile projectilePrefab;
     [SerializeField] float fireRate = 1f;
     [SerializeField] float projectileSpeed = 6f;
-    [SerializeField] int projectileDamage = 10;
+    [SerializeField] float projectileDamage = 10;
 
     private float lastAttack;
+
+    void Start()
+    {
+        // Difficulty
+        Difficulty difficulty = GameManager.Instance.gameDifficulty;
+        switch (difficulty)
+        {
+            case Difficulty.Easy:
+                fireRate *= 0.8f;
+                projectileDamage *= 0.8f;
+                break;
+            case Difficulty.Medium:
+                fireRate *= 1f;
+                projectileDamage *= 1f;
+                break;
+            case Difficulty.Hard:
+                fireRate *= 1.2f;
+                projectileSpeed *= 1.1f;
+                projectileDamage *= 1.2f;
+                break;
+            case Difficulty.Expert:
+                fireRate *= 1.5f;
+                projectileDamage *= 1.5f;
+                projectileSpeed *= 1.25f;
+                break;
+        }
+    }
 
     void Update()
     {

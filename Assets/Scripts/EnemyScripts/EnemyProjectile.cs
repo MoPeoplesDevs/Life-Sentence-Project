@@ -6,7 +6,7 @@ public class EnemyProjectile : MonoBehaviour
     [SerializeField] LayerMask wallLayers;
 
     float speed;
-    int damage;
+    float damage;
     Vector2 direction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,7 +15,7 @@ public class EnemyProjectile : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
-    public void Initialize(Vector2 newDirection, float newSpeed, int newDamage)
+    public void Initialize(Vector2 newDirection, float newSpeed, float newDamage)
     {
         direction = newDirection.normalized;
         speed = newSpeed;
