@@ -7,7 +7,7 @@ public class BossHealth : MonoBehaviour, IDamage
     [SerializeField] int maxHP = 100;
     [SerializeField] int phaseTwoThreshold = 50;
 
-    int currentHP;
+    float currentHP;
     bool phaseTwoTriggered = false;
 
     public event Action OnPhaseTwo;
@@ -19,7 +19,7 @@ public class BossHealth : MonoBehaviour, IDamage
         currentHP = maxHP;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHP -= damage;
 
