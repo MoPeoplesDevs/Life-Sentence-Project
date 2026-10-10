@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class ShotgunWeapon : MonoBehaviour, IWeapon
 {
+    [Header("Shotgun Stats")]
     [Range(1, 15)] [SerializeField] private int bulletCount;
     [Range(1, 70)] [SerializeField] private int damage;
     [Range(1, 45)] [SerializeField] private float bulletSpread;
