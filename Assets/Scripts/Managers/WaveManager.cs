@@ -11,7 +11,10 @@ public class WaveManager : MonoBehaviour
     [SerializeField] GameObject heavyPrefab;
     [SerializeField] GameObject seekingPrefab;
     [SerializeField] GameObject sniperPrefab;
-    [SerializeField] GameObject bossPrefab;
+    [SerializeField] GameObject InmateBossPrefab;
+    [SerializeField] GameObject correctionalOfficerBossPrefab;
+    [SerializeField] GameObject gangFightBossPrefab;
+    [SerializeField] GameObject wardenBossPrefab;
 
     private List<WaveData> waves;
     private Transform enemySpawns;
@@ -98,6 +101,7 @@ public class WaveManager : MonoBehaviour
         }
 
         finishedSpawning = true;
+        CheckWaveComplete();
     }
 
     public void EnemyDestroyed()
@@ -129,8 +133,17 @@ public class WaveManager : MonoBehaviour
             case "Sniper":
                 return sniperPrefab;
 
-            case "Boss":
-                return bossPrefab;
+            case "InmateBoss":
+                return InmateBossPrefab;
+
+            case "CorrectionalOfficerBoss":
+                return correctionalOfficerBossPrefab;
+
+            case "GangFightBoss":
+                return gangFightBossPrefab;
+
+            case "WardenBoss":
+                return wardenBossPrefab;
 
             default:
                 Debug.LogWarning("Unknown enemy type: " + enemyType);
