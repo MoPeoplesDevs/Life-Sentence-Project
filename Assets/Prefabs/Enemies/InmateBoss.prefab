@@ -219,12 +219,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3124896110979934777}
-  - component: {fileID: -8344796176209473737}
+  - component: {fileID: -5323301136367026599}
   - component: {fileID: 958515923089510388}
   - component: {fileID: 8650515364040528874}
   - component: {fileID: 5700613485293029095}
   m_Layer: 8
-  m_Name: TestWarden
+  m_Name: InmateBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +247,7 @@ Transform:
   - {fileID: 267755659988234053}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8344796176209473737
+--- !u!114 &-5323301136367026599
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -256,21 +256,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 4865820463175617488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6815f89d0342ed44b8a7b47f5e3faf33, type: 3}
+  m_Script: {fileID: 11500000, guid: 579fd3041c240f8489135096cd2c0bb3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WardenBossController
+  m_EditorClassIdentifier: Assembly-CSharp::InmateBossController
   bossHealth: {fileID: 0}
   player: {fileID: 0}
-  guardPrefab: {fileID: 0}
-  guardSpawnPoints: []
-  guardsToSpawn: 3
-  chaseSpeed: 4
-  chaseDuration: 6
-  batonRange: 1.2
-  batonDamage: 20
+  chaseSpeed: 3
+  chargeTriggerDistance: 4
+  chargeSpeed: 7
+  chargeWindupTime: 1
+  chargeDuration: 1
+  chargeDamage: 15
+  chargeHitRange: 1.2
+  chargeObstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  chargeObstacleTilemaps: []
   pathRefreshRate: 0.4
   agentRadius: 1
-  recoveryTime: 2
+  recoveryTime: 1.5
 --- !u!114 &958515923089510388
 MonoBehaviour:
   m_ObjectHideFlags: 0
