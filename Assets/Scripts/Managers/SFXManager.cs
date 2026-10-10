@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SFXManager : MonoBehvaiour
+public class SFXManager : MonoBehaviour
 {
     public static SFXManager Instance {get; private set;}
 
