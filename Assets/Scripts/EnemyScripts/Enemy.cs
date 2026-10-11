@@ -50,8 +50,6 @@ public class Enemy : MonoBehaviour, IDamage
         pathRenderer.sortingOrder = 100;
 
         hitmarker = Resources.Load<AudioClip>("SFX/Hitmarker");
-        if (hitmarker == null)
-            Debug.LogWarning("Failed to load hitmarker sfx!");
 
         // Difficulty
         Difficulty difficulty = GameManager.Instance.gameDifficulty;
