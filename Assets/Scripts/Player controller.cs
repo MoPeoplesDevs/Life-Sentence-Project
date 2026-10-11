@@ -362,7 +362,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             RaycastHit2D hit = results[0];
             if (hit != null)
             {
-                Debug.Log(hit.transform.gameObject.name);
                 if (hit.transform.gameObject.name == "Walls")
                     beamLength = hit.distance + 1.5f;
                 else

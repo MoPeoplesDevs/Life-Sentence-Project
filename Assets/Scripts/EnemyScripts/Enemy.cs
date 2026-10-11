@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour, IDamage
         Move();
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         health -= damage;
         float targetAlpha = Mathf.Clamp01(health / MAX_HEALTH);
