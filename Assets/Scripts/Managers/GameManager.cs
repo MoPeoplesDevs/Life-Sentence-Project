@@ -29,7 +29,11 @@ public class GameManager : MonoBehaviour
     public bool IsFromContinued {get; set;}
     public LevelData Level {get; private set;}
     public List<LevelData> Levels { get; private set;}
-    public Difficulty gameDifficulty { get; set; } = Difficulty.Expert;
+    public Difficulty gameDifficulty { get; set; } = Difficulty.Medium;
+    public  static Difficulty selectedDifficulty { get; set; } = Difficulty.Medium;
+    public float enemyHealthMult = 1.0f;
+    public float enemyDamageMult = 1.0f;
+
 
     public event Action OnGameOver;
     public event Action OnGameExit;
@@ -44,6 +48,8 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        gameDifficulty = selectedDifficulty;
+        SetDifficulty();
         DontDestroyOnLoad(gameObject);
         
         // Grab level data
@@ -190,6 +196,35 @@ public class GameManager : MonoBehaviour
         WaveManager.Instance.Initialize(Level);
         Pathfinder.Initialize(groundTiles, trapMask, doorTiles, wallTiles);
     }
+
+    public void SetDifficulty()
+    {
+        switch (gameDifficulty)
+        {
+            case Difficulty.Easy:
+                enemyHealthMult = 0.75f;
+                enemyDamageMult = 0.75f;
+                break;
+
+            case Difficulty.Medium:
+                enemyHealthMult = 1.0f;
+                enemyDamageMult = 1.0f;
+                break;
+
+            case Difficulty.Hard:
+                enemyHealthMult = 1.25f;
+                enemyDamageMult = 1.25f;
+                break;
+
+            case Difficulty.Expert:
+                enemyHealthMult = 1.5f;
+                enemyDamageMult = 1.5f;
+                break;
+             
+        }
+    }
+
+
 
     private void OnDestroy()
     {
