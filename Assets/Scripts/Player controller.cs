@@ -348,6 +348,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     {
         int plrLayer = ~LayerMask.GetMask("Player");
 
+
         ContactFilter2D filter = new ContactFilter2D();
         filter.SetLayerMask(plrLayer);
         filter.useTriggers = false;
@@ -360,7 +361,13 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         {
             RaycastHit2D hit = results[0];
             if (hit != null)
-                beamLength = hit.distance + 1.5f;
+            {
+                Debug.Log(hit.transform.gameObject.name);
+                if (hit.transform.gameObject.name == "Walls")
+                    beamLength = hit.distance + 1.5f;
+                else
+                    beamLength = (hit.transform.position - transform.position).magnitude;
+            }
         }
 
         laser.localScale = new Vector3(0.15f, beamLength, 1f);

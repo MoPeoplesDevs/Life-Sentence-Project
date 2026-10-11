@@ -265,7 +265,10 @@ MonoBehaviour:
   heavyPrefab: {fileID: 7962632098728244822, guid: 6c4561a306113d64189d52f10c38b613, type: 3}
   seekingPrefab: {fileID: 7239499321924668746, guid: 243147e23690eb44b93cab8f6789b959, type: 3}
   sniperPrefab: {fileID: 3047276198905081543, guid: 43dc674b2bf81b7419b219aa79211b5d, type: 3}
-  bossPrefab: {fileID: 4865820463175617488, guid: 6ba2f3439d361e4468fc80a05efdf88b, type: 3}
+  InmateBossPrefab: {fileID: 0}
+  correctionalOfficerBossPrefab: {fileID: 0}
+  gangFightBossPrefab: {fileID: 0}
+  wardenBossPrefab: {fileID: 0}
 --- !u!4 &65420348
 Transform:
   m_ObjectHideFlags: 0
@@ -388,8 +391,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.736, z: 0}
   m_LocalScale: {x: 0.2, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 761497742}
+  m_Children: []
   m_Father: {fileID: 1867059339}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &91442461
@@ -2317,12 +2319,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761497741}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 49.7, z: 0}
-  m_LocalScale: {x: 0.75, y: 100, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 25, z: 0}
+  m_LocalScale: {x: 0.15, y: 50, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 91442460}
+  m_Father: {fileID: 1867059339}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &761497743
 SpriteRenderer:
@@ -3438,6 +3440,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32860049256d63449beff638ca9837ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  enemyHealthMult: 1
+  enemyDamageMult: 1
 --- !u!4 &1180080403
 Transform:
   m_ObjectHideFlags: 0
@@ -7336,10 +7340,12 @@ MonoBehaviour:
   winMenu: {fileID: 454821306}
   pauseMenu: {fileID: 1710493753}
   creditsMenu: {fileID: 1415761368}
+  difficultyMenu: {fileID: 0}
   playButton: {fileID: 0}
   resumeButton: {fileID: 162358102}
   nextLevelButton: {fileID: 1418879474}
   restartButton: {fileID: 790194491}
+  mediumButton: {fileID: 0}
   isControllerActive: 0
   Playercontroller: {fileID: 1867059338}
 --- !u!4 &1654818631
@@ -17898,6 +17904,7 @@ Transform:
   m_Children:
   - {fileID: 91442460}
   - {fileID: 644554675}
+  - {fileID: 761497742}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1867059340
