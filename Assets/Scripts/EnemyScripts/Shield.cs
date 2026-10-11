@@ -88,6 +88,8 @@ public class Shield : Enemy
 
     public override void TakeDamage(float damage)
     {
+        SFXManager.Instance.PlaySFXAt(hitmarker, transform, 0.35f);
+        
         if (!shieldBroken)
         {
             remainingShieldHits--;

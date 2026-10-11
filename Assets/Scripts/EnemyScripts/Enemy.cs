@@ -12,6 +12,10 @@ public class Enemy : MonoBehaviour, IDamage
 	[SerializeField] public LayerMask ignoreRaycastLayer;
     [SerializeField] public DamageIndicator dmgIndicatorPrefab;
 
+    // SFX
+    protected static AudioClip hitmarker;
+
+    //
     protected float health;
     protected Image healthBar;
 
@@ -45,6 +49,10 @@ public class Enemy : MonoBehaviour, IDamage
         pathRenderer.endColor = Color.green;
         pathRenderer.sortingOrder = 100;
 
+        hitmarker = Resources.Load<AudioClip>("SFX/Hitmarker");
+        if (hitmarker == null)
+            Debug.LogWarning("Failed to load hitmarker sfx!");
+
         // Difficulty
         Difficulty difficulty = GameManager.Instance.gameDifficulty;
         switch (difficulty)
@@ -74,6 +82,8 @@ public class Enemy : MonoBehaviour, IDamage
 
     public virtual void TakeDamage(float damage)
     {
+        SFXManager.Instance.PlaySFXAt(hitmarker, transform, 0.35f);
+        
         health -= damage;
         float targetAlpha = Mathf.Clamp01(health / MAX_HEALTH);
         
