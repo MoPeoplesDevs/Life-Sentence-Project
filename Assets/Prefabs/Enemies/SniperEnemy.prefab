@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sniper
   MAX_HEALTH: 50
-  SPEED: 1
+  SPEED: 5
   ignoreRaycastLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -210,6 +210,11 @@ MonoBehaviour:
   fireRate: 1
   projectileSpeed: 10
   projectileDamage: 20
+  minSnipingDistance: 7
+  maxSnipingDistance: 13
+  relocationInterval: 12
+  arrivalDistance: 0.5
+  positionAttempts: 20
 --- !u!212 &5779246861258852172
 SpriteRenderer:
   serializedVersion: 3

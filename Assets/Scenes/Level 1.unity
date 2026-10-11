@@ -152,10 +152,12 @@ MonoBehaviour:
   winMenu: {fileID: 1365326424}
   pauseMenu: {fileID: 1886019625}
   creditsMenu: {fileID: 1959852714}
+  difficultyMenu: {fileID: 0}
   playButton: {fileID: 0}
   resumeButton: {fileID: 146553597}
   nextLevelButton: {fileID: 320981108}
   restartButton: {fileID: 435920524}
+  mediumButton: {fileID: 0}
   isControllerActive: 0
   Playercontroller: {fileID: 1927028768}
 --- !u!4 &21973194
@@ -1523,8 +1525,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.736, z: 0}
   m_LocalScale: {x: 0.2, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1571500724}
+  m_Children: []
   m_Father: {fileID: 1927028769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &361067639
@@ -3701,6 +3702,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32860049256d63449beff638ca9837ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  enemyHealthMult: 1
+  enemyDamageMult: 1
 --- !u!4 &479160372
 Transform:
   m_ObjectHideFlags: 0
@@ -5179,7 +5182,10 @@ MonoBehaviour:
   heavyPrefab: {fileID: 7962632098728244822, guid: 6c4561a306113d64189d52f10c38b613, type: 3}
   seekingPrefab: {fileID: 7239499321924668746, guid: 243147e23690eb44b93cab8f6789b959, type: 3}
   sniperPrefab: {fileID: 3047276198905081543, guid: 43dc674b2bf81b7419b219aa79211b5d, type: 3}
-  bossPrefab: {fileID: 4865820463175617488, guid: 6ba2f3439d361e4468fc80a05efdf88b, type: 3}
+  InmateBossPrefab: {fileID: 0}
+  correctionalOfficerBossPrefab: {fileID: 0}
+  gangFightBossPrefab: {fileID: 0}
+  wardenBossPrefab: {fileID: 0}
 --- !u!4 &1061628068
 Transform:
   m_ObjectHideFlags: 0
@@ -6156,12 +6162,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1571500723}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 49.7, z: 0}
-  m_LocalScale: {x: 0.75, y: 100, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.008, y: 25.586, z: 0}
+  m_LocalScale: {x: 0.15, y: 50, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 361067638}
+  m_Father: {fileID: 1927028769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1571500725
 SpriteRenderer:
@@ -7582,6 +7588,7 @@ Transform:
   m_Children:
   - {fileID: 361067638}
   - {fileID: 1994063379}
+  - {fileID: 1571500724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1927028770
