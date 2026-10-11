@@ -49,15 +49,15 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [SerializeField] private Image healthBar;
     [SerializeField] private TMP_Text healthText;
 
-   
+    private Transform laser;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        laser = transform.Find("Red Dot");
         transform.position = playerSpawn.position;
-
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
@@ -89,6 +89,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         Evade();
         SwitchWeapon();
         UseWeapon();
+        UpdateLaser();
 	}
 
     public void Respawn()
@@ -342,6 +343,27 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             }
 
     }
+    
+    private void UpdateLaser()
+    {
+        int plrLayer = ~LayerMask.GetMask("Player");
 
-  
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(plrLayer);
+        filter.useTriggers = false;
+
+        float beamLength = 50f;
+        RaycastHit2D[] results = new RaycastHit2D[1];
+        int hitCount = Physics2D.Raycast(transform.position, transform.up, filter, results, beamLength);
+
+        if (hitCount > 0)
+        {
+            RaycastHit2D hit = results[0];
+            if (hit != null)
+                beamLength = hit.distance + 1.5f;
+        }
+
+        laser.localScale = new Vector3(0.15f, beamLength, 1f);
+        laser.localPosition = new Vector3(0f, beamLength / 2f, 0f);
+    }
 }
