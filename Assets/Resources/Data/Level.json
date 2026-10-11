@@ -69,6 +69,11 @@
                             "type": "Sniper",
                             "count": 2,
                             "maxDelay": 0
+                        },
+                        {
+                            "type": "Shield",
+                            "count": 4,
+                            "maxDelay": 0
                         }
                     ]
                 }

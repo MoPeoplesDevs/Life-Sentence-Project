@@ -134,21 +134,17 @@ public class Enemy : MonoBehaviour, IDamage
         RaycastHit2D[] results = new RaycastHit2D[10];
         int hitCount = Physics2D.Raycast(transform.position, new Vector2(dir.x, dir.y), filter, results, distance);
 
-        if (hitCount > 0)
+        for (int i = 0; i < hitCount; i++)
         {
-            RaycastHit2D hit = results[0];
-            if (hit.transform.gameObject == transform.gameObject)
-            {
-                if (results.Length > 1)
-                    hit = results[1];
-                else
-                    return false;
-            }
+            RaycastHit2D hit = results[i];
+            if (hit.transform == null) continue;
 
-            if (hit == null) return false;
-            if (hit.transform.gameObject == player.gameObject)
-                return true;
+            if (hit.transform == transform || hit.transform.IsChildOf(transform))
+                continue;
+
+            return hit.transform == player || hit.transform.IsChildOf(player);
         }
+
         return false;
     }
 

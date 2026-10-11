@@ -10,6 +10,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] GameObject hordePrefab;
     [SerializeField] GameObject heavyPrefab;
     [SerializeField] GameObject seekingPrefab;
+    [SerializeField] GameObject shieldPrefab;
     [SerializeField] GameObject sniperPrefab;
     [SerializeField] GameObject InmateBossPrefab;
     [SerializeField] GameObject correctionalOfficerBossPrefab;
@@ -126,6 +127,9 @@ public class WaveManager : MonoBehaviour
 
             case "Heavy":
                 return heavyPrefab;
+
+            case "Shield":
+                return shieldPrefab;
 
             case "Seeking":
                 return seekingPrefab;

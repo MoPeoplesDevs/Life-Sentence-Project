@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8187473083035986631}
   - component: {fileID: 2168153191141543751}
   m_Layer: 8
-  m_Name: Square (1)
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 548505367259574655}
   - component: {fileID: 5469122890949004557}
   - component: {fileID: -515505519977872365}
-  - component: {fileID: -7515446926600002762}
+  - component: {fileID: -4240473444047323129}
   m_Layer: 8
   m_Name: Shield
   m_TagString: Enemy
@@ -507,7 +507,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &-7515446926600002762
+--- !u!114 &-4240473444047323129
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -516,18 +516,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 7962632098728244822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce8ac5516ec6b014783164f1ca11299d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8af6296bdb8f3734daa7d648ecb58516, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Horde
-  MAX_HEALTH: 125
+  m_EditorClassIdentifier: Assembly-CSharp::Shield
+  MAX_HEALTH: 50
   SPEED: 2.5
   ignoreRaycastLayer:
     serializedVersion: 2
     m_Bits: 256
   dmgIndicatorPrefab: {fileID: -3661789217590035035, guid: 86a41ee43826eee4daa9b8c1d42b2db6, type: 3}
   lastKnownLocation: {x: 0, y: 0, z: 0}
-  damage: 25
-  damageCooldown: 1
+  shieldHits: 5
+  shieldVisuals: []
+  brokenSpeedMultiplier: 1.25
+  projectilePrefab: {fileID: -4476736061826955653, guid: 594975dcd5cd67647a1d257a67f1e694, type: 3}
+  fireRate: 2.2
+  projectileSpeed: 9
+  projectileDamage: 4
+  pelletCount: 6
+  spreadAngle: 40
+  minDistance: 3
+  maxDistance: 6
+  preferredDistance: 4.5
+  repathInterval: 0.5
 --- !u!1 &8355873925806644740
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +550,7 @@ GameObject:
   - component: {fileID: 2264967784556604041}
   - component: {fileID: 7043180495793570325}
   m_Layer: 8
-  m_Name: Square
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
