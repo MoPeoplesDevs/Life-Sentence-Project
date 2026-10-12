@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 1064425007889507293}
   - component: {fileID: 8270126082580715371}
   m_Layer: 8
-  m_Name: HordeEnemy
+  m_Name: Horde
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

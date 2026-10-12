@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
-using Unity.Tutorials.Editor;
+using System;
 
 public class buttonFunctions : MonoBehaviour
 {
@@ -10,16 +10,20 @@ public class buttonFunctions : MonoBehaviour
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject creditsMenu;
+    [SerializeField] private GameObject difficultyMenu;
+
     [SerializeField] private GameObject playButton;
     [SerializeField] private GameObject resumeButton;
     [SerializeField] private GameObject nextLevelButton;
     [SerializeField] private GameObject restartButton;
+    [SerializeField] private GameObject mediumButton;
+
+    public event Action OnGameRestarted;
 
 
     public bool IsPaused { get; private set; }
 
     public bool isControllerActive;
-    public event System.Action OnGameRestarted;
 
     [SerializeField] private Playercontroller Playercontroller;
     
@@ -65,7 +69,12 @@ public class buttonFunctions : MonoBehaviour
                 {
                     isControllerActive = true;
 
-                    if (playButton != null && playButton.activeInHierarchy)
+
+                    if(difficultyMenu != null && difficultyMenu.activeInHierarchy && mediumButton != null)
+                    {
+                        EventSystem.current.SetSelectedGameObject(mediumButton);
+                    }
+                    else if (playButton != null && playButton.activeInHierarchy)
                     {
                         EventSystem.current.SetSelectedGameObject(playButton);
                     }
@@ -89,9 +98,9 @@ public class buttonFunctions : MonoBehaviour
         if(Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.delta.ReadValue().magnitude > 0.2f)
         {
             isControllerActive = false;
-            Cursor.visible = IsPaused || winMenu.activeInHierarchy || loseMenu.activeInHierarchy;
+            Cursor.visible = true;
             
-            EventSystem.current.SetSelectedGameObject(null);
+            //EventSystem.current.SetSelectedGameObject(null);
         }
 
     }
@@ -151,7 +160,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void Pause()
     {
-        if (IsPaused || GameManager.Instance.IsGameOver) return;
+        if (IsPaused || GameManager.Instance == null || GameManager.Instance.IsGameOver) return;
 
         IsPaused = true;
         Time.timeScale = 0f;
@@ -232,6 +241,67 @@ public class buttonFunctions : MonoBehaviour
         if (isControllerActive && nextLevelButton != null)
         {
             EventSystem.current.SetSelectedGameObject(nextLevelButton);
+        }
+    }
+
+    public void ShowDifficulty()
+    {
+        if(difficultyMenu != null)
+        {
+            difficultyMenu.SetActive(true);
+        }
+        if(mediumButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(mediumButton);
+        }
+    }
+
+    public void SetEasy()
+    {
+        GameManager.selectedDifficulty = Difficulty.Easy;
+
+        difficultyMenu.SetActive(false);
+
+        if (isControllerActive && playButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(playButton);
+        }
+    }
+
+    public void SetMedium()
+    {
+        GameManager.selectedDifficulty = Difficulty.Medium;
+
+        difficultyMenu.SetActive(false);
+
+        if (isControllerActive && playButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(playButton);
+        }
+    }
+
+    public void SetHard()
+    {
+        GameManager.selectedDifficulty = Difficulty.Hard;
+        
+
+        difficultyMenu.SetActive(false);
+
+        if (isControllerActive && playButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(playButton);
+        }
+    }
+
+    public void SetExpert()
+    {
+        GameManager.selectedDifficulty = Difficulty.Expert;
+
+        difficultyMenu.SetActive(false);
+
+        if (isControllerActive && playButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(playButton);
         }
     }
 }

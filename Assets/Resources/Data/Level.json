@@ -57,17 +57,45 @@
                 {
                     "enemies": [
                         {
-                            "type": "Horde",
+                            "type": "Guard",
                             "count": 4,
                             "maxDelay": 0.25
                         }
                     ]
                 },
                 {
+                    "enemies":[
+                        {
+                            "type": "Shield",
+                            "count": 4,
+                            "maxDelay": 0.1
+                        }
+                    ]  
+                },
+                {
                     "enemies": [
                         {
                             "type": "Sniper",
                             "count": 2,
+                            "maxDelay": 0
+                        },
+                        {
+                            "type": "Shield",
+                            "count": 4,
+                            "maxDelay": 0
+                        }
+                    ]
+                },
+                {
+                    "enemies": [
+                        {
+                            "type": "Guard",
+                            "count": 12,
+                            "maxDelay": 0
+                        },
+                        {
+                            "type": "Sniper",
+                            "count": 4,
                             "maxDelay": 0
                         }
                     ]

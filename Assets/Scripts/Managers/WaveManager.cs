@@ -7,10 +7,13 @@ public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance { get; private set; }
 
-    [SerializeField] GameObject hordePrefab;
-    [SerializeField] GameObject heavyPrefab;
-    [SerializeField] GameObject seekingPrefab;
-    [SerializeField] GameObject sniperPrefab;
+    private GameObject[] enemies;
+
+    // [SerializeField] GameObject hordePrefab;
+    // [SerializeField] GameObject heavyPrefab;
+    // [SerializeField] GameObject seekingPrefab;
+    // [SerializeField] GameObject shieldPrefab;
+    // [SerializeField] GameObject sniperPrefab;
     [SerializeField] GameObject InmateBossPrefab;
     [SerializeField] GameObject correctionalOfficerBossPrefab;
     [SerializeField] GameObject gangFightBossPrefab;
@@ -37,6 +40,9 @@ public class WaveManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        //
+        enemies = Resources.LoadAll<GameObject>("Enemies");
     }
 
     public void Initialize(LevelData currentLevel)
@@ -119,19 +125,28 @@ public class WaveManager : MonoBehaviour
 
     GameObject GetEnemyPrefab(string enemyType)
     {
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy.name == enemyType)
+                return enemy;
+        }
+        
         switch (enemyType)
         {
-            case "Horde":
-                return hordePrefab;
+            // case "Horde":
+            //     return hordePrefab;
 
-            case "Heavy":
-                return heavyPrefab;
+            // case "Heavy":
+            //     return heavyPrefab;
 
-            case "Seeking":
-                return seekingPrefab;
+            // case "Shield":
+            //     return shieldPrefab;
 
-            case "Sniper":
-                return sniperPrefab;
+            // case "Seeking":
+            //     return seekingPrefab;
+
+            // case "Sniper":
+            //     return sniperPrefab;
 
             case "InmateBoss":
                 return InmateBossPrefab;
