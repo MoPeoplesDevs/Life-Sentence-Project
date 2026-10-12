@@ -1584,10 +1584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7cc8a05fc53e2429dfeb9c8c4f3d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
-  hordePrefab: {fileID: 4636200690292352861, guid: 8a4a69a3c4d7e884a9d22afb3ecee0c0, type: 3}
-  heavyPrefab: {fileID: 7962632098728244822, guid: 6c4561a306113d64189d52f10c38b613, type: 3}
-  seekingPrefab: {fileID: 7239499321924668746, guid: 243147e23690eb44b93cab8f6789b959, type: 3}
-  sniperPrefab: {fileID: 3047276198905081543, guid: 43dc674b2bf81b7419b219aa79211b5d, type: 3}
   InmateBossPrefab: {fileID: 0}
   correctionalOfficerBossPrefab: {fileID: 0}
   gangFightBossPrefab: {fileID: 0}
@@ -1981,6 +1977,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32860049256d63449beff638ca9837ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  enemyHealthMult: 1
+  enemyDamageMult: 1
 --- !u!1 &232369755
 GameObject:
   m_ObjectHideFlags: 0
@@ -2870,10 +2868,12 @@ MonoBehaviour:
   winMenu: {fileID: 842354576}
   pauseMenu: {fileID: 1652684196}
   creditsMenu: {fileID: 326985757}
+  difficultyMenu: {fileID: 0}
   playButton: {fileID: 0}
   resumeButton: {fileID: 0}
   nextLevelButton: {fileID: 0}
   restartButton: {fileID: 0}
+  mediumButton: {fileID: 0}
   isControllerActive: 0
   Playercontroller: {fileID: 990450900}
 --- !u!1 &411113009
@@ -3068,12 +3068,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 417639623}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: 49.7, z: 0}
-  m_LocalScale: {x: 0.75, y: 100, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.008, y: 25.586, z: 0}
+  m_LocalScale: {x: 0.15, y: 50, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1495234497}
+  m_Father: {fileID: 990450899}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &417639625
 SpriteRenderer:
@@ -4763,6 +4763,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529275781}
   m_CullTransparentMesh: 1
+--- !u!1 &546456743
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 546456745}
+  - component: {fileID: 546456744}
+  m_Layer: 0
+  m_Name: SFXManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &546456744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546456743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f603c833032bc4cae2fefc2a90765a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXManager
+  sfxObject: {fileID: 171923894386945983, guid: 0ce6d31f005da094880bbf10055a7230, type: 3}
+--- !u!4 &546456745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546456743}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.29615, y: -0.11023, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &550177302
 GameObject:
   m_ObjectHideFlags: 0
@@ -7464,6 +7509,7 @@ Transform:
   m_Children:
   - {fileID: 1495234497}
   - {fileID: 1841192744}
+  - {fileID: 417639624}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &990450900
@@ -22816,8 +22862,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.736, z: 0}
   m_LocalScale: {x: 0.2, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 417639624}
+  m_Children: []
   m_Father: {fileID: 990450899}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1495234498
@@ -31035,3 +31080,4 @@ SceneRoots:
   - {fileID: 912205876}
   - {fileID: 423604740}
   - {fileID: 1975905593}
+  - {fileID: 546456745}
