@@ -362,6 +362,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77105239}
   m_CullTransparentMesh: 1
+--- !u!1001 &79784466
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1813875226}
+    m_Modifications:
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.203
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865820463175617488, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_Name
+      value: COBoss Right
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+--- !u!4 &79784467 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+  m_PrefabInstance: {fileID: 79784466}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &91442459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,6 +1194,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325535435}
   m_CullTransparentMesh: 1
+--- !u!1001 &327777835
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1813875226}
+    m_Modifications:
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.345
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.842
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865820463175617488, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_Name
+      value: COBoss Center
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+--- !u!4 &327777836 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+  m_PrefabInstance: {fileID: 327777835}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &327777841 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7952269425406661569, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+  m_PrefabInstance: {fileID: 327777835}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b192b107e26c1c4b85b7083b9398573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::COBossController
 --- !u!4 &391790361 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1523383058067794406, guid: be0a47e48554b7842b8e3228971dfb68, type: 3}
@@ -1610,6 +1745,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539849381}
   m_CullTransparentMesh: 1
+--- !u!114 &573552990 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7952269425406661569, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+  m_PrefabInstance: {fileID: 79784466}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b192b107e26c1c4b85b7083b9398573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::COBossController
 --- !u!1 &583922561
 GameObject:
   m_ObjectHideFlags: 0
@@ -12396,6 +12542,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418879474}
   m_CullTransparentMesh: 1
+--- !u!1001 &1445005356
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1813875226}
+    m_Modifications:
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.195
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.232
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865820463175617488, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+      propertyPath: m_Name
+      value: COBoss Left
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+--- !u!4 &1445005357 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3124896110979934777, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+  m_PrefabInstance: {fileID: 1445005356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1445005362 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7952269425406661569, guid: 66c8b4880909d09469bfd0245e83df3c, type: 3}
+  m_PrefabInstance: {fileID: 1445005356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b192b107e26c1c4b85b7083b9398573, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::COBossController
 --- !u!1 &1466447104
 GameObject:
   m_ObjectHideFlags: 0
@@ -13095,6 +13314,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811139740}
   m_CullTransparentMesh: 1
+--- !u!1 &1813875225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1813875226}
+  - component: {fileID: 1813875227}
+  m_Layer: 0
+  m_Name: CO Squad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1813875226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813875225}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.13324, y: 22.25413, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 327777836}
+  - {fileID: 1445005357}
+  - {fileID: 79784467}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1813875227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813875225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9639860f974523346b4a1c3691e8c9b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::COSquadController
+  player: {fileID: 1867059339}
+  officers:
+  - {fileID: 1445005362}
+  - {fileID: 327777841}
+  - {fileID: 573552990}
+  shieldDuration: 3
+  windupDuration: 0.8
+  timeBetweenShots: 0.5
+  recoveryDuration: 2
 --- !u!1 &1818577891
 GameObject:
   m_ObjectHideFlags: 0
@@ -43574,3 +43849,4 @@ SceneRoots:
   - {fileID: 1135233842}
   - {fileID: 1123055197}
   - {fileID: 503412483}
+  - {fileID: 1813875226}
