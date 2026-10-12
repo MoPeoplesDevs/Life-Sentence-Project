@@ -99,7 +99,7 @@
                     "enemies": [
                         {
                             "type": "Guard",
-                            "count": 12,
+                            "count": 6,
                             "maxDelay": 0
                         },
                         {
