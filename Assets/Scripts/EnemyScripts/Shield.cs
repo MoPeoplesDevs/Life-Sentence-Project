@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Shield : Enemy
@@ -20,13 +21,17 @@ public class Shield : Enemy
     [Header("Movement")]
     [SerializeField] float minDistance = 3f;
     [SerializeField] float maxDistance = 6f;
-    [SerializeField] float preferredDistance = 4.5f;
     [SerializeField] float repathInterval = 0.5f;
+
+    [SerializeField] int magSize = 5;
+    [SerializeField] int reloadTime = 5;
 
     private int remainingShieldHits;
     private float lastAttack;
     private float nextRepath;
     private bool shieldBroken;
+    private int ammoRemaining;
+    private bool isReloading = false;
 
     void Start()
     {
@@ -55,17 +60,14 @@ public class Shield : Enemy
     void Update()
     {
         if (GameManager.Instance.IsGameOver || buttonFunctions.IsPaused) return;
-
-        Vector3 direction = player.position - transform.position;
-        direction.z = 0f;
-
-        float distance = direction.magnitude;
-        direction.Normalize();
-
-        bool canSeePlayer = HasLineOfSight();
+               
+        Vector3 difference = (player.position - transform.position);
+        Vector3 direction = difference.normalized;
+        float distance = difference.magnitude;
+        bool canSeePlayer = CanSeePlayer(direction, distance);
 
         // Attack independently of movement
-        if (distance <= maxDistance && canSeePlayer)
+        if (distance <= maxDistance && canSeePlayer && !isReloading)
             Shoot(direction);
 
         // Only recalculate paths periodically
@@ -134,24 +136,22 @@ public class Shield : Enemy
             EnemyProjectile projectile = Instantiate(projectilePrefab, transform.position + direction * 0.7f, Quaternion.identity);
             projectile.Initialize(pelletDirection.normalized, projectileSpeed, projectileDamage);
         }
+
+        ammoRemaining--;
+        if (ammoRemaining <= 0)
+            StartCoroutine(Reload());
     }
 
-    private bool HasLineOfSight()
+    private IEnumerator Reload()
     {
-        Vector2 direction = player.position - transform.position;
-        float distance = direction.magnitude;
+        isReloading = true;
+		yield return new WaitForSeconds(reloadTime);
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction.normalized, distance + 0.5f, ~ignoreRaycastLayer);
-
-        foreach (RaycastHit2D hit in hits)
+        if (transform.gameObject != null)
         {
-            if (hit.collider.isTrigger) continue;
-            if (hit.transform == transform || hit.transform.IsChildOf(transform)) continue;
-
-            return hit.transform == player || hit.transform.IsChildOf(player);
+            isReloading = false;
+            ammoRemaining = magSize;
         }
-
-        return false;
     }
 
     protected override void Move()
