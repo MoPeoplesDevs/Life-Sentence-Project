@@ -48,6 +48,15 @@
                             "maxDelay": 0.25
                         }
                     ]
+                },
+                {
+                    "enemies": [
+                        {
+                            "type": "Guard",
+                            "count": 4,
+                            "maxDelay": 0
+                        }
+                    ]
                 }
             ]
         },
