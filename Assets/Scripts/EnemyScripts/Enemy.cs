@@ -16,6 +16,13 @@ public class Enemy : MonoBehaviour, IDamage
     protected static AudioClip hitmarker;
 
     //
+    [Header("Death Animation")]
+    [SerializeField] protected float deathDuration = 0.8f;
+    [SerializeField] protected int deathFlashes = 4;
+    protected bool isDead = false;
+    protected SpriteRenderer spriteRenderer;
+
+    //
     protected float health;
     protected Image healthBar;
 
@@ -37,6 +44,7 @@ public class Enemy : MonoBehaviour, IDamage
 
         rigidBody = GetComponent<Rigidbody2D>();
         collider = GetComponent<CircleCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         
         healthBar = this.gameObject.transform.Find("Health").transform.Find("Bar").GetComponent<Image>();
@@ -74,12 +82,14 @@ public class Enemy : MonoBehaviour, IDamage
 
     void Update()
     {
-        if (GameManager.Instance.IsGameOver || buttonFunctions.IsPaused) return;
+        if (GameManager.Instance.IsGameOver || buttonFunctions.IsPaused || isDead) return;
         Move();
     }
 
     public virtual void TakeDamage(float damage)
     {
+        if (isDead) return;
+        
         SFXManager.Instance.PlaySFXAt(hitmarker, transform, 0.35f);
         
         health -= damage;
@@ -93,7 +103,37 @@ public class Enemy : MonoBehaviour, IDamage
         ShowDamageIndicator(damage);
 
         if (health <= 0)
-            Destroy(gameObject);
+        {
+            isDead = true;
+            StartCoroutine(DeathAnimation());
+        }
+    }
+
+    protected virtual IEnumerator DeathAnimation()
+    {
+        rigidBody.linearVelocity = Vector2.zero;
+        rigidBody.simulated = false;
+        collider.enabled = false;
+
+        healthBar.transform.parent.gameObject.SetActive(false);
+
+        float flashTime = deathDuration / deathFlashes;
+
+        for (int i = 0; i < deathFlashes; i++)
+        {
+            Color color = spriteRenderer.color;
+            color.a = 0.2f;
+            spriteRenderer.color = color;
+
+            yield return new WaitForSeconds(flashTime * 0.5f);
+
+            color.a = 1f - ((float)i / deathFlashes);
+            spriteRenderer.color = color;
+
+            yield return new WaitForSeconds(flashTime * 0.5f);
+        }
+
+        Destroy(gameObject);
     }
 
     private void ShowDamageIndicator(float damage)
