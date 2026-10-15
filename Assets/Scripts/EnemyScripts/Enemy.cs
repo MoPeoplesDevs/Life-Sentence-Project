@@ -12,19 +12,17 @@ public class Enemy : MonoBehaviour, IDamage
     [Range(1, 10)][SerializeField] public float SPEED;
 	[SerializeField] public LayerMask ignoreRaycastLayer;
     [SerializeField] public DamageIndicator dmgIndicatorPrefab;
+    [SerializeField] public float fireRate = 1f;
 
     // SFX
     protected static AudioClip hitmarker;
-
-    // Visuals
-    private string skinTone;
 
     //
     [Header("Death Animation")]
     [SerializeField] protected float deathDuration = 0.8f;
     [SerializeField] protected int deathFlashes = 4;
     protected bool isDead = false;
-    protected SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     //
     protected float health;
@@ -74,8 +72,6 @@ public class Enemy : MonoBehaviour, IDamage
         }
 
         health = MAX_HEALTH;
-
-        skinTone = $"Tone{(int) UnityEngine.Random.Range(1, 4)}";
         hitmarker = Resources.Load<AudioClip>("SFX/Hitmarker");
     }
 
@@ -106,6 +102,11 @@ public class Enemy : MonoBehaviour, IDamage
             isDead = true;
             StartCoroutine(DeathAnimation());
         }
+    }
+
+    public virtual void Attack()
+    {
+        Attacking?.Invoke();
     }
 
     protected virtual IEnumerator DeathAnimation()
@@ -161,7 +162,7 @@ public class Enemy : MonoBehaviour, IDamage
     //
     protected virtual void Move()
     {
-        Debug.Log("Base move");
+        Moving?.Invoke();
     }
 
     protected void GetPathToPlayer()

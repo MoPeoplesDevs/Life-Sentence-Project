@@ -10,7 +10,6 @@ public class Guard : Enemy
     [SerializeField] float repathInterval = 0.5f;
 
     [SerializeField] EnemyProjectile projectilePrefab;
-    [SerializeField] float fireRate = 1.8f;
     [SerializeField] float projectileSpeed = 9f;
     [SerializeField] float projectileDamage = 4f;
 
@@ -21,6 +20,10 @@ public class Guard : Enemy
     private float nextRepath;
     private int ammoRemaining;
     private bool isReloading = false;
+    
+    //
+    private string variant;
+    private EnemyAnimator animator;
 
     void Start()
     {
@@ -41,6 +44,11 @@ public class Guard : Enemy
         }
 
         ammoRemaining = magSize;
+
+        //
+        variant = $"Tone{UnityEngine.Random.Range(1, 4)}";
+        animator = gameObject.AddComponent<EnemyAnimator>();
+        animator.Initialize(variant, this, "Guard");
     }
 
     void Update()
@@ -81,6 +89,8 @@ public class Guard : Enemy
 
         EnemyProjectile projectile = Instantiate(projectilePrefab, transform.position + (plrDirection * 0.7f), Quaternion.identity);
         projectile.Initialize(plrDirection, projectileSpeed, projectileDamage);
+
+        base.Attack();
 
         ammoRemaining--;
         if (ammoRemaining <= 0)
@@ -132,6 +142,7 @@ public class Guard : Enemy
         {
             Vector2 position = rigidBody.position + (Vector2)(movement.normalized * SPEED * Time.fixedDeltaTime);
             rigidBody.MovePosition(position);
+            base.Move();
         }
     }
 }

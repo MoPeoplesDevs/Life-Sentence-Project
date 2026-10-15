@@ -114,6 +114,11 @@ public class WaveManager : MonoBehaviour
         CheckWaveComplete();
     }
 
+    public EnemySprites GetEnemySprites(string type, string variant)
+    {
+        return enemyConfig[type].Variants[variant];
+    }
+
     void CheckWaveComplete()
     {
         if (finishedSpawning && activeEnemies <= 0)

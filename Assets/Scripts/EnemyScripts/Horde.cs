@@ -3,9 +3,13 @@ using UnityEngine;
 public class Horde : Enemy
 {
     [SerializeField] float damage = 1;
-    [SerializeField] float damageCooldown = 1f;
+    [SerializeField] bool isHeavy = false;
 
     private float lastDamageTime;
+
+    //
+    private string variant;
+    private EnemyAnimator animator;
 
     void Start()
     {
@@ -21,19 +25,26 @@ public class Horde : Enemy
                 break;
             case Difficulty.Hard:
                 damage *= 1.2f;
-                damageCooldown *= 0.9f;
+                fireRate *= 0.9f;
                 break;
             case Difficulty.Expert:
                 damage *= 1.5f;
-                damageCooldown *= 0.75f;
+                fireRate *= 0.75f;
                 break;
         }
+
+        //
+        variant = $"Tone{UnityEngine.Random.Range(1, 4)}";
+        animator = gameObject.AddComponent<EnemyAnimator>();
+        animator.Initialize(variant, this, isHeavy ? "Heavy" : "Horde");
     }
 
     void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.transform.tag != "Player") return;
-        if (Time.time < lastDamageTime + damageCooldown) return;
+        if (Time.time < lastDamageTime + fireRate) return;
+        
+        base.Attack();
 
         Playercontroller player = collision.gameObject.GetComponent<Playercontroller>();
 
@@ -74,5 +85,6 @@ public class Horde : Enemy
 
         // Set velocity
         rigidBody.linearVelocity = movementDir * SPEED;
+        base.Move();
     }
 }

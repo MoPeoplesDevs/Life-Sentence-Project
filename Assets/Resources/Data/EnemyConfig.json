@@ -1,5 +1,5 @@
 {
-    "TexturePath": "Assets/Sprites/Enemies",
+    "TexturePath": "Sprites/Enemies/Enemies",
     "TileSize": 256,
     "Columns": 16,
     "Rows": 6,
