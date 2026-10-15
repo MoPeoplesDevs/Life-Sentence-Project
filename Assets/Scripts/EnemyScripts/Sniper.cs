@@ -56,7 +56,7 @@ public class Sniper : Enemy
 
         //
         animator = gameObject.AddComponent<EnemyAnimator>();
-        animator.Initialize(variant, this, "Shiper");
+        animator.Initialize(variant, this, "Sniper");
     }
 
     void Update()
