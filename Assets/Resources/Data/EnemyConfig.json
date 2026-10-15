@@ -1,0 +1,141 @@
+{
+    "TexturePath": "Assets/Sprites/Enemies",
+    "TileSize": 256,
+    "Columns": 16,
+    "Rows": 6,
+    "PixelsPerUnit": 256,
+    "Enemies": [
+    {
+        "Name": "Guard",
+        "DefaultVariant": "Tone1",
+        "Variants": [
+            {
+                "Name": "Tone1",
+                "Sprite": { "Idle": 0, "WalkA": 1, "WalkB": 2, "Attack": 3 }
+            },
+            {
+                "Name": "Tone2",
+                "Sprite": { "Idle": 4, "WalkA": 5, "WalkB": 6, "Attack": 7 }
+            },
+            {
+                "Name": "Tone3",
+                "Sprite": { "Idle": 8, "WalkA": 9, "WalkB": 10, "Attack": 11 }
+            },
+            {
+                "Name": "Tone4",
+                "Sprite": { "Idle": 12, "WalkA": 13, "WalkB": 14, "Attack": 15 }
+            }
+        ]
+    },
+    {
+        "Name": "RiotGuard",
+        "DefaultVariant": "Tone1",
+        "Variants": [
+            {
+                "Name": "Tone1",
+                "Sprite": { "Idle": 16, "WalkA": 17, "WalkB": 18, "Attack": 19 }
+            },
+            {
+                "Name": "Tone2",
+                "Sprite": { "Idle": 20, "WalkA": 21, "WalkB": 22, "Attack": 23 }
+            },
+            {
+                "Name": "Tone3",
+                "Sprite": { "Idle": 24, "WalkA": 25, "WalkB": 26, "Attack": 27 }
+            },
+            {
+                "Name": "Tone4",
+                "Sprite": { "Idle": 28, "WalkA": 29, "WalkB": 30, "Attack": 31 }
+            }
+        ]
+    },
+    {
+        "Name": "RiotGuardWithoutShield",
+        "DefaultVariant": "Tone1",
+        "Variants": [
+            {
+                "Name": "Tone1",
+                "Sprite": { "Idle": 32, "WalkA": 33, "WalkB": 34, "Attack": 35 }
+            },
+            {
+                "Name": "Tone2",
+                "Sprite": { "Idle": 36, "WalkA": 37, "WalkB": 38, "Attack": 39 }
+            },
+            {
+                "Name": "Tone3",
+                "Sprite": { "Idle": 40, "WalkA": 41, "WalkB": 42, "Attack": 43 }
+            },
+            {
+                "Name": "Tone4",
+                "Sprite": { "Idle": 44, "WalkA": 45, "WalkB": 46, "Attack": 47 }
+            }
+        ]
+    },
+    {
+        "Name": "Horde",
+        "DefaultVariant": "Tone1",
+        "Variants": [
+            {
+                "Name": "Tone1",
+                "Sprite": { "Idle": 48, "WalkA": 49, "WalkB": 50, "Attack": 51 }
+            },
+            {
+                "Name": "Tone2",
+                "Sprite": { "Idle": 52, "WalkA": 53, "WalkB": 54, "Attack": 55 }
+            },
+            {
+                "Name": "Tone3",
+                "Sprite": { "Idle": 56, "WalkA": 57, "WalkB": 58, "Attack": 59 }
+            },
+            {
+                "Name": "Tone4",
+                "Sprite": { "Idle": 60, "WalkA": 61, "WalkB": 62, "Attack": 63 }
+            }
+        ]
+    },
+    {
+        "Name": "Heavy",
+        "DefaultVariant": "Tone1",
+        "Variants": [
+            {
+                "Name": "Tone1",
+                "Sprite": { "Idle": 64, "WalkA": 65, "WalkB": 66, "Attack": 67 }
+            },
+            {
+                "Name": "Tone2",
+                "Sprite": { "Idle": 68, "WalkA": 69, "WalkB": 70, "Attack": 71 }
+            },
+            {
+                "Name": "Tone3",
+                "Sprite": { "Idle": 72, "WalkA": 73, "WalkB": 74, "Attack": 75 }
+            },
+            {
+                "Name": "Tone4",
+                "Sprite": { "Idle": 76, "WalkA": 77, "WalkB": 78, "Attack": 79 }
+            }
+        ]
+    },
+    {
+        "Name": "Sniper",
+        "DefaultVariant": "Tone1",
+        "Variants": [
+            {
+                "Name": "Tone1",
+                "Sprite": { "Idle": 80, "WalkA": 81, "WalkB": 82, "Attack": 83 }
+            },
+            {
+                "Name": "Tone2",
+                "Sprite": { "Idle": 84, "WalkA": 85, "WalkB": 86, "Attack": 87 }
+            },
+            {
+                "Name": "Tone3",
+                "Sprite": { "Idle": 88, "WalkA": 89, "WalkB": 90, "Attack": 91 }
+            },
+            {
+                "Name": "Tone4",
+                "Sprite": { "Idle": 92, "WalkA": 93, "WalkB": 94, "Attack": 95 }
+            }
+        ]
+    }
+  ]
+}

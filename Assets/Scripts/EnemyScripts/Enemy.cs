@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Collections;
@@ -15,6 +16,9 @@ public class Enemy : MonoBehaviour, IDamage
     // SFX
     protected static AudioClip hitmarker;
 
+    // Visuals
+    private string skinTone;
+
     //
     [Header("Death Animation")]
     [SerializeField] protected float deathDuration = 0.8f;
@@ -31,12 +35,14 @@ public class Enemy : MonoBehaviour, IDamage
     protected CircleCollider2D collider;
 
     protected PathState pathState = new PathState();
-    protected LineRenderer pathRenderer;
 
     public Vector3 lastKnownLocation;
     private Coroutine healthBarTween;
 
     protected buttonFunctions buttonFunctions;
+
+    public event Action Moving;
+    public event Action Attacking;
     
     void Awake()
     {
@@ -48,16 +54,6 @@ public class Enemy : MonoBehaviour, IDamage
         player = GameObject.FindGameObjectWithTag("Player").transform;
         
         healthBar = this.gameObject.transform.Find("Health").transform.Find("Bar").GetComponent<Image>();
-
-        pathRenderer = gameObject.AddComponent<LineRenderer>();
-        pathRenderer.startWidth = 0.08f;
-        pathRenderer.endWidth = 0.08f;
-        pathRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        pathRenderer.startColor = Color.green;
-        pathRenderer.endColor = Color.green;
-        pathRenderer.sortingOrder = 100;
-
-        hitmarker = Resources.Load<AudioClip>("SFX/Hitmarker");
 
         // Difficulty
         Difficulty difficulty = GameManager.Instance.gameDifficulty;
@@ -78,6 +74,9 @@ public class Enemy : MonoBehaviour, IDamage
         }
 
         health = MAX_HEALTH;
+
+        skinTone = $"Tone{(int) UnityEngine.Random.Range(1, 4)}";
+        hitmarker = Resources.Load<AudioClip>("SFX/Hitmarker");
     }
 
     void Update()
@@ -138,7 +137,7 @@ public class Enemy : MonoBehaviour, IDamage
 
     private void ShowDamageIndicator(float damage)
     {
-        Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), 0.15f, 0);
+        Vector3 offset = new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), 0.15f, 0);
         DamageIndicator indicator = Instantiate(dmgIndicatorPrefab, transform.position + offset, Quaternion.identity);
         indicator.Show(damage);
     }
@@ -212,45 +211,6 @@ public class Enemy : MonoBehaviour, IDamage
         return new Vector3(0, 0, 0);
     }
 
-    /*
-    protected void VisualizePath()
-    {
-        if (pathState.path == null || pathState.path.Count == 0)
-        {
-            pathRenderer.positionCount = 0;
-            return;
-        }
-
-        int remainingPoints = pathState.path.Count - pathState.index;
-
-        pathRenderer.positionCount = remainingPoints + 1;
-        pathRenderer.SetPosition(0, transform.position);
-
-        for (int i = 0; i < remainingPoints; i++)
-        {
-            Vector3 position = pathState.path[pathState.index + i];
-            position.z = 0;
-
-            pathRenderer.SetPosition(i + 1, position);
-
-            GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            sphere.name = $"Path Point {pathState.index + i}";
-            sphere.transform.position = position;
-            sphere.transform.localScale = Vector3.one * 0.15f;
-
-            Collider collider = sphere.GetComponent<Collider>();
-            if (collider != null) Object.Destroy(collider);
-
-            Renderer renderer = sphere.GetComponent<Renderer>();
-            if (renderer != null)
-                renderer.material.color = i == 0 ? Color.red : Color.yellow;
-
-            Object.Destroy(sphere, 0.05f);
-        }
-    }
-    /**/
-
-    //
     protected class PathState
     {
         public int index;
