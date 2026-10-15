@@ -23,8 +23,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     bool isEvading;
     bool isInvincible;
     bool isDead;
-    bool usingController;
-
     private List<GameObject> weaponInventory = new List<GameObject>();
     private int currentWeapon;
 
@@ -131,18 +129,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             if (Keyboard.current.sKey.isPressed)
                 y = -1;
         }
-
-        // checks if a controller is connected before trying to read controller inputs
-        if (Gamepad.current != null)
-        {
-            //gets both the x and y movements fromthe controllers left stick
-            Vector2 controllerInput = Gamepad.current.leftStick.ReadValue();
-
-            // adds the controller's horizontal and vertical input to our movement
-            x += controllerInput.x;
-            y += controllerInput.y;
-        }
-
+        
         //stores the x and y movment
         playerInput = new Vector2(x, y);
 
@@ -152,44 +139,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     }
 
     void TurnPlayer()
-    {
-      
-        // Checks if a controller connected before reading controller inputs
-        if (Gamepad.current != null)
-        {
-            // gets the horizontal and vertical input from the controllers right stick
-            Vector2 controllerInput = Gamepad.current.rightStick.ReadValue();
-
-            //checks if the right stick is being moved
-            if (controllerInput.magnitude > 0.1f)
-            {
-                //sets controller aiming as the current aiming method
-                usingController = true;
-
-                // calculates the angle based on the direction of the right stick
-                float controllerAngle = Mathf.Atan2(controllerInput.y, controllerInput.x) * Mathf.Rad2Deg;
-
-                // rotates the player int he direction of the right stick
-                rb.MoveRotation(controllerAngle - 90);
-
-                // stops here so the mouse does not override the controller 
-                return;
-            }
-        }
-
-        //checks if the mouse has been moved 
-        if(Mouse.current.delta.ReadValue().magnitude > 0.1f)
-        {
-            //Switcher the player back to mouse aiming
-            usingController = false;
-        }
-
-        //Stops the mouse code from running while using the controller
-        if(usingController)
-        {
-            return;
-        }
-
+    { 
         //Gets the current position of the mouse on the screen
         mousePos = Mouse.current.position.ReadValue();
 
@@ -227,7 +177,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     void Shoot()
     {
         if (buttons.IsPaused || GameManager.Instance.IsGameOver) return;
-        if(Mouse.current.leftButton.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.rightTrigger.wasPressedThisFrame)
+        if(Mouse.current.leftButton.wasPressedThisFrame)
         {
             Instantiate(bullet, firePoint.position, transform.rotation);
         }
@@ -235,12 +185,12 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void Evade()
     {
-        if (Keyboard.current.leftShiftKey.wasPressedThisFrame || Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame && evadeCooldownTimer <=0)
+        if (Keyboard.current.leftShiftKey.wasPressedThisFrame)
         {
             isEvading = true;
             isInvincible = true;
 
-            playerCollider.includeLayers = ~wallLayer;
+            playerCollider.excludeLayers = ~wallLayer;
 
             evadeDuration = evadeTime;
         }
