@@ -4,10 +4,13 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Playercontroller : MonoBehaviour, IHeal, IDamage
 {
     public static event Action OnPlayerDeath;
+
+    public static Playercontroller playerInstance;
 
     [SerializeField] GameObject playerCam;
     [Range(1, 10)][SerializeField] float playerSpeed;
@@ -49,18 +52,41 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     private Transform laser;
 
+    void Awake()
+    {
+        if(playerInstance != null && playerInstance != this)
+        {
+            DontDestroyOnLoad(gameObject);
+            return;
+        }
+
+        playerInstance = this;
+        DontDestroyOnLoad(gameObject);
+
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         laser = transform.Find("Red Dot");
-        transform.position = playerSpawn.position;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
         AddWeapon(startingWeapon);
+
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     // Update is called once per frame
@@ -72,23 +98,47 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             DeathSpin();
             rb.linearVelocity = new Vector3(0, 0, 0);
             return;
-        } else
-            loseMenu.SetActive(false);
+        } 
 
         if (GameManager.Instance.IsGameOver)
         {
             rb.linearVelocity = new Vector3(0, 0, 0);
             return;
         }
-        
-        Movement();
-        TurnPlayer();
-		RenderCamera();
-        Evade();
-        SwitchWeapon();
-        UseWeapon();
-        UpdateLaser();
+
+        if (isDead == false)
+        {
+            Movement();
+            TurnPlayer();
+            RenderCamera();
+            Evade();
+            SwitchWeapon();
+            UseWeapon();
+            UpdateLaser();
+        }
 	}
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject spawn = GameObject.Find("PlayerSpawn");
+        isDead = false;
+
+        if(spawn != null)
+        {
+            playerSpawn = spawn.transform;
+            transform.position = playerSpawn.position;
+        }
+
+        playerCam = Camera.main.gameObject;
+        healthBar = GameObject.Find("Bar").GetComponent<Image>();
+        healthText = GameObject.Find("AmountText").GetComponentInChildren<TMP_Text>();
+        buttons = FindFirstObjectByType<buttonFunctions>();
+
+        loseMenu = GameObject.Find("UI").transform.Find("MainRoot/LoseMenu").gameObject;
+
+        UpdateHealthUI();
+    }
+
 
     public void Respawn()
     {

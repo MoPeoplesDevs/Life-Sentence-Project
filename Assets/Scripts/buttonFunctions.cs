@@ -98,7 +98,7 @@ public class buttonFunctions : MonoBehaviour
         if(Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.delta.ReadValue().magnitude > 0.2f)
         {
             isControllerActive = false;
-            Cursor.visible = true;
+            Cursor.visible = IsPaused;
             
             //EventSystem.current.SetSelectedGameObject(null);
         }
