@@ -224,8 +224,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
     private void OnDestroy()
     {
         WaveManager.OnEnemyKilled -= UpdateActiveEnemies;

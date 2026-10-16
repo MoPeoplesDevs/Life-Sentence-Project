@@ -75,7 +75,7 @@
                 {
                     "enemies":[
                         {
-                            "type": "Shield",
+                            "type": "RiotGuard",
                             "count": 4,
                             "maxDelay": 0.1
                         }
@@ -89,7 +89,7 @@
                             "maxDelay": 0
                         },
                         {
-                            "type": "Shield",
+                            "type": "RiotGuard",
                             "count": 4,
                             "maxDelay": 0
                         }

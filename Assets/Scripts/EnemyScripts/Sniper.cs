@@ -6,7 +6,6 @@ public class Sniper : Enemy
 {
     [Header("Combat")]
     [SerializeField] EnemyProjectile projectilePrefab;
-    [SerializeField] float fireRate = 1f;
     [SerializeField] float projectileSpeed = 6f;
     [SerializeField] float projectileDamage = 10f;
 
@@ -27,6 +26,10 @@ public class Sniper : Enemy
     private float nextRelocation;
     private float movementTimeout;
     private bool isRelocating;
+
+    //
+    private string variant;
+    private EnemyAnimator animator;
 
     void Start()
     {
@@ -50,6 +53,10 @@ public class Sniper : Enemy
         }
 
         nextRelocation = Time.time;
+
+        //
+        animator = gameObject.AddComponent<EnemyAnimator>();
+        animator.Initialize(variant, this, "Sniper");
     }
 
     void Update()
@@ -227,6 +234,7 @@ public class Sniper : Enemy
 
         Vector2 position = Vector2.MoveTowards(rigidBody.position, target, SPEED * Time.fixedDeltaTime);
         rigidBody.MovePosition(position);
+        base.Move();
     }
 
     private void FinishRelocating()
@@ -246,5 +254,6 @@ public class Sniper : Enemy
         );
 
         projectile.Initialize(plrDirection, projectileSpeed, projectileDamage);
+        base.Attack();
     }
 }
