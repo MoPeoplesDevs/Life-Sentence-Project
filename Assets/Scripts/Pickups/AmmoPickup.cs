@@ -51,19 +51,14 @@ public class AmmoPickup : MonoBehaviour, IPickup
 
         if (ammoAdded)
         {
-
-            Debug.Log("Ammo successfully added: " + ammoType);
             Destroy(gameObject);
         }
-        else
-        {
-            Debug.LogWarning("Ammo was NOT added: " + ammoType);
-        }
+       
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Something entered the ammo pickup: " + other.name);
+        
         if (other.CompareTag("Player"))
         {
             Pickup();
