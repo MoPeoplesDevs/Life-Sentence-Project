@@ -12,6 +12,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     public static Playercontroller playerInstance;
 
+    [Header("Player Stats")]
     [SerializeField] GameObject playerCam;
     [Range(1, 10)][SerializeField] float playerSpeed;
     [Range(0, 100)][SerializeField] float playerHP;
@@ -23,15 +24,19 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     float deathRotation;
     [SerializeField] float spinSpeed;
 
+    [Header ("Player Abilities")]
     bool isEvading;
     bool isInvincible;
     bool isDead;
     private List<GameObject> weaponInventory = new List<GameObject>();
     private int currentWeapon;
 
+    [Header ("Weapon")]
     [SerializeField] GameObject startingWeapon;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
+    [Range(0,1)][SerializeField] float fireRate;
+    private float nextFireTime;
     [SerializeField] GameObject loseMenu;
     [SerializeField] private buttonFunctions buttons;
 
@@ -65,7 +70,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerCollider = GetComponent<CircleCollider2D>();
@@ -89,7 +93,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -160,13 +163,11 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             return;
         }
 
-        // stores the players horizontal and vertical movement
         float x = 0;
         float y = 0;
 
         if (Keyboard.current != null)
         {
-            //moves the direction when the specified key is held
             if (Keyboard.current.aKey.isPressed)
                 x = -1;
 
@@ -180,29 +181,17 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
                 y = -1;
         }
         
-        //stores the x and y movment
         playerInput = new Vector2(x, y);
-
-        // moves the player
         rb.linearVelocity = playerInput.normalized * playerSpeed;
         
     }
 
     void TurnPlayer()
     { 
-        //Gets the current position of the mouse on the screen
         mousePos = Mouse.current.position.ReadValue();
-
-        // converts teh mouses screen position into a posistion in the game would
         mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
-
-        //gets the direction fromthe player to the mouse
         playerDir = mouseWorldPos - new Vector2(transform.position.x, transform.position.y);
-        
-        // calculates the angle the player needs toward the mouse
         float playerAngle = Mathf.Atan2(playerDir.y, playerDir.x) * Mathf.Rad2Deg;
-
-        // Rotates the player to face the calculated direction
         rb.MoveRotation(playerAngle - 90);
     }
 
@@ -227,15 +216,17 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     void Shoot()
     {
         if (buttons.IsPaused || GameManager.Instance.IsGameOver) return;
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        if(Mouse.current.leftButton.wasPressedThisFrame && Time.time >= nextFireTime)
         {
             Instantiate(bullet, firePoint.position, transform.rotation);
+
+            nextFireTime = Time.time + fireRate;
         }
     }
 
     void Evade()
     {
-        if (Keyboard.current.leftShiftKey.wasPressedThisFrame)
+        if (Keyboard.current.leftShiftKey.wasPressedThisFrame && evadeCooldownTimer <= 0 && !isEvading)
         {
             isEvading = true;
             isInvincible = true;

@@ -158,7 +158,6 @@ MonoBehaviour:
   nextLevelButton: {fileID: 320981108}
   restartButton: {fileID: 435920524}
   mediumButton: {fileID: 0}
-  isControllerActive: 0
   Playercontroller: {fileID: 1927028768}
 --- !u!4 &21973194
 Transform:
@@ -4316,6 +4315,9 @@ MonoBehaviour:
   bulletSpeed: 1
   fireRate: 1
   bulletLifetime: 0.1
+  magazineSize: 0
+  maxReserveAmmo: 0
+  reloadTime: 0
   bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
   firePoint: {fileID: 503228912}
   shotgunActive: 0
@@ -7601,11 +7603,12 @@ MonoBehaviour:
   playerHP: 100
   evadeSpeed: 2
   evadeTime: 0.5
-  evadeCooldown: 2
+  evadeCooldown: 1.25
   spinSpeed: 720
   startingWeapon: {fileID: 361067637}
   bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
   firePoint: {fileID: 1994063379}
+  fireRate: 0.2
   loseMenu: {fileID: 1870256861}
   buttons: {fileID: 21973193}
   wallLayer:
