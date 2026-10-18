@@ -88,14 +88,19 @@ public class WaveManager : MonoBehaviour
                 if (!CanContinue()) yield break;
 
                 GameObject prefab = GetEnemyPrefab(data.type);
-                if (prefab == null) break;
+                if (prefab == null)
+                {
+                    Debug.LogWarning($"Failed to find prefab for enemy type: {data.type}");
+                    break;
+                }
 
+                Vector2 offset = UnityEngine.Random.insideUnitCircle * 1.5f;
                 Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Count)];
-                GameObject enemy = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-                
+                Vector3 spawnPosition = spawnPoint.position + new Vector3(offset.x, offset.y, 0f);
+                GameObject enemy = Instantiate(prefab, spawnPosition, Quaternion.identity);
                 WaveEnemyTracker tracker = enemy.AddComponent<WaveEnemyTracker>();
+                
                 tracker.SetWaveManager(this);
-
                 activeEnemies++;
                 OnEnemySpawned?.Invoke(activeEnemies);
 

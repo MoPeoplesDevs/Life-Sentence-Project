@@ -222,9 +222,13 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     void Shoot()
     {
         if (buttons.IsPaused || GameManager.Instance.IsGameOver) return;
-        if(Mouse.current.leftButton.wasPressedThisFrame && Time.time >= nextFireTime)
+        if (Mouse.current.leftButton.wasPressedThisFrame && Time.time >= nextFireTime)
         {
-            Instantiate(bullet, firePoint.position, transform.rotation);
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector2 direction = mousePosition - (Vector2)firePoint.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            Instantiate(bullet, firePoint.position, Quaternion.Euler(0f, 0f, angle - 90f));
             playerAnimation.SetTrigger("Shoot");
             nextFireTime = Time.time + fireRate;
         }
