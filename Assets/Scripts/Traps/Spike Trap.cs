@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public class SpikeTrap : MonoBehaviour
 {
-	[Range(0, 10)][SerializeField] int damage;
+	[Range(1, 100)][SerializeField] int damage = 25;
 
-	[SerializeField] float deployDelay = 0.35f;
+	[SerializeField] float deployDelay = 0.15f;
 	[SerializeField] float deployTime = 0.15f;
-	[SerializeField] float activeTime = 1.5f;
-	[SerializeField] float retractTime = 0.25f;
+	[SerializeField] float activeTime = 1f;
+	[SerializeField] float retractTime = 0.2f;
 
 	[SerializeField] float undeployedScale = 0.2f;
 	[SerializeField] float deployedScale = 1f;
