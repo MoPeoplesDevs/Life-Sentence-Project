@@ -121,7 +121,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             Evade();
             SwitchWeapon();
             UseWeapon();
-            UpdateLaser();
         }
 	}
 
@@ -342,35 +341,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     }
     
-    private void UpdateLaser()
-    {
-        int plrLayer = ~LayerMask.GetMask("Player");
-
-
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.SetLayerMask(plrLayer);
-        filter.useTriggers = false;
-
-        float beamLength = 50f;
-        RaycastHit2D[] results = new RaycastHit2D[1];
-        int hitCount = Physics2D.Raycast(transform.position, transform.up, filter, results, beamLength);
-
-        if (hitCount > 0)
-        {
-            RaycastHit2D hit = results[0];
-            if (hit != null)
-            {
-                if (hit.transform.gameObject.name == "Walls")
-                    beamLength = hit.distance + 1.5f;
-                else
-                    beamLength = (hit.transform.position - transform.position).magnitude;
-            }
-        }
-
-        laser.localScale = new Vector3(0.15f, beamLength, 1f);
-        laser.localPosition = new Vector3(0f, beamLength / 2f, 0f);
-    }
-
     public bool AddAmmoToWeapon(AmmoPickup.AmmoType ammoType, int amount)
     {
         foreach (GameObject weapon in weaponInventory)
