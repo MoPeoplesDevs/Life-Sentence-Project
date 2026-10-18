@@ -185,16 +185,22 @@ public class GameManager : MonoBehaviour
             waveCounter = hud.Find("Enemy/Wave").GetComponent<TMP_Text>();
             enemyCounter = hud.Find("Enemy/Amount").GetComponent<TMP_Text>();
         }
-        
+
+        Pathfinder.Initialize(groundTiles, trapMask, doorTiles, wallTiles);
+
         // Load level data
         string sceneName = SceneManager.GetActiveScene().name;
         Level = Levels.Find(level => level.name == sceneName);
 
         if (Level == null)
+        {
             Debug.LogWarning($"FAILED TO FIND LEVEL DATA FOR SCENE: {sceneName}");
 
+            return;
+        }
+
         WaveManager.Instance.Initialize(Level);
-        Pathfinder.Initialize(groundTiles, trapMask, doorTiles, wallTiles);
+        
     }
 
     public void SetDifficulty()
