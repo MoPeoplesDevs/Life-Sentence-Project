@@ -261,7 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WardenBossController
   bossHealth: {fileID: 0}
   player: {fileID: 0}
-  guardPrefab: {fileID: 0}
+  guardPrefab: {fileID: 7239499321924668746, guid: 243147e23690eb44b93cab8f6789b959, type: 3}
   guardSpawnPoints: []
   guardsToSpawn: 3
   chaseSpeed: 4
@@ -271,6 +271,13 @@ MonoBehaviour:
   pathRefreshRate: 0.4
   agentRadius: 1
   recoveryTime: 2
+  guardPhaseProjectile: {fileID: -4476736061826955653, guid: 594975dcd5cd67647a1d257a67f1e694, type: 3}
+  firePoint: {fileID: 267755659988234053}
+  aimWarning: {fileID: 0}
+  shotInterval: 2
+  shotWindup: 0.6
+  projectileSpeed: 7
+  projectileDamage: 10
 --- !u!114 &958515923089510388
 MonoBehaviour:
   m_ObjectHideFlags: 0
