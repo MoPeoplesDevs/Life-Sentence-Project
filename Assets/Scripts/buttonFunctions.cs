@@ -23,7 +23,6 @@ public class buttonFunctions : MonoBehaviour
 
     public bool IsPaused { get; private set; }
 
-    public bool isControllerActive;
 
     [SerializeField] private Playercontroller Playercontroller;
     
@@ -40,67 +39,17 @@ public class buttonFunctions : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame || (Gamepad.current != null && Gamepad.current.startButton.wasPressedThisFrame))
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
             TogglePause();
 
-        if(creditsMenu.activeInHierarchy && (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame))
+        if (creditsMenu.activeInHierarchy && (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame))
         {
             creditsMenu.SetActive(false);
+
             if (pauseMenu != null)
             {
                 pauseMenu.SetActive(true);
             }
-            
-        }
-
-        if (Gamepad.current != null)
-        {
-            if(Mouse.current != null && Mouse.current.delta.ReadValue().sqrMagnitude > 0.1f)
-            {
-                isControllerActive = false;
-                Cursor.visible = IsPaused;
-            }
-
-            if (Gamepad.current.leftStick.ReadValue().sqrMagnitude > 0.25f && !isControllerActive)
-            {
-                Cursor.visible = false;
-
-                if (!isControllerActive)
-                {
-                    isControllerActive = true;
-
-
-                    if(difficultyMenu != null && difficultyMenu.activeInHierarchy && mediumButton != null)
-                    {
-                        EventSystem.current.SetSelectedGameObject(mediumButton);
-                    }
-                    else if (playButton != null && playButton.activeInHierarchy)
-                    {
-                        EventSystem.current.SetSelectedGameObject(playButton);
-                    }
-                    else if (pauseMenu != null && pauseMenu.activeInHierarchy && resumeButton != null)
-                    {
-                        EventSystem.current.SetSelectedGameObject(resumeButton);
-                    }
-                    else if (winMenu != null && winMenu.activeInHierarchy && nextLevelButton != null)
-                    {
-                        EventSystem.current.SetSelectedGameObject(nextLevelButton);
-                    }
-                    else if (loseMenu != null && loseMenu != null && loseMenu.activeInHierarchy && restartButton != null)
-                    {
-                        EventSystem.current.SetSelectedGameObject(restartButton);
-                    }
-                }
-
-            }
-        }
-
-        if(Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.delta.ReadValue().magnitude > 0.2f)
-        {
-            isControllerActive = false;
-            Cursor.visible = IsPaused;
-            
-            //EventSystem.current.SetSelectedGameObject(null);
         }
 
     }
@@ -178,10 +127,6 @@ public class buttonFunctions : MonoBehaviour
         UnityEngine.Cursor.visible = !IsPaused;
         UnityEngine.Cursor.lockState = !IsPaused ? CursorLockMode.None : CursorLockMode.Confined;
 
-        if ( IsPaused && isControllerActive && resumeButton != null)
-        {
-            EventSystem.current.SetSelectedGameObject(resumeButton);
-        }
     }
 
     public void ToggleCredits()
@@ -237,11 +182,6 @@ public class buttonFunctions : MonoBehaviour
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-
-        if (isControllerActive && nextLevelButton != null)
-        {
-            EventSystem.current.SetSelectedGameObject(nextLevelButton);
-        }
     }
 
     public void ShowDifficulty()
@@ -249,10 +189,6 @@ public class buttonFunctions : MonoBehaviour
         if(difficultyMenu != null)
         {
             difficultyMenu.SetActive(true);
-        }
-        if(mediumButton != null)
-        {
-            EventSystem.current.SetSelectedGameObject(mediumButton);
         }
     }
 
@@ -262,10 +198,6 @@ public class buttonFunctions : MonoBehaviour
 
         difficultyMenu.SetActive(false);
 
-        if (isControllerActive && playButton != null)
-        {
-            EventSystem.current.SetSelectedGameObject(playButton);
-        }
     }
 
     public void SetMedium()
@@ -274,10 +206,6 @@ public class buttonFunctions : MonoBehaviour
 
         difficultyMenu.SetActive(false);
 
-        if (isControllerActive && playButton != null)
-        {
-            EventSystem.current.SetSelectedGameObject(playButton);
-        }
     }
 
     public void SetHard()
@@ -287,10 +215,6 @@ public class buttonFunctions : MonoBehaviour
 
         difficultyMenu.SetActive(false);
 
-        if (isControllerActive && playButton != null)
-        {
-            EventSystem.current.SetSelectedGameObject(playButton);
-        }
     }
 
     public void SetExpert()
@@ -299,9 +223,5 @@ public class buttonFunctions : MonoBehaviour
 
         difficultyMenu.SetActive(false);
 
-        if (isControllerActive && playButton != null)
-        {
-            EventSystem.current.SetSelectedGameObject(playButton);
-        }
     }
 }
