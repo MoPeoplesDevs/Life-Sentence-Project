@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238ae08350e373246aa0b3de310d15ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Guard
-  MAX_HEALTH: 75
+  MAX_HEALTH: 45
   SPEED: 2.5
   ignoreRaycastLayer:
     serializedVersion: 2
@@ -436,8 +436,8 @@ MonoBehaviour:
   deathFlashes: 4
   spriteRenderer: {fileID: 0}
   lastKnownLocation: {x: 0, y: 0, z: 0}
-  minDistance: 10
-  maxDistance: 45
+  minDistance: 7
+  maxDistance: 30
   repathInterval: 0.5
   projectilePrefab: {fileID: -4476736061826955653, guid: 594975dcd5cd67647a1d257a67f1e694, type: 3}
   projectileSpeed: 9

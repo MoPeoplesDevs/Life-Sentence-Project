@@ -55,6 +55,7 @@ public class Sniper : Enemy
         nextRelocation = Time.time;
 
         //
+        variant = $"Tone{UnityEngine.Random.Range(1, 4)}";
         animator = gameObject.AddComponent<EnemyAnimator>();
         animator.Initialize(variant, this, "Sniper");
     }
