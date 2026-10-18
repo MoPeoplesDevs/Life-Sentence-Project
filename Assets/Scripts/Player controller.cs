@@ -51,9 +51,13 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     Rigidbody2D rb;
     CircleCollider2D playerCollider;
     [SerializeField] Transform playerSpawn;
+    [SerializeField] private Transform weaponPivot;
+    [SerializeField] private Transform PlayerVisuals;
+
 
     [SerializeField] private Image healthBar;
     [SerializeField] private TMP_Text healthText;
+    [SerializeField] private Animator playerAnimation;
 
     private Transform laser;
 
@@ -149,6 +153,8 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         transform.position = playerSpawn.position;
         UpdateHealthUI();
         isDead = false;
+
+        PlayerVisuals.localRotation = Quaternion.identity;
     }
 
     void RenderCamera()
@@ -182,6 +188,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         }
         
         playerInput = new Vector2(x, y);
+        playerAnimation.SetBool("IsWalking", playerInput.sqrMagnitude > 0);
         rb.linearVelocity = playerInput.normalized * playerSpeed;
         
     }
@@ -192,7 +199,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
         playerDir = mouseWorldPos - new Vector2(transform.position.x, transform.position.y);
         float playerAngle = Mathf.Atan2(playerDir.y, playerDir.x) * Mathf.Rad2Deg;
-        rb.MoveRotation(playerAngle - 90);
+        weaponPivot.rotation = Quaternion.Euler(0,0,playerAngle - 90);
     }
 
     public void Heal(int healAmount)
@@ -219,7 +226,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         if(Mouse.current.leftButton.wasPressedThisFrame && Time.time >= nextFireTime)
         {
             Instantiate(bullet, firePoint.position, transform.rotation);
-
+            playerAnimation.SetTrigger("Shoot");
             nextFireTime = Time.time + fireRate;
         }
     }
@@ -266,7 +273,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void DeathSpin()
     {
-        transform.Rotate(0, 0, spinSpeed * Time.deltaTime);
+        PlayerVisuals.Rotate(0, 0, spinSpeed * Time.deltaTime);
         deathRotation += spinSpeed * Time.deltaTime;
 
         if(deathRotation >= 1080)
