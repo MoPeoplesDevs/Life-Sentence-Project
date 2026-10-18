@@ -437,7 +437,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   lastKnownLocation: {x: 0, y: 0, z: 0}
   minDistance: 7
-  maxDistance: 30
+  maxDistance: 12
   repathInterval: 0.5
   projectilePrefab: {fileID: -4476736061826955653, guid: 594975dcd5cd67647a1d257a67f1e694, type: 3}
   projectileSpeed: 9
