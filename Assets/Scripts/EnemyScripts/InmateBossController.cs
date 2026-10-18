@@ -37,6 +37,9 @@ public class InmateBossController : MonoBehaviour
     [Header("Recovery")]
     [SerializeField] float recoveryTime = 1.5f;
 
+    [Header("Charge Warning")]
+    [SerializeField] LineRenderer chargeWarning;
+
     InmateState currentState = InmateState.Chase;
 
     List<Vector3> currentPath = new List<Vector3>();
@@ -55,6 +58,8 @@ public class InmateBossController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        HideChargeWarning();
+
         bossHealth = GetComponent<BossHealth>();
 
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -81,9 +86,13 @@ public class InmateBossController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.IsGameOver) return;
-
-        if (player == null) return;
+        if (GameManager.Instance == null ||
+        GameManager.Instance.IsGameOver ||
+        player == null)
+        {
+            HideChargeWarning();
+            return;
+        }
 
         switch (currentState)
         {
@@ -116,8 +125,7 @@ public class InmateBossController : MonoBehaviour
 
         if (distance <= chargeTriggerDistance)
         {
-            stateTimer = chargeWindupTime;
-            currentState = InmateState.ChargeWindup;
+            BeginChargeWindup();
             return;
         }
 
@@ -161,7 +169,7 @@ public class InmateBossController : MonoBehaviour
 
         if (stateTimer <= 0f)
         {
-            chargeDirection = ((Vector2)player.position - (Vector2)transform.position).normalized;
+            HideChargeWarning();
 
             chargeHitPlayer = false;
             stateTimer = chargeDuration;
@@ -243,6 +251,8 @@ public class InmateBossController : MonoBehaviour
 
     void BeginRecovery()
     {
+        HideChargeWarning();
+
         stateTimer = recoveryTime;
         currentState = InmateState.Recovery;
     }
@@ -256,5 +266,66 @@ public class InmateBossController : MonoBehaviour
             pathRefreshTimer = 0f;
             currentState = InmateState.Chase;
         }
+    }
+
+    void BeginChargeWindup()
+    {
+        // Lock the direction before showing the warning.
+        chargeDirection =
+            ((Vector2)player.position - (Vector2)transform.position).normalized;
+
+        stateTimer = chargeWindupTime;
+        currentState = InmateState.ChargeWindup;
+
+        if (chargeWarning != null)
+        {
+            float speed = phaseTwo ? chargeSpeed * 1.4f : chargeSpeed;
+
+            float warningDistance =
+            GetChargeWarningDistance(speed * chargeDuration);
+
+            Vector3 start = transform.position;
+            Vector3 end = start +
+                (Vector3)(chargeDirection * warningDistance);
+
+            chargeWarning.useWorldSpace = true;
+            chargeWarning.positionCount = 2;
+            chargeWarning.SetPosition(0, start);
+            chargeWarning.SetPosition(1, end);
+            chargeWarning.enabled = true;
+        }
+    }
+
+    void HideChargeWarning()
+    {
+        if (chargeWarning != null)
+            chargeWarning.enabled = false;
+    }
+
+    void OnDisable()
+    {
+        HideChargeWarning();
+    }
+
+    float GetChargeWarningDistance(float maxDistance)
+    {
+        Vector2 origin = transform.position;
+        float clearDistance = 0f;
+
+        while (clearDistance < maxDistance)
+        {
+            float nextDistance =
+                Mathf.Min(clearDistance + 0.05f, maxDistance);
+
+            Vector2 nextPosition =
+                origin + chargeDirection * nextDistance;
+
+            if (ChargeBlocked(nextPosition))
+                break;
+
+            clearDistance = nextDistance;
+        }
+
+        return clearDistance;
     }
 }
