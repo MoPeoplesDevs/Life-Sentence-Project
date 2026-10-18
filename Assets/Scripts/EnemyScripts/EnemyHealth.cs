@@ -4,10 +4,10 @@ using UnityEngine.UI;
 public class EnemyHealth : MonoBehaviour, IDamage
 {
 
-    [SerializeField] int enemyHP;
+    [SerializeField] float enemyHP;
     [SerializeField] private Image healthBar;
 
-    private int enemyMaxHP;
+    private float enemyMaxHP;
 
     public void Start()
     {
@@ -15,10 +15,12 @@ public class EnemyHealth : MonoBehaviour, IDamage
     }
 
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         enemyHP -= damage;
-        healthBar.fillAmount = (float)enemyHP / enemyMaxHP;
+
+        if (healthBar != null)
+            healthBar.fillAmount = enemyHP / enemyMaxHP;
 
         if (enemyHP <= 0)
         {
