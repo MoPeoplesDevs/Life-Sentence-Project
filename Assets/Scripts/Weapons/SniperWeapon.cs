@@ -9,12 +9,27 @@ public class SniperWeapon : MonoBehaviour, IWeapon
     [Range(0.1f, 5f)][SerializeField] private float fireRate = 1f;
     [Range(1f, 10f)][SerializeField] private float bulletLifetime = 5f;
 
+    [Header("Ammo Settings")]
+    [Range(1, 100)][SerializeField] private int magazineSize;
+    [Range(0, 500)][SerializeField] private int maxReserveAmmo;
+    [Range(0.1f, 10f)][SerializeField] private float reloadTime;
+
+    private int currentAmmo;
+    private int reserveAmmo;
+    private bool isReloading;
+
     [Header("Bullet Settings")]
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform firePoint;
 
     private float nextFireTime;
     public bool sniperActive;
+
+    private void Start()
+    {
+        currentAmmo = magazineSize;
+        reserveAmmo = maxReserveAmmo;
+    }
 
     public void SetStats(int damage, float bulletSpeed, float fireRate)
     {
@@ -77,10 +92,22 @@ public class SniperWeapon : MonoBehaviour, IWeapon
             nextFireTime = Time.time + (1f / fireRate);
             Shoot();
         }
+
+        if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            Reload();
+        }
     }
 
     public void Shoot()
     {
+        if (isReloading || currentAmmo <= 0)
+        {
+            return;
+        }
+
+        currentAmmo--;
+
         GameObject newBullet = Instantiate(bullet, firePoint.position, firePoint.rotation);
 
         Destroy(newBullet, bulletLifetime);
@@ -92,5 +119,45 @@ public class SniperWeapon : MonoBehaviour, IWeapon
             bulletScript.SetStats(damage, bulletSpeed);
         }
     }
+
+    public bool AddAmmo(int amount)
+    {
+        if (reserveAmmo >= maxReserveAmmo)
+        {
+            return false;
+        }
+
+        reserveAmmo += amount;
+
+        if (reserveAmmo > maxReserveAmmo)
+        {
+            reserveAmmo = maxReserveAmmo;
+        }
+
+        return true;
+    }
+
+    public void Reload()
+    {
+        if (isReloading || currentAmmo >= magazineSize || reserveAmmo <= 0)
+        {
+            return;
+        }
+
+        isReloading = true;
+
+        int ammoNeeded = magazineSize - currentAmmo;
+        int ammoToReload = Mathf.Min(ammoNeeded, reserveAmmo);
+
+        currentAmmo += ammoToReload;
+        reserveAmmo -= ammoToReload;
+
+        isReloading = false;
+
+        Debug.Log("Reloaded. Magazine: " + currentAmmo +
+                  " | Reserve: " + reserveAmmo);
+    }
+
+
 
 }
