@@ -65,7 +65,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     {
         if(playerInstance != null && playerInstance != this)
         {
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
             return;
         }
 
@@ -126,6 +126,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("OnSceneLoaded called:" +  scene.name)    ;
         GameObject spawn = GameObject.Find("PlayerSpawn");
         isDead = false;
 

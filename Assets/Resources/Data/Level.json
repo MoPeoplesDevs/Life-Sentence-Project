@@ -1,115 +1,228 @@
 {
-    "levels": [
+  "levels": [
+    {
+      "name": "SampleScene",
+      "waves": [
         {
-            "name": "SampleScene",
-            "waves": [
-                {
-                    "enemies": [
-                        {
-                            "type": "Horde",
-                            "count": 1,
-                            "maxDelay": 0.25
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Level 1",
-            "waves": [
-                {
-                    "enemies": [
-                        {
-                            "type": "Horde",
-                            "count": 4,
-                            "maxDelay": 0.25
-                        }
-                    ]
-                },
-                {
-                    "enemies": [
-                        {
-                            "type": "Heavy",
-                            "count": 2,
-                            "maxDelay": 1.5
-                        }
-                    ]
-                },
-                {
-                    "enemies": [
-                        {
-                            "type": "Horde",
-                            "count": 12,
-                            "maxDelay": 0.25
-                        },
-                        {
-                            "type": "Heavy",
-                            "count": 2,
-                            "maxDelay": 0.25
-                        }
-                    ]
-                },
-                {
-                    "enemies": [
-                        {
-                            "type": "Guard",
-                            "count": 4,
-                            "maxDelay": 0
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "Level 2",
-            "waves": [
-                {
-                    "enemies": [
-                        {
-                            "type": "Guard",
-                            "count": 4,
-                            "maxDelay": 0.25
-                        }
-                    ]
-                },
-                {
-                    "enemies":[
-                        {
-                            "type": "RiotGuard",
-                            "count": 4,
-                            "maxDelay": 0.1
-                        }
-                    ]  
-                },
-                {
-                    "enemies": [
-                        {
-                            "type": "Sniper",
-                            "count": 2,
-                            "maxDelay": 0
-                        },
-                        {
-                            "type": "RiotGuard",
-                            "count": 4,
-                            "maxDelay": 0
-                        }
-                    ]
-                },
-                {
-                    "enemies": [
-                        {
-                            "type": "Guard",
-                            "count": 6,
-                            "maxDelay": 0
-                        },
-                        {
-                            "type": "Sniper",
-                            "count": 4,
-                            "maxDelay": 0
-                        }
-                    ]
-                }
-            ]
+          "enemies": [
+            {
+              "type": "Horde",
+              "count": 1,
+              "maxDelay": 0.25
+            }
+          ]
         }
-    ]
+      ]
+    },
+    {
+      "name": "Level 1",
+      "waves": [
+        {
+          "enemies": [
+            {
+              "type": "Horde",
+              "count": 4,
+              "maxDelay": 0.25
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "Heavy",
+              "count": 2,
+              "maxDelay": 1.5
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "Horde",
+              "count": 12,
+              "maxDelay": 0.25
+            },
+            {
+              "type": "Heavy",
+              "count": 2,
+              "maxDelay": 0.25
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "Guard",
+              "count": 4,
+              "maxDelay": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Level 2",
+      "waves": [
+        {
+          "enemies": [
+            {
+              "type": "Guard",
+              "count": 4,
+              "maxDelay": 0.25
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "RiotGuard",
+              "count": 4,
+              "maxDelay": 0.1
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "Sniper",
+              "count": 2,
+              "maxDelay": 0
+            },
+            {
+              "type": "RiotGuard",
+              "count": 4,
+              "maxDelay": 0
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "Guard",
+              "count": 6,
+              "maxDelay": 0
+            },
+            {
+              "type": "Sniper",
+              "count": 4,
+              "maxDelay": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Level 3",
+      "waves": [
+        {
+          "enemies": [
+            {
+              "type": "Horde",
+              "count": 8,
+              "maxDelay": 0.25
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "RiotGuard",
+              "count": 8,
+              "maxDelay": 0.1
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "Guard",
+              "count": 10,
+              "maxDelay": 0
+            },
+            {
+              "type": "Heavy",
+              "count": 8,
+              "maxDelay": 0
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "Heavy",
+              "count": 6,
+              "maxDelay": 0
+            },
+            {
+              "type": "Guard",
+              "count": 5,
+              "maxDelay": 0
+            },
+            {
+              "type": "Horde",
+              "count": 4,
+              "maxDelay": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Level 4",
+      "waves": [
+        {
+          "enemies": [
+            {
+              "type": "Horde",
+              "count": 24,
+              "maxDelay": 0.25
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "RiotGuard",
+              "count": 12,
+              "maxDelay": 0.1
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "Guard",
+              "count": 16,
+              "maxDelay": 0
+            },
+            {
+              "type": "Heavy",
+              "count": 8,
+              "maxDelay": 0
+            }
+          ]
+        },
+        {
+          "enemies": [
+            {
+              "type": "Heavy",
+              "count": 10,
+              "maxDelay": 0
+            },
+            {
+              "type": "Guard",
+              "count": 7,
+              "maxDelay": 0
+            },
+            {
+              "type": "Horde",
+              "count": 12,
+              "maxDelay": 0
+            }
+          ]
+        }
+      ]
+    }
+
+  ]
 }

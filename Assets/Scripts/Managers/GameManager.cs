@@ -174,7 +174,8 @@ public class GameManager : MonoBehaviour
         if (grid != null)
         {
             wallTiles = grid.transform.Find("Walls").GetComponent<Tilemap>();
-            doorTiles = grid.transform.Find("Doors").GetComponent<Tilemap>();
+            Transform doors = grid.transform.Find("Doors");
+            doorTiles = doors != null ? doors.GetComponent<Tilemap>() : null;
             groundTiles = grid.transform.Find("Ground").GetComponent<Tilemap>();
         }
 
