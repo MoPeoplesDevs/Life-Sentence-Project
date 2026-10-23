@@ -355,63 +355,43 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
             if (ammoType == AmmoPickup.AmmoType.MachineGun)
             {
-                Debug.Log("Machine gun ammo pickup requested.");
-
-                MachineGun machineGun = weapon.GetComponent<MachineGun>();
+                 MachineGun machineGun = weapon.GetComponent<MachineGun>();
 
                 if (machineGun == null)
                 {
-                    Debug.LogWarning("MachineGun script not found on: " + weapon.name);
                     continue;
                 }
 
-                Debug.Log("Found machine gun. Attempting to add " + amount + " ammo.");
-
                 bool ammoAdded = machineGun.AddAmmo(amount);
-
-                Debug.Log("Machine gun ammo added: " + ammoAdded);
 
                 return ammoAdded;
             }
 
             if (ammoType == AmmoPickup.AmmoType.Shotgun)
             {
-                Debug.Log("Shotgun ammo pickup requested.");
-
                 ShotgunWeapon shotgun = weapon.GetComponent<ShotgunWeapon>();
 
                 if (shotgun == null)
                 {
-                    Debug.LogWarning("ShotgunWeapon script not found on: " + weapon.name);
                     continue;
                 }
 
-                Debug.Log("Found shotgun. Attempting to add " + amount + " ammo.");
-
                 bool ammoAdded = shotgun.AddAmmo(amount);
-
-                Debug.Log("Ammo added: " + ammoAdded);
 
                 return ammoAdded;
             }
 
             if (ammoType == AmmoPickup.AmmoType.Sniper)
             {
-                Debug.Log("Sniper ammo pickup requested.");
-
                 SniperWeapon sniper = weapon.GetComponent<SniperWeapon>();
 
                 if (sniper == null)
                 {
-                    Debug.LogWarning("SniperWeapon script not found on: " + weapon.name);
+                    
                     continue;
                 }
 
-                Debug.Log("Found sniper. Attempting to add " + amount + " ammo.");
-
                 bool ammoAdded = sniper.AddAmmo(amount);
-
-                Debug.Log("Sniper ammo added: " + ammoAdded);
 
                 return ammoAdded;
             }
@@ -419,7 +399,5 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
         return false;
     }
-
-
 
 }

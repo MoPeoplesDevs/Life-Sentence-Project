@@ -154,8 +154,6 @@ public class MachineGun : MonoBehaviour, IWeapon
 
         isReloading = false;
 
-        Debug.Log("Reloaded. Magazine: " + currentAmmo +
-                  " | Reserve: " + reserveAmmo);
     }
 
 

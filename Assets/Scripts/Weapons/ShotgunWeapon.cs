@@ -122,8 +122,6 @@ public class ShotgunWeapon : MonoBehaviour, IWeapon
 
         currentAmmo--;
 
-        Debug.Log("SHOTGUN SHOOTING: " + bulletCount + " bullets");
-
         for (int i = 0; i < bulletCount; i++)
         {
             float spread = Random.Range(-bulletSpread, bulletSpread);
@@ -179,8 +177,7 @@ public class ShotgunWeapon : MonoBehaviour, IWeapon
 
         isReloading = false;
 
-        Debug.Log("Reloaded. Magazine: " + currentAmmo +
-                  " | Reserve: " + reserveAmmo);
+       
     }
 
 

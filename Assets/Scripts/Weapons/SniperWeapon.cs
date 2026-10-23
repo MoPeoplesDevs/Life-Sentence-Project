@@ -154,8 +154,7 @@ public class SniperWeapon : MonoBehaviour, IWeapon
 
         isReloading = false;
 
-        Debug.Log("Reloaded. Magazine: " + currentAmmo +
-                  " | Reserve: " + reserveAmmo);
+       
     }
 
 
