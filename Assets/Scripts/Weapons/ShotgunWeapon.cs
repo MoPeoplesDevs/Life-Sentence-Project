@@ -21,6 +21,9 @@ public class ShotgunWeapon : MonoBehaviour, IWeapon
     private int reserveAmmo;
     private bool isReloading;
 
+    public int CurrentAmmo => currentAmmo;
+    public int ReserveAmmo => reserveAmmo;
+
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform firePoint;
 

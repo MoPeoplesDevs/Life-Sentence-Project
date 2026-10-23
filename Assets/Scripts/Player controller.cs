@@ -400,4 +400,27 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         return false;
     }
 
+
+    public IWeapon GetCurrentWeapon()
+    {
+        if (weaponInventory.Count == 0)
+        {
+            return null;
+        }
+
+        if (currentWeapon < 0 || currentWeapon >= weaponInventory.Count)
+        {
+            return null;
+        }
+
+        GameObject weaponObject = weaponInventory[currentWeapon];
+
+        if (weaponObject == null || !weaponObject.activeSelf)
+        {
+            return null;
+        }
+
+        return weaponObject.GetComponent<IWeapon>();
+    }
+
 }
