@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System;
+using TMPro;
 
 public class buttonFunctions : MonoBehaviour
 {
@@ -11,12 +12,15 @@ public class buttonFunctions : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject creditsMenu;
     [SerializeField] private GameObject difficultyMenu;
+    [SerializeField] private GameObject mainMenu;
 
     [SerializeField] private GameObject playButton;
     [SerializeField] private GameObject resumeButton;
     [SerializeField] private GameObject nextLevelButton;
     [SerializeField] private GameObject restartButton;
     [SerializeField] private GameObject mediumButton;
+
+    [SerializeField] private TMP_Text selectedDifficulty;
 
     public event Action OnGameRestarted;
 
@@ -139,6 +143,7 @@ public class buttonFunctions : MonoBehaviour
                 pauseMenu.SetActive(false);
             }
         }
+        mainMenu.SetActive(isActive);
         creditsMenu.SetActive(!isActive);
     }
 
@@ -195,7 +200,7 @@ public class buttonFunctions : MonoBehaviour
     public void SetEasy()
     {
         GameManager.selectedDifficulty = Difficulty.Easy;
-
+        UpdateDifficultyText();
         difficultyMenu.SetActive(false);
 
     }
@@ -203,7 +208,7 @@ public class buttonFunctions : MonoBehaviour
     public void SetMedium()
     {
         GameManager.selectedDifficulty = Difficulty.Medium;
-
+        UpdateDifficultyText();
         difficultyMenu.SetActive(false);
 
     }
@@ -211,8 +216,7 @@ public class buttonFunctions : MonoBehaviour
     public void SetHard()
     {
         GameManager.selectedDifficulty = Difficulty.Hard;
-        
-
+        UpdateDifficultyText();
         difficultyMenu.SetActive(false);
 
     }
@@ -220,8 +224,13 @@ public class buttonFunctions : MonoBehaviour
     public void SetExpert()
     {
         GameManager.selectedDifficulty = Difficulty.Expert;
-
+        UpdateDifficultyText();
         difficultyMenu.SetActive(false);
 
+    }
+
+    public void UpdateDifficultyText()
+    {
+        selectedDifficulty.text = "Difficulty: " + GameManager.selectedDifficulty.ToString();
     }
 }

@@ -7546,7 +7546,7 @@ MonoBehaviour:
   maxReserveAmmo: 12
   reloadTime: 0.75
   bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 76386433}
   sniperActive: 0
 --- !u!4 &912205876
 Transform:
@@ -8652,7 +8652,7 @@ MonoBehaviour:
   maxReserveAmmo: 30
   reloadTime: 0.5
   bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
-  firePoint: {fileID: 2092093849}
+  firePoint: {fileID: 76386433}
   shotgunActive: 0
 --- !u!1 &1074043526
 GameObject:
@@ -23943,7 +23943,7 @@ MonoBehaviour:
   maxReserveAmmo: 300
   reloadTime: 0.25
   bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 76386433}
   machineGunActive: 0
 --- !u!4 &1529863458
 Transform:

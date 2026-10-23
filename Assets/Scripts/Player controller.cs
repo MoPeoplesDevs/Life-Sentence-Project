@@ -126,7 +126,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("OnSceneLoaded called:" +  scene.name)    ;
         GameObject spawn = GameObject.Find("PlayerSpawn");
         isDead = false;
 
@@ -177,7 +176,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             if (Keyboard.current.aKey.isPressed)
                 x = -1;
 
-            if (Keyboard.current.dKey.isPressed)
+            if (Keyboard.current.dKey.isPressed) 
                 x = 1;
 
             if (Keyboard.current.wKey.isPressed)
@@ -191,6 +190,8 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         playerAnimation.SetBool("IsWalking", playerInput.sqrMagnitude > 0);
         rb.linearVelocity = playerInput.normalized * playerSpeed;
         
+
+
     }
 
     void TurnPlayer()

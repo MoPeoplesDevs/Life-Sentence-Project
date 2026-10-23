@@ -4544,11 +4544,11 @@ MonoBehaviour:
   bulletSpeed: 1
   fireRate: 1
   bulletLifetime: 0.1
-  magazineSize: 0
+  magazineSize: 1
   maxReserveAmmo: 0
-  reloadTime: 0
+  reloadTime: 0.1
   bullet: {fileID: 6785803326396580241, guid: 878d8313067f6ec4ea4172472796a19b, type: 3}
-  firePoint: {fileID: 503228912}
+  firePoint: {fileID: 1922826982}
   shotgunActive: 0
 --- !u!114 &603388131
 MonoBehaviour:
