@@ -62,7 +62,6 @@ public class SpikeTrap : MonoBehaviour
 		active = true;
 
 		yield return new WaitForSeconds(deployDelay);
-
 		yield return ScaleSpikes(undeployedScale, deployedScale, deployTime);
 
 		foreach (Collider2D target in targetsInside)
