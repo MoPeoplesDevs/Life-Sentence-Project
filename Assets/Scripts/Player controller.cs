@@ -59,8 +59,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private Animator playerAnimation;
 
-    private Transform laser;
-
     void Awake()
     {
         if(playerInstance != null && playerInstance != this)
@@ -78,13 +76,11 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     {
         playerCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        laser = transform.Find("Red Dot");
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
         AddWeapon(startingWeapon);
-
     }
 
     private void OnEnable()
@@ -195,6 +191,8 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void TurnPlayer()
     { 
+        if (buttons.IsPaused) return;
+
         mousePos = Mouse.current.position.ReadValue();
         mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
         playerDir = mouseWorldPos - new Vector2(transform.position.x, transform.position.y);
