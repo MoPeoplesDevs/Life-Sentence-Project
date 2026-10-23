@@ -58,6 +58,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [SerializeField] private Image healthBar;
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private Animator playerAnimation;
+    [SerializeField] private GameObject reloadText;
+    [SerializeField] private Transform gunHolder;
+    [SerializeField] private Transform currentGunSprite;
 
     void Awake()
     {
@@ -118,7 +121,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             SwitchWeapon();
             UseWeapon();
         }
-	}
+        UpdateReloadText();
+        RotateGun();
+    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -328,22 +333,45 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         }
 
         for (int i = 0; i < weaponInventory.Count; i++)
-            {
-                if(i == currentWeapon)
-                {
-                    weaponInventory[i].SetActive(true);
+        {
+             if(i == currentWeapon)
+             {
+                 weaponInventory[i].SetActive(true);
 
-                }
-                else
-                {
-                    weaponInventory[i].SetActive(false);
+             }
+             else
+             {
+                 weaponInventory[i].SetActive(false);
 
-                }   
+             }   
 
-            }
+         }
+        UpdateGunSprite();
 
     }
-    
+
+    private void UpdateGunSprite()
+    {
+        if (weaponInventory.Count == 0)
+        {
+            return;
+        }
+
+        if (currentWeapon < 0 || currentWeapon >= weaponInventory.Count)
+        {
+            return;
+        }
+
+        GameObject weapon = weaponInventory[currentWeapon];
+
+        if (weapon == null)
+        {
+            return;
+        }
+
+        currentGunSprite = weapon.transform;
+    }
+
     public bool AddAmmoToWeapon(AmmoPickup.AmmoType ammoType, int amount)
     {
         foreach (GameObject weapon in weaponInventory)
@@ -421,6 +449,45 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         }
 
         return weaponObject.GetComponent<IWeapon>();
+    }
+
+    private void UpdateReloadText()
+    {
+        IWeapon current_weapon = GetCurrentWeapon();
+
+        if (reloadText == null)
+        {
+            return;
+        }
+
+        if (current_weapon != null && current_weapon.CurrentAmmo <= 0)
+        {
+            reloadText.SetActive(true);
+        }
+        else
+        {
+            reloadText.SetActive(false);
+        }
+    }
+
+    private void RotateGun()
+    {
+        IWeapon current_weapon = GetCurrentWeapon();
+
+        if (current_weapon == null || currentGunSprite == null)
+        {
+            return;
+        }
+
+        Vector2 mouse_position = Camera.main.ScreenToWorldPoint(
+            Mouse.current.position.ReadValue());
+
+        Vector2 direction = mouse_position -
+            (Vector2)currentGunSprite.position;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        currentGunSprite.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
 }
