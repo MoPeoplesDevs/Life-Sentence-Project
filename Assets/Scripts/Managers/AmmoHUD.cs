@@ -16,6 +16,18 @@ public class AmmoHUD : MonoBehaviour
 
         IWeapon weapon = playerController.GetCurrentWeapon();
 
+        if (weapon is DefaultWeapon)
+        {
+            ammoText.text = "Unlimited";
+
+            if (weaponNameText != null)
+            {
+                weaponNameText.text = "PISTOL";
+            }
+
+            return;
+        }
+
         if (weapon == null)
         {
             ammoText.text = "No Ammo";

@@ -28,8 +28,18 @@ public class COBossController : MonoBehaviour
 
     void HandleDeath()
     {
+        if (!IsAlive)
+            return;
+
         IsAlive = false;
         SetShield(false);
+
+        EnemyWeaponDrop weaponDrop = GetComponent<EnemyWeaponDrop>();
+
+        if (weaponDrop != null)
+        {
+            weaponDrop.DropWeapon();
+        }
     }
 
     public void SetShield(bool raised)
