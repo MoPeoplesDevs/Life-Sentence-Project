@@ -219,6 +219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3124896110979934777}
+  - component: {fileID: -1774278641800390250}
   - component: {fileID: 3128231133058288978}
   - component: {fileID: 8086787018130657646}
   - component: {fileID: 7154338418277300868}
@@ -248,6 +249,19 @@ Transform:
   - {fileID: 267755659988234053}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1774278641800390250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4865820463175617488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbbc24b7427c8c74599e3e936da6058f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyWeaponDrop
+  weaponPickup: {fileID: 3694857099201700130, guid: 0904b91d17c3a314b85996805b2a71ec, type: 3}
 --- !u!114 &3128231133058288978
 MonoBehaviour:
   m_ObjectHideFlags: 0

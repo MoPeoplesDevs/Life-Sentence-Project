@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edbceb4f5fb88d14d9ed9027eb63979f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AmmoHUD
-  playerController: {fileID: 0}
+  playerController: {fileID: 1867059338}
   ammoText: {fileID: 931507815}
   weaponNameText: {fileID: 445056293}
 --- !u!1001 &63643843
@@ -43693,6 +43693,8 @@ MonoBehaviour:
   healthText: {fileID: 63643844}
   playerAnimation: {fileID: 0}
   reloadText: {fileID: 262962332}
+  gunHolder: {fileID: 0}
+  currentGunSprite: {fileID: 0}
 --- !u!4 &1867059339
 Transform:
   m_ObjectHideFlags: 0

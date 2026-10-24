@@ -127,6 +127,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        ResetWeaponsForNewLevel();
+
+        Debug.Log("OnSceneLoaded called:" +  scene.name)    ;
         GameObject spawn = GameObject.Find("PlayerSpawn");
         isDead = false;
 
@@ -177,7 +180,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             if (Keyboard.current.aKey.isPressed)
                 x = -1;
 
-            if (Keyboard.current.dKey.isPressed) 
+            if (Keyboard.current.dKey.isPressed)
                 x = 1;
 
             if (Keyboard.current.wKey.isPressed)
@@ -191,8 +194,6 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         playerAnimation.SetBool("IsWalking", playerInput.sqrMagnitude > 0);
         rb.linearVelocity = playerInput.normalized * playerSpeed;
         
-
-
     }
 
     void TurnPlayer()
@@ -299,7 +300,7 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         healthText.text = $"Health: {playerHP}";
     }
 
-    public void UseWeapon()
+   public void UseWeapon()
     {
         if(currentWeapon == 0)
         {
@@ -490,5 +491,35 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
         currentGunSprite.rotation = Quaternion.Euler(0f, 0f, angle);
     }
+
+    public void ResetWeaponsForNewLevel()
+    {
+        // Remove collected weapons.
+        for (int i = weaponInventory.Count - 1; i >= 0; i--)
+        {
+            GameObject weapon = weaponInventory[i];
+
+            if (weapon != null && weapon != startingWeapon)
+            {
+                Destroy(weapon);
+            }
+        }
+
+        // Clear the inventory.
+        weaponInventory.Clear();
+
+        // Reset to the default pistol.
+        currentWeapon = 0;
+
+        if (startingWeapon != null)
+        {
+            startingWeapon.SetActive(true);
+            weaponInventory.Add(startingWeapon);
+        }
+
+        // Update the gun sprite.
+        UpdateGunSprite();
+    }
+
 
 }
