@@ -49,6 +49,7 @@ public class buttonFunctions : MonoBehaviour
         if (creditsMenu.activeInHierarchy && (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame))
         {
             creditsMenu.SetActive(false);
+            mainMenu.SetActive(true);
 
             if (pauseMenu != null)
             {
@@ -135,7 +136,7 @@ public class buttonFunctions : MonoBehaviour
 
     public void ToggleCredits()
     {
-        bool isActive = creditsMenu.activeInHierarchy;
+        bool isActive = creditsMenu.activeSelf;
         if (!isActive)
         {
             if (pauseMenu != null)
