@@ -58,8 +58,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     [SerializeField] private Image healthBar;
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private Animator playerAnimation;
-
-    private Transform laser;
+    [SerializeField] private GameObject reloadText;
+    [SerializeField] private Transform gunHolder;
+    [SerializeField] private Transform currentGunSprite;
 
     void Awake()
     {
@@ -78,13 +79,11 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     {
         playerCollider = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        laser = transform.Find("Red Dot");
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
         AddWeapon(startingWeapon);
-
     }
 
     private void OnEnable()
@@ -122,7 +121,9 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
             SwitchWeapon();
             UseWeapon();
         }
-	}
+        UpdateReloadText();
+        RotateGun();
+    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -196,6 +197,8 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
     void TurnPlayer()
     { 
+        if (buttons.IsPaused) return;
+
         mousePos = Mouse.current.position.ReadValue();
         mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePos);
         playerDir = mouseWorldPos - new Vector2(transform.position.x, transform.position.y);
@@ -331,22 +334,45 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
         }
 
         for (int i = 0; i < weaponInventory.Count; i++)
-            {
-                if(i == currentWeapon)
-                {
-                    weaponInventory[i].SetActive(true);
+        {
+             if(i == currentWeapon)
+             {
+                 weaponInventory[i].SetActive(true);
 
-                }
-                else
-                {
-                    weaponInventory[i].SetActive(false);
+             }
+             else
+             {
+                 weaponInventory[i].SetActive(false);
 
-                }   
+             }   
 
-            }
+         }
+        UpdateGunSprite();
 
     }
-    
+
+    private void UpdateGunSprite()
+    {
+        if (weaponInventory.Count == 0)
+        {
+            return;
+        }
+
+        if (currentWeapon < 0 || currentWeapon >= weaponInventory.Count)
+        {
+            return;
+        }
+
+        GameObject weapon = weaponInventory[currentWeapon];
+
+        if (weapon == null)
+        {
+            return;
+        }
+
+        currentGunSprite = weapon.transform;
+    }
+
     public bool AddAmmoToWeapon(AmmoPickup.AmmoType ammoType, int amount)
     {
         foreach (GameObject weapon in weaponInventory)
@@ -358,63 +384,43 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
 
             if (ammoType == AmmoPickup.AmmoType.MachineGun)
             {
-                Debug.Log("Machine gun ammo pickup requested.");
-
-                MachineGun machineGun = weapon.GetComponent<MachineGun>();
+                 MachineGun machineGun = weapon.GetComponent<MachineGun>();
 
                 if (machineGun == null)
                 {
-                    Debug.LogWarning("MachineGun script not found on: " + weapon.name);
                     continue;
                 }
 
-                Debug.Log("Found machine gun. Attempting to add " + amount + " ammo.");
-
                 bool ammoAdded = machineGun.AddAmmo(amount);
-
-                Debug.Log("Machine gun ammo added: " + ammoAdded);
 
                 return ammoAdded;
             }
 
             if (ammoType == AmmoPickup.AmmoType.Shotgun)
             {
-                Debug.Log("Shotgun ammo pickup requested.");
-
                 ShotgunWeapon shotgun = weapon.GetComponent<ShotgunWeapon>();
 
                 if (shotgun == null)
                 {
-                    Debug.LogWarning("ShotgunWeapon script not found on: " + weapon.name);
                     continue;
                 }
 
-                Debug.Log("Found shotgun. Attempting to add " + amount + " ammo.");
-
                 bool ammoAdded = shotgun.AddAmmo(amount);
-
-                Debug.Log("Ammo added: " + ammoAdded);
 
                 return ammoAdded;
             }
 
             if (ammoType == AmmoPickup.AmmoType.Sniper)
             {
-                Debug.Log("Sniper ammo pickup requested.");
-
                 SniperWeapon sniper = weapon.GetComponent<SniperWeapon>();
 
                 if (sniper == null)
                 {
-                    Debug.LogWarning("SniperWeapon script not found on: " + weapon.name);
+                    
                     continue;
                 }
 
-                Debug.Log("Found sniper. Attempting to add " + amount + " ammo.");
-
                 bool ammoAdded = sniper.AddAmmo(amount);
-
-                Debug.Log("Sniper ammo added: " + ammoAdded);
 
                 return ammoAdded;
             }
@@ -424,5 +430,65 @@ public class Playercontroller : MonoBehaviour, IHeal, IDamage
     }
 
 
+    public IWeapon GetCurrentWeapon()
+    {
+        if (weaponInventory.Count == 0)
+        {
+            return null;
+        }
+
+        if (currentWeapon < 0 || currentWeapon >= weaponInventory.Count)
+        {
+            return null;
+        }
+
+        GameObject weaponObject = weaponInventory[currentWeapon];
+
+        if (weaponObject == null || !weaponObject.activeSelf)
+        {
+            return null;
+        }
+
+        return weaponObject.GetComponent<IWeapon>();
+    }
+
+    private void UpdateReloadText()
+    {
+        IWeapon current_weapon = GetCurrentWeapon();
+
+        if (reloadText == null)
+        {
+            return;
+        }
+
+        if (current_weapon != null && current_weapon.CurrentAmmo <= 0)
+        {
+            reloadText.SetActive(true);
+        }
+        else
+        {
+            reloadText.SetActive(false);
+        }
+    }
+
+    private void RotateGun()
+    {
+        IWeapon current_weapon = GetCurrentWeapon();
+
+        if (current_weapon == null || currentGunSprite == null)
+        {
+            return;
+        }
+
+        Vector2 mouse_position = Camera.main.ScreenToWorldPoint(
+            Mouse.current.position.ReadValue());
+
+        Vector2 direction = mouse_position -
+            (Vector2)currentGunSprite.position;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        currentGunSprite.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
 
 }

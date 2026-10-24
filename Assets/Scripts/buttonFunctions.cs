@@ -170,6 +170,7 @@ public class buttonFunctions : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
+        OnGameRestarted?.Invoke();
         WaveManager.Instance.SpawnWave(GameManager.Instance.WaveCount);
     }
 

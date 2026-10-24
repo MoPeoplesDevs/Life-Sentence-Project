@@ -21,6 +21,9 @@ public class ShotgunWeapon : MonoBehaviour, IWeapon
     private int reserveAmmo;
     private bool isReloading;
 
+    public int CurrentAmmo => currentAmmo;
+    public int ReserveAmmo => reserveAmmo;
+
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform firePoint;
 
@@ -122,8 +125,6 @@ public class ShotgunWeapon : MonoBehaviour, IWeapon
 
         currentAmmo--;
 
-        Debug.Log("SHOTGUN SHOOTING: " + bulletCount + " bullets");
-
         for (int i = 0; i < bulletCount; i++)
         {
             float spread = Random.Range(-bulletSpread, bulletSpread);
@@ -179,8 +180,7 @@ public class ShotgunWeapon : MonoBehaviour, IWeapon
 
         isReloading = false;
 
-        Debug.Log("Reloaded. Magazine: " + currentAmmo +
-                  " | Reserve: " + reserveAmmo);
+       
     }
 
 

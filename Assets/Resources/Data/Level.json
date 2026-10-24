@@ -22,7 +22,7 @@
             {
               "type": "Horde",
               "count": 4,
-              "maxDelay": 0.25
+              "maxDelay": 1.5
             }
           ]
         },

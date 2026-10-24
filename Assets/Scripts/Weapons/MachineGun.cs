@@ -18,6 +18,9 @@ public class MachineGun : MonoBehaviour, IWeapon
     private int reserveAmmo;
     private bool isReloading;
 
+    public int CurrentAmmo => currentAmmo;
+    public int ReserveAmmo => reserveAmmo;
+
     [Header("Bullet Settings")]
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform firePoint;
@@ -154,8 +157,6 @@ public class MachineGun : MonoBehaviour, IWeapon
 
         isReloading = false;
 
-        Debug.Log("Reloaded. Magazine: " + currentAmmo +
-                  " | Reserve: " + reserveAmmo);
     }
 
 
