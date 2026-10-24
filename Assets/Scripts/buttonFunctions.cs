@@ -45,17 +45,20 @@ public class buttonFunctions : MonoBehaviour
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
             TogglePause();
-
-        if (creditsMenu.activeInHierarchy && (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame))
-        {
-            creditsMenu.SetActive(false);
-            mainMenu.SetActive(true);
-
-            if (pauseMenu != null)
+        
+            if (creditsMenu.activeInHierarchy && (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame))
             {
-                pauseMenu.SetActive(true);
+                creditsMenu.SetActive(false);
+                if (mainMenu != null)
+                {
+                    mainMenu.SetActive(true);
+                }
+                if (pauseMenu != null)
+                {
+                    pauseMenu.SetActive(true);
+                }
             }
-        }
+        
 
     }
 
@@ -144,7 +147,11 @@ public class buttonFunctions : MonoBehaviour
                 pauseMenu.SetActive(false);
             }
         }
-        mainMenu.SetActive(isActive);
+
+        if (mainMenu != null)
+        {
+            mainMenu.SetActive(isActive);
+        }
         creditsMenu.SetActive(!isActive);
     }
 
